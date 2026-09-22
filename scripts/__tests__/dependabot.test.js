@@ -29,6 +29,7 @@ const PARTIAL = [
   '@types/jest',
   'typescript',
   '@types/node',
+  'eslint',
 ];
 
 describe('Dependabot und Expo SDK', () => {

@@ -126,3 +126,9 @@ per Verweis in Dateien, die in Node laufen. Der React Compiler aus der Vorlage b
 
 **E-26 · Versalien in der Marke.** «HUNDEBÜECHLI» im Ring der Marke bleibt in Versalien: Es ist ein
 Stempel wie im echten Büechli, kein Etikett über einer Überschrift.
+
+**E-27 · ESLint bleibt bei Hauptversion 9.** Der erste Dependabot-PR hob ESLint auf 10.10.0 und
+wurde rot: ESLint 10 hat `context.getFilename()` entfernt, `eslint-plugin-react` aus
+`eslint-config-expo` 57 ruft es noch auf. Die Hauptversion von ESLint ist damit an die
+Expo-Konfiguration gebunden und in `.github/dependabot.yml` für Hauptversionen gesperrt;
+Minor- und Patch-Fassungen kommen weiter.

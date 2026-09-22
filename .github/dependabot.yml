@@ -93,6 +93,11 @@ updates:
       # gesperrt, bis der Sprung bewusst ansteht.
       - dependency-name: 'typescript'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      # ESLint 10 entfernt context.getFilename(); eslint-plugin-react aus
+      # eslint-config-expo 57 braucht es noch (Befund aus PR #1, 22.09.2026).
+      # Die Hauptversion wechselt mit der Expo-Konfiguration, nicht davor.
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
       # Die Typen von Node folgen der Laufzeit (Node 24), nicht dem Neusten.
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
