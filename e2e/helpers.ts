@@ -98,31 +98,51 @@ export function horizontalOverflow(page: Page): Promise<number> {
 
 /**
  * Tab erreicht jedes sichtbare Bedienelement, und jedes zeigt einen
- * sichtbaren Fokus. Gibt die Elemente zurück, bei denen das nicht so ist.
+ * sichtbaren Fokus. Gibt zurück, was nicht erreichbar ist oder keinen
+ * sichtbaren Fokus hat.
  */
 export async function keyboardProblems(page: Page): Promise<string[]> {
-  const focusable = await page.evaluate(
-    () =>
-      [
-        ...document.querySelectorAll<HTMLElement>(
-          'a[href], button, input, textarea, select, [tabindex]',
-        ),
-      ].filter((el) => el.tabIndex >= 0 && el.getBoundingClientRect().width > 0).length,
-  );
+  const total = await page.evaluate(() => {
+    const selector = 'a[href], button, input, textarea, select, [tabindex]';
+    const visible = (el: HTMLElement) =>
+      el.tabIndex >= 0 &&
+      el.offsetParent !== null &&
+      el.getBoundingClientRect().width > 0 &&
+      !el.closest('[aria-hidden="true"]') &&
+      getComputedStyle(el).visibility !== 'hidden';
+    const elements = [...document.querySelectorAll<HTMLElement>(selector)].filter(visible);
+    elements.forEach((el, index) => el.setAttribute('data-tastatur', String(index)));
+    return elements.length;
+  });
+  const reached = new Set<string>();
   const problems: string[] = [];
-  for (let i = 0; i < focusable; i += 1) {
+  for (let press = 0; press < total + 5 && reached.size < total; press += 1) {
     await page.keyboard.press('Tab');
     const state = await page.evaluate(() => {
       const el = document.activeElement as HTMLElement | null;
-      if (!el || el === document.body) return { name: 'nichts', visible: false };
+      const mark = el?.getAttribute('data-tastatur') ?? null;
+      if (!el || mark === null) return { mark, name: '', visible: true };
       const style = getComputedStyle(el);
       const visible = style.outlineStyle !== 'none' || style.boxShadow !== 'none';
       return {
+        mark,
         name: el.getAttribute('aria-label') ?? el.textContent?.trim() ?? el.tagName,
         visible,
       };
     });
+    if (state.mark === null || reached.has(state.mark)) continue;
+    reached.add(state.mark);
     if (!state.visible) problems.push(`kein sichtbarer Fokus: ${state.name}`);
+  }
+  if (reached.size < total) {
+    const missing = await page.evaluate(
+      (seen) =>
+        [...document.querySelectorAll<HTMLElement>('[data-tastatur]')]
+          .filter((el) => !seen.includes(el.getAttribute('data-tastatur') ?? ''))
+          .map((el) => el.getAttribute('aria-label') ?? el.textContent?.trim() ?? el.tagName),
+      [...reached],
+    );
+    problems.push(...missing.map((name) => `per Tab nicht erreichbar: ${name}`));
   }
   return problems;
 }

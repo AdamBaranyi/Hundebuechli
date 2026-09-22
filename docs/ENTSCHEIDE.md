@@ -132,3 +132,9 @@ wurde rot: ESLint 10 hat `context.getFilename()` entfernt, `eslint-plugin-react`
 `eslint-config-expo` 57 ruft es noch auf. Die Hauptversion von ESLint ist damit an die
 Expo-Konfiguration gebunden und in `.github/dependabot.yml` für Hauptversionen gesperrt;
 Minor- und Patch-Fassungen kommen weiter.
+
+## Tag 2 – 22.09.2026
+
+**E-28 · `expo-symbols` wieder dabei (zu E-3).** Die native Tab-Leiste zeichnet unter Android
+Material-Symbole über `expo-symbols`; ohne das Paket fehlen die Symbole. Es ist Teil von Expo Go
+(57.0.3). Unter iOS kommen die SF Symbols `seal`, `tag` und `slider.horizontal.3` vom System.
