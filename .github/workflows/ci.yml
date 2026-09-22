@@ -1,0 +1,87 @@
+name: CI
+
+# Bei jedem Push auf main und bei jedem Pull Request. Der tägliche Lauf in
+# sicherheit-taeglich.yml deckt die Tage ohne Commit ab.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUN_VERSION: 1.3.14
+  NODE_VERSION: 24
+
+jobs:
+  pruefen:
+    name: Format, Dateilänge, Regeln, Typen, Tests, SDK, Web-Export, Playwright
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # Binärdatei statt Action, mit geprüfter Prüfsumme aus dem Release.
+      # Dieselbe Fassung wie in sicherheit-taeglich.yml – beide zusammen ändern.
+      - name: gitleaks 8.30.1 holen
+        run: |
+          curl -sSfL -o gitleaks.tar.gz https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  gitleaks.tar.gz" | sha256sum --check
+          tar -xzf gitleaks.tar.gz gitleaks
+
+      - name: Secret-Scan über alle Commits
+        run: ./gitleaks git . --no-banner --redact
+
+      # Expo CLI, Jest und Playwright laufen mit Node; Bun installiert.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - run: bun install --frozen-lockfile
+
+      - run: bun run format:check
+      - run: bun run check:file-length
+      - run: bun run lint
+      - run: bun run typecheck
+      - run: bun run test --ci
+
+      # Offline gegen bundledNativeModules.json der installierten expo-Fassung:
+      # prüft, ob alles zur SDK passt. Der Online-Vergleich mit der neusten
+      # Patch-Fassung wäre eine Update-Meldung und kollidierte mit der
+      # Wartezeit von sieben Tagen (docs/ENTSCHEIDE.md).
+      - name: Fassungen passen zur Expo-SDK
+        run: bun run check:expo
+
+      - name: Web-Export mit CSP
+        run: bun run export:web
+
+      - name: Chrome für Playwright
+        run: node_modules/.bin/playwright install --with-deps chromium
+
+      - name: Playwright bei 320, 768 und 1440 Pixeln
+        run: bun run test:e2e
+
+      - name: Spuren der Browser-Tests bei Fehlern
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-spuren
+          path: test-results/
+          retention-days: 7
+
+      # Blockiert ab "hoch". Der tägliche Lauf ist strenger (ab "moderat"):
+      # Dort geht es ums Bemerken, hier ums Durchlassen.
+      - name: Bekannte Schwachstellen
+        run: bun audit --audit-level=high

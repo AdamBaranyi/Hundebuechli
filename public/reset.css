@@ -1,0 +1,23 @@
+/* Grundstil nach react-native-web: Seite in voller Höhe, gescrollt wird in der ScrollView. */
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #eef0ec;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #000000;
+  }
+}
+
+#root {
+  display: flex;
+  height: 100%;
+  flex: 1;
+}

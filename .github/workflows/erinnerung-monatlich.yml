@@ -1,0 +1,61 @@
+name: Erinnerung monatlich
+
+# Für die Handgriffe, die niemand meldet: SDK-Patches, Expo Go im App Store,
+# Ausnahmen im Audit, die Sicherung des Signierschlüssels. Ohne diesen Lauf
+# hängt die Wartung am Gedächtnis – genau dort stirbt ein Sicherheitssystem im
+# Alltag.
+
+on:
+  schedule:
+    # Am Ersten jedes Monats, 07:05 UTC.
+    - cron: '5 7 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  erinnern:
+    name: Wartungsliste öffnen
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Issue anlegen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          monat=$(date +'%m.%Y')
+
+          gh label create wartung --repo "$REPO" --color 0E8A16 \
+            --description "Wiederkehrende Wartung" 2>/dev/null || true
+
+          gh issue create --repo "$REPO" \
+            --title "Monatliche Wartung $monat" \
+            --label wartung \
+            --assignee AdamBaranyi \
+            --body "$(cat <<'EOF'
+          Rund 15 Minuten. Der Reihe nach:
+
+          - [ ] **Offene Pull Requests**: grüne mergen. Das hält nebenbei die geplanten Läufe
+                am Leben – GitHub schaltet sie in öffentlichen Repositories nach 60 Tagen ohne
+                Aktivität ab.
+          - [ ] **SDK-Patch**: `bunx expo install --check` (mit Netz) zeigt neuere Patch-Fassungen
+                der SDK. Ist die Fassung älter als sieben Tage: `bunx expo install --fix`, dann
+                `bunx expo-doctor`, `bun run verify` und ein kurzer Start in Expo Go.
+          - [ ] **Expo Go im App Store**: Welche SDK kann die aktuelle Fassung? Kommt eine neue
+                SDK, ist der Wechsel ein eigener, bewusster Schritt (docs/RELEASE.md).
+          - [ ] **Ausnahmen nachprüfen**: Steht in docs/SECURITY.md noch ein `--ignore`, das
+                inzwischen wegfallen könnte? `bun audit` zeigt es.
+          - [ ] **Signierschlüssel** (sobald es ihn gibt): Sicherung offline vorhanden und lesbar.
+
+          Alle drei Monate zusätzlich:
+
+          - [ ] **Header der Web-Vorschau von aussen prüfen** (sobald sie gehostet ist).
+
+          Erledigt? Issue schliessen. Am Ersten des nächsten Monats kommt das nächste.
+          EOF
+          )"

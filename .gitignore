@@ -1,0 +1,48 @@
+# Abhängigkeiten
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native Ordner entstehen in der CI mit `expo prebuild` und gehören nicht ins
+# Repository.
+/ios
+/android
+.kotlin/
+
+# Schlüssel und Zertifikate nie einchecken. Der Android-Keystore lebt nur als
+# GitHub-Secret und als Sicherung offline, siehe docs/RELEASE.md.
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.pem
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# Tests
+coverage/
+test-results/
+playwright-report/
+
+# Protokolle
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# Lokale Umgebung
+.env
+.env.*
+!.env.example
+
+# TypeScript
+*.tsbuildinfo
+
+# macOS
+.DS_Store

@@ -1,0 +1,115 @@
+# Updates laufen von selbst und melden sich, statt darauf zu warten, dass
+# jemand nachschaut. Drei Regeln gelten überall in dieser Datei:
+#
+# 1. Keine Vorabversionen. Dependabot schlägt Beta, RC und Canary nur vor,
+#    wenn die eingesetzte Fassung schon eine ist – hier ist das nirgends so.
+# 2. Wartezeit (cooldown): sieben Tage nach der Veröffentlichung, wie
+#    minimumReleaseAge in bunfig.toml. Gilt nicht für Security-Updates.
+# 3. "Funktioniert" heisst grün. Jeder dieser Pull Requests löst den vollen
+#    CI-Lauf aus. Gemergt wird nur, was grün ist.
+#
+# Meldung: `assignees` macht den Pull Request zu einer zugewiesenen Aufgabe –
+# E-Mail und Push in GitHub Mobile.
+#
+# Kein `docker`-Eintrag: Das Projekt hat kein Dockerfile, und ein solcher
+# Eintrag scheitert bei jedem Lauf still.
+
+version: 2
+
+updates:
+  # ---------------------------------------------------------------- Bun ----
+  # Achtung, Grenze: Der Dependency Graph von GitHub liest bun.lock nicht. Für
+  # Bun gibt es hier nur Versions-Updates; den Alarm bei Schwachstellen liefert
+  # .github/workflows/sicherheit-taeglich.yml mit `bun audit`.
+  - package-ecosystem: bun
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Zurich
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    assignees:
+      - AdamBaranyi
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      # Minor und Patch als ein Sammel-PR: ein Lauf, eine Prüfung, eine
+      # Entscheidung. Major-Sprünge kommen einzeln.
+      alltag:
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # SDK-gebunden: Alles aus bundledNativeModules.json der eingesetzten
+      # Expo-SDK, dazu expo selbst. Expo Go aus dem App Store enthält genau
+      # diese Fassungen; hebt Dependabot eines darüber, läuft die App in Expo Go
+      # nicht mehr. Diese Pakete wechseln nur bewusst mit der SDK:
+      # `bunx expo install --fix`, danach `bunx expo-doctor` (docs/RELEASE.md).
+      # Ein Test hält diese Liste deckungsgleich mit package.json
+      # (scripts/__tests__/dependabot.test.js).
+      - dependency-name: 'eslint-config-expo'
+      - dependency-name: 'expo'
+      - dependency-name: 'expo-asset'
+      - dependency-name: 'expo-constants'
+      - dependency-name: 'expo-crypto'
+      - dependency-name: 'expo-font'
+      - dependency-name: 'expo-linking'
+      - dependency-name: 'expo-router'
+      - dependency-name: 'expo-splash-screen'
+      - dependency-name: 'expo-sqlite'
+      - dependency-name: 'expo-status-bar'
+      - dependency-name: 'expo-system-ui'
+      - dependency-name: 'jest-expo'
+      - dependency-name: 'react'
+      - dependency-name: 'react-dom'
+      - dependency-name: 'react-native'
+      - dependency-name: 'react-native-gesture-handler'
+      - dependency-name: 'react-native-reanimated'
+      - dependency-name: 'react-native-safe-area-context'
+      - dependency-name: 'react-native-screens'
+      - dependency-name: 'react-native-svg'
+      - dependency-name: 'react-native-web'
+      - dependency-name: 'react-native-worklets'
+
+      # Gekoppelt, aber nicht in bundledNativeModules.json:
+      # Die Typen von React folgen React 19.2 aus der SDK.
+      - dependency-name: '@types/react'
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      # Das Jest-Preset folgt React Native 0.86; eine neue Minor ist eine neue RN-Fassung.
+      - dependency-name: '@react-native/jest-preset'
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      # jest-expo 57 baut auf Jest 29.
+      - dependency-name: 'jest'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@types/jest'
+        update-types: ['version-update:semver-major']
+      # TypeScript folgt der Empfehlung der SDK (~6.0); TypeScript 7 bleibt
+      # gesperrt, bis der Sprung bewusst ansteht.
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      # Die Typen von Node folgen der Laufzeit (Node 24), nicht dem Neusten.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
+
+  # ------------------------------------------------------ GitHub Actions ----
+  # Hält checkout, setup-node, setup-bun und upload-artifact aktuell. Eine
+  # veraltete Action ist fremde Codeausführung in der CI.
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: monthly
+      time: '06:00'
+      timezone: Europe/Zurich
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 3
+    assignees:
+      - AdamBaranyi
+    commit-message:
+      prefix: ci

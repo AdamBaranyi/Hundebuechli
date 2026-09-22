@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "Hundebüechli",
+    "slug": "hundebuechli",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icons/icon.png",
+    "scheme": "hundebuechli",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#EEF0EC",
+    "ios": {
+      "bundleIdentifier": "xyz.adambaranyi.hundebuechli",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "xyz.adambaranyi.hundebuechli",
+      "adaptiveIcon": {
+        "backgroundColor": "#B3223F",
+        "foregroundImage": "./assets/icons/android-foreground.png",
+        "monochromeImage": "./assets/icons/android-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/icons/favicon.png",
+      "lang": "de-CH"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#EEF0EC",
+          "image": "./assets/icons/splash.png",
+          "imageWidth": 160,
+          "dark": {
+            "backgroundColor": "#000000",
+            "image": "./assets/icons/splash.png"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

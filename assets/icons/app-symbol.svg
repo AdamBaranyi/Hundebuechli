@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="App-Symbol Hundebüechli">
+  <rect width="1024" height="1024" rx="228" fill="#B3223F"/>
+  <g transform="rotate(-8 512 512)">
+    <rect x="296" y="200" width="440" height="610" rx="44" fill="#FFFFFF"/>
+    <rect x="296" y="200" width="70" height="610" rx="44" fill="#F3E6E9"/>
+    <rect x="336" y="200" width="30" height="610" fill="#F3E6E9"/>
+    <rect x="410" y="292" width="250" height="28" rx="14" fill="#E7D4D9"/>
+    <rect x="410" y="350" width="170" height="28" rx="14" fill="#E7D4D9"/>
+  </g>
+  <g transform="rotate(-12 598 628)">
+    <circle cx="598" cy="628" r="152" fill="#FFFFFF"/>
+    <circle cx="598" cy="628" r="146" fill="none" stroke="#1D2420" stroke-width="22"/>
+    <circle cx="598" cy="628" r="114" fill="none" stroke="#1D2420" stroke-width="8"/>
+    <path d="M538 632l42 42 84-96" fill="none" stroke="#1D2420" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
