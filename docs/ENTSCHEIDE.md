@@ -138,3 +138,37 @@ Minor- und Patch-Fassungen kommen weiter.
 **E-28 · `expo-symbols` wieder dabei (zu E-3).** Die native Tab-Leiste zeichnet unter Android
 Material-Symbole über `expo-symbols`; ohne das Paket fehlen die Symbole. Es ist Teil von Expo Go
 (57.0.3). Unter iOS kommen die SF Symbols `seal`, `tag` und `slider.horizontal.3` vom System.
+
+**E-29 · Getypte Routen auch in der CI.** Die Typen der Routen erzeugt sonst nur der laufende
+Entwicklungsserver. `bun run typecheck` ruft darum zuerst `expo customize tsconfig.json` auf; das
+erzeugt `.expo/types` und lässt `tsconfig.json` unverändert. Gegenprobe: Eine falsche Route
+(`/hunde/[id]`) lässt den Typecheck scheitern.
+
+**E-30 · Datum als Feld statt Datumswähler.** Datum und nächste Fälligkeit haben eine Schnellwahl
+(Heute, Gestern; 1, 3, 6, 12, 36 Monate) und für alles andere ein Feld «TT.MM.JJJJ». Ein nativer
+Datumswähler fehlt im Browser, und seine Schrift folgt nicht überall der Systemgrösse; das Feld ist
+auf Gerät und Web gleich, per Tastatur bedienbar und testbar. Ein gewähltes Datum trägt keine
+Wiederholung; «Erledigt» plant dann keine nächste Fälligkeit.
+
+**E-31 · Die Übersicht lädt beim Öffnen neu.** Nach «Erledigt» bleibt die Zeile an ihrem Platz und
+zeigt den Stempel; der Folgeeintrag erscheint erst, wenn «Als Nächstes» wieder geöffnet wird. Andere
+Ansichten (Profil, Liste) werden sofort nachgeführt.
+
+**E-32 · Ein Eintrag schliesst den offenen Termin mit demselben Produkt.** Wer die Entwurmung als
+neuen Eintrag erfasst statt zu stempeln, sähe sonst den alten Termin weiter als fällig. Nur bei genau
+einem passenden offenen Termin derselben Art und desselben Produkts; verschiedene Impfungen bleiben
+getrennt.
+
+**E-33 · Schalter als ganze Zeile.** Der Schalter des Systems ist im Browser 40 × 20 Pixel gross. Die
+ganze Zeile ist der Schalter (Rolle «switch»), der Schieber ist nur Zeichen.
+
+**E-34 · Profilfoto ohne Formular.** Das Foto wird im Profil aufgenommen oder gewählt, nicht im
+Formular: So ist der Hund schon gespeichert, wenn das Foto dazukommt, und ein abgebrochenes Formular
+hinterlässt keine Datei. Im Browser gibt es nur «Foto wählen», die Kamera wäre dort eine Dateiauswahl.
+
+**E-35 · Hunde ohne Foto zeigen die Hundemarke.** Kein Anfangsbuchstabe im Kreis: Er würde mit der
+Systemschrift aus dem Kreis wachsen.
+
+**E-36 · Zurück im Browser mit eigener Tippfläche.** Die Kopfleiste von React Navigation hat im
+Browser einen Zurück-Knopf von 30 × 30 Pixeln; im Web ersetzt ihn einer mit 48 und Beschriftung. Auf
+dem Gerät bleibt der Knopf des Systems.
