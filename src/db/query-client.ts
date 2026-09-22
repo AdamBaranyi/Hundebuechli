@@ -12,7 +12,7 @@ export function createQueryClient(options: { gcTime?: number } = {}): QueryClien
   return new QueryClient({
     defaultOptions: {
       queries: { networkMode: 'always', staleTime: Infinity, retry: false, ...options },
-      mutations: { networkMode: 'always', retry: false },
+      mutations: { networkMode: 'always', retry: false, ...options },
     },
   });
 }
