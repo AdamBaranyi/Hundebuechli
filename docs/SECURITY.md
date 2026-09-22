@@ -76,10 +76,17 @@ object-src 'none'; frame-ancestors 'none'
 
 ## Berechtigungen
 
-Stand Tag 1: keine. Kamera, Fotos und Benachrichtigungen kommen mit ihren Funktionen (Tag 2 und 3),
-jede mit deutschem Begründungstext; `expo-image-picker` ohne Mikrofon (`microphonePermission:
-false`), Überflüssiges über `android.blockedPermissions`. Ziel: Die Release-APK verlangt nicht
-einmal `INTERNET`; die CI prüft die Berechtigungen in der fertigen APK (Tag 5).
+Stand Tag 2: Kamera und Fotos über `expo-image-picker`, mit deutschen Texten, wozu sie dienen
+(`app.json`). Mikrofon ausgeschaltet (`microphonePermission: false`) und `RECORD_AUDIO` über
+`android.blockedPermissions` gesperrt. Die Kamera wird erst gefragt, wenn jemand ein Foto aufnimmt;
+die Auswahl aus den Fotos braucht unter iOS keine Erlaubnis. Benachrichtigungen folgen an Tag 3.
+Ziel: Die Release-APK verlangt nicht einmal `INTERNET`; die CI prüft die Berechtigungen in der
+fertigen APK (Tag 5).
+
+**Fotos ohne Standort:** Jedes Foto wird verkleinert und als JPEG neu kodiert; danach prüft
+`src/domain/jpeg-metadata.ts` auf EXIF und XMP (beide können GPS tragen). Findet es welche, wird
+nichts gespeichert. Die Testbilder mit GPS sind mit ImageIO von Apple gegengeprüft. Gelöscht wird
+nur, was nach einem selbst angelegten Pfad aussieht (`photos/<uuid>.jpg`).
 
 ## Daten auf dem Gerät
 

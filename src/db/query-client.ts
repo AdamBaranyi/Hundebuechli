@@ -8,10 +8,10 @@ import { QueryClient } from '@tanstack/react-query';
  * - Keine Wiederholung: Ein Fehler der lokalen Datenbank löst sich nicht durch
  *   einen zweiten Versuch.
  */
-export function createQueryClient(): QueryClient {
+export function createQueryClient(options: { gcTime?: number } = {}): QueryClient {
   return new QueryClient({
     defaultOptions: {
-      queries: { networkMode: 'always', staleTime: Infinity, retry: false },
+      queries: { networkMode: 'always', staleTime: Infinity, retry: false, ...options },
       mutations: { networkMode: 'always', retry: false },
     },
   });

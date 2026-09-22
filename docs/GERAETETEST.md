@@ -19,3 +19,27 @@ und den QR-Code mit der Kamera des iPhones scannen.
 | 0.5 | VoiceOver einschalten, über den Bildschirm wischen | Liest «Hundebüechli, Stempel vom …» als Bild, dann den Titel als Überschrift, dann die Texte | | | |
 | 0.6 | Expo Go ganz schliessen (App-Umschalter), Projekt neu öffnen | Startet wieder ohne Fehler (Migrationen laufen kein zweites Mal) | | | |
 | 0.7 | Name unter dem App-Symbol | In Expo Go nicht prüfbar – erst mit der APK (Tag 5) | – | – | – |
+
+## Runde 1 – Tag 2: Hund, Foto, Einträge, im Flugmodus
+
+**Vorbereitung:** Metro läuft am Mac (`bun run start`), das Projekt ist in Expo Go offen. Dann den
+**Flugmodus einschalten** (WLAN bleibt für die Verbindung zum Mac an, Mobilfunk aus) – die App selbst
+braucht kein Netz.
+
+| Nr. | Schritt | Erwartet | Datum | Gerät, iOS | Beobachtet |
+|---|---|---|---|---|---|
+| 1.1 | Erststart: «Ersten Hund anlegen» | Formular «Neuer Hund» als Blatt von unten | | | |
+| 1.2 | Sichern ohne Name | Satz «Gib deinem Hund einen Namen.» unter dem Feld, VoiceOver liest ihn | | | |
+| 1.3 | Name, Rasse, «Rüde», Chipnummer «756 0981 2345 6789», Praxis mit Telefon; Sichern | Profil mit Name gross; «Chipnummer aus der Schweiz» | | | |
+| 1.4 | Tab-Leiste unten ansehen | Drei Einträge, Beschriftung gross (16 pt), nichts abgeschnitten, Liquid Glass | | | |
+| 1.5 | «Foto aufnehmen» | Frage nach der Kamera erst jetzt; Foto erscheint, hochkant richtig gedreht | | | |
+| 1.6 | «Foto ersetzen» aus den Fotos | Neues Foto erscheint | | | |
+| 1.7 | «Chipnummer kopieren», in Notizen einfügen | 756098123456789 | | | |
+| 1.8 | «Tierarztpraxis anrufen» | Telefon öffnet mit der Nummer (nicht anrufen) | | | |
+| 1.9 | «Eintrag hinzufügen»: Entwurmung, Produkt, «Datum wählen» in 3 Tagen; Sichern | Im Profil «Das Jahr in Stempeln»; unter «Als Nächstes» bei «Diese Woche» | | | |
+| 1.10 | Unter «Als Nächstes» aufs gestrichelte Stempelfeld tippen | Stempel mit heutigem Datum, Zeile bleibt stehen; VoiceOver sagt «… erledigt.» | | | |
+| 1.11 | **Expo Go ganz schliessen, neu öffnen** (Flugmodus weiter an) | Hund, Foto und Einträge sind da | | | |
+| 1.12 | Grösster Text (wie 0.4), dann Formular und «Als Nächstes» | Alles bricht um, nichts abgeschnitten, alles erreichbar | | | |
+| 1.13 | Dunkel (wie 0.3) | Alles lesbar, Karmin nur bei fällig | | | |
+| 1.14 | VoiceOver im Formular | Felder mit Namen, «Kastriert, Schalter, aus», Kacheln als Auswahl | | | |
+| 1.15 | Hund löschen: Profil, «Löschen» | Rückfrage nennt Einträge und Fotos; danach Liste ohne den Hund | | | |

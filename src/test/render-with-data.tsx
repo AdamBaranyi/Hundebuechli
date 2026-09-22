@@ -14,7 +14,8 @@ import type { Db } from '@/db/types';
 export async function renderWithData(ui: ReactElement, prepare?: (db: Db) => void) {
   const db = await createTestDb();
   prepare?.(db);
-  const client = createQueryClient();
+  // Ohne Aufräum-Zeitgeber, damit Jest nach dem Test nichts offen findet.
+  const client = createQueryClient({ gcTime: Infinity });
   const result = await render(
     <QueryClientProvider client={client}>
       <DatabaseContext.Provider value={db}>{ui}</DatabaseContext.Provider>
