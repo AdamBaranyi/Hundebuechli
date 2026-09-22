@@ -1,3 +1,7 @@
+// Alle Tests rechnen in der Zeitzone der Nutzerinnen und Nutzer, damit Sommer-
+// und Winterzeit wirklich geprüft werden, egal wo die CI läuft.
+process.env.TZ = 'Europe/Zurich';
+
 /**
  * Jest mit jest-expo: Domänenlogik, Repositories gegen sql.js und
  * Komponenten mit React Native Testing Library. Playwright gegen den

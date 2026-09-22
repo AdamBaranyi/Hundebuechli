@@ -19,7 +19,10 @@
         "foregroundImage": "./assets/icons/android-foreground.png",
         "monochromeImage": "./assets/icons/android-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "output": "single",
@@ -29,6 +32,14 @@
     "plugins": [
       "expo-router",
       "expo-sqlite",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Hundebüechli braucht Zugriff auf deine Fotos, damit du ein Bild deines Hundes oder eines Dokuments auswählen kannst. Das Bild bleibt auf deinem Gerät.",
+          "cameraPermission": "Hundebüechli braucht die Kamera, damit du deinen Hund oder ein Dokument fotografieren kannst. Das Foto bleibt auf deinem Gerät.",
+          "microphonePermission": false
+        }
+      ],
       [
         "expo-splash-screen",
         {

@@ -49,6 +49,7 @@ const fileNetworkFunctions = [
   'uploadAsync',
   'createDownloadResumable',
   'createUploadTask',
+  'createDownloadTask',
   'downloadFileAsync',
 ].map((name) => ({
   selector: `MemberExpression[property.name='${name}']`,
