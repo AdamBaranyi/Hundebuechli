@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '@/domain/zod';
 
 import { addMonths } from './calendar';
 import { type LocalDate, localDateSchema } from './local-date';

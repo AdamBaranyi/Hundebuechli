@@ -2,7 +2,16 @@ import { asc, count, eq, inArray, isNull } from 'drizzle-orm';
 
 import { type DogInput, dogInputSchema } from '@/domain/dog';
 
-import { attachments, diaryEntries, documents, dogs, healthEntries } from '../schema';
+import {
+  attachments,
+  diaryEntries,
+  documents,
+  dogs,
+  healthEntries,
+  medications,
+  reminders,
+  weights,
+} from '../schema';
 import { newId, nowUtc } from '../time';
 import type { Db } from '../types';
 
@@ -76,6 +85,25 @@ export function deleteDog(db: Db, id: string): { attachmentPaths: string[] } {
     tx.delete(dogs).where(eq(dogs.id, id)).run();
     return { attachmentPaths };
   });
+}
+
+/**
+ * Was beim Löschen eines Hundes verschwindet, gezählt für die Rückfrage:
+ * Einträge aller Art und alle Fotos.
+ */
+export function countDogData(db: Db, id: string): { entries: number; photos: number } {
+  const rows = (table: typeof healthEntries | typeof diaryEntries | typeof documents) =>
+    db.select({ value: count() }).from(table).where(eq(table.dogId, id)).get()?.value ?? 0;
+  const other = (table: typeof weights | typeof medications | typeof reminders) =>
+    db.select({ value: count() }).from(table).where(eq(table.dogId, id)).get()?.value ?? 0;
+  const entries =
+    rows(healthEntries) +
+    rows(diaryEntries) +
+    rows(documents) +
+    other(weights) +
+    other(medications) +
+    other(reminders);
+  return { entries, photos: attachmentPathsOfDog(db, id).length };
 }
 
 function attachmentPathsOfDog(db: Pick<Db, 'select'>, dogId: string): string[] {

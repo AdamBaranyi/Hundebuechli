@@ -94,8 +94,24 @@ module.exports = defineConfig([
     rules: {
       'no-restricted-globals': ['error', ...networkGlobals],
       'no-restricted-properties': ['error', ...networkProperties],
-      'no-restricted-imports': ['error', { paths: networkImports }],
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            ...networkImports,
+            {
+              name: 'zod',
+              message: "Zod über '@/domain/zod' importieren: dort ist es ohne eval eingestellt.",
+            },
+          ],
+        },
+      ],
       'no-restricted-syntax': ['error', ...fileNetworkFunctions],
     },
+  },
+  {
+    // Zuletzt, damit es die Regel für app/ und src/ überschreibt: das eine Modul, das Zod einstellt und weitergibt.
+    files: ['src/domain/zod.ts'],
+    rules: { 'no-restricted-imports': ['error', { paths: networkImports }] },
   },
 ]);

@@ -68,6 +68,7 @@ updates:
       - dependency-name: 'expo-splash-screen'
       - dependency-name: 'expo-sqlite'
       - dependency-name: 'expo-status-bar'
+      - dependency-name: 'expo-symbols'
       - dependency-name: 'expo-system-ui'
       - dependency-name: 'jest-expo'
       - dependency-name: 'react'

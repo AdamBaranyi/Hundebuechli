@@ -55,8 +55,6 @@ export function Icon({ name, size = 24, color = 'graphite' }: Props) {
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
-      accessibilityElementsHidden
-      importantForAccessibility="no-hide-descendants"
     >
       <IconShapes name={name} />
     </Svg>

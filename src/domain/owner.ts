@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '@/domain/zod';
 
 /**
  * Halterangaben. Sie erscheinen nur auf dem Hundesitter-Blatt und dem

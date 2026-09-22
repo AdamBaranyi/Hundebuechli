@@ -7,6 +7,7 @@ import * as SystemUI from 'expo-system-ui';
 import { useCallback, useEffect, useState } from 'react';
 
 import { DatabaseProvider } from '@/db/DatabaseProvider';
+import { LiveRegion } from '@/ui/LiveRegion';
 import { createQueryClient } from '@/db/query-client';
 import { usePalette } from '@/ui/theme';
 import { fontFiles } from '@/ui/tokens';
@@ -35,7 +36,15 @@ export default function RootLayout() {
         <StatusBar style="auto" />
         <Stack
           screenOptions={{ headerShown: false, contentStyle: { backgroundColor: palette.pebble } }}
-        />
+        >
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="welcome" />
+          <Stack.Screen name="new-dog" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="edit-dog/[id]" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="new-entry" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="edit-entry/[id]" options={{ presentation: 'modal' }} />
+        </Stack>
+        <LiveRegion />
       </DatabaseProvider>
     </QueryClientProvider>
   );

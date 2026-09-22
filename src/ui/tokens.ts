@@ -15,6 +15,8 @@ export const colors = {
     carmine: '#B3223F', // Karmin: Marke, «fällig», «überfällig»
     onGraphite: '#FFFFFF', // Schrift auf Graphit
     pressed: '#E6E9E4', // Gedrückt
+    glass: 'rgba(255, 255, 255, 0.9)', // Glas der eigenen Tab-Leiste im Browser
+    glassEdge: 'rgba(29, 36, 32, 0.08)',
   },
   dark: {
     pebble: '#000000',
@@ -26,6 +28,8 @@ export const colors = {
     carmine: '#F76E82',
     onGraphite: '#000000',
     pressed: '#2A2D2A',
+    glass: 'rgba(28, 30, 28, 0.92)',
+    glassEdge: 'rgba(241, 243, 239, 0.1)',
   },
 } as const;
 

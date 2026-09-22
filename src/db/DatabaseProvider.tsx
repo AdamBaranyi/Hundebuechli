@@ -3,7 +3,8 @@ import { createContext, type ReactNode, useContext, useEffect, useState } from '
 import { openDatabase } from './client';
 import type { Db } from './types';
 
-const DatabaseContext = createContext<Db | null>(null);
+/** Nur für Tests direkt zu verwenden; die App nimmt DatabaseProvider. */
+export const DatabaseContext = createContext<Db | null>(null);
 
 type State = { db: Db } | { error: unknown } | null;
 

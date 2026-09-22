@@ -34,14 +34,7 @@ export function StampField({ id, state, label, stampText, onPress }: Props) {
       onPress={onPress}
       style={({ pressed }) => [styles.field, { opacity: pressed ? 0.8 : 1 }]}
     >
-      <Svg
-        width={touch.stamp}
-        height={touch.stamp}
-        viewBox="0 0 56 56"
-        aria-hidden
-        accessibilityElementsHidden
-        importantForAccessibility="no-hide-descendants"
-      >
+      <Svg width={touch.stamp} height={touch.stamp} viewBox="0 0 56 56" aria-hidden>
         {state === 'done' ? (
           <G rotation={stampAngle(id)} origin="28, 28">
             <Circle

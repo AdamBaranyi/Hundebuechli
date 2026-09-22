@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '@/domain/zod';
 
 /**
  * Tage sind lokale Kalenderdaten ohne Zeitzone: «2026-09-22». Die Prüfung
