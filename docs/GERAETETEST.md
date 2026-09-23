@@ -39,10 +39,15 @@ braucht kein Netz.
 | 1.9 | «Eintrag hinzufügen»: Entwurmung, Produkt, «Datum wählen» in 3 Tagen; Sichern | Im Profil «Das Jahr in Stempeln»; unter «Als Nächstes» bei «Diese Woche» | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Eintrag angelegt, nächstes Datum 23.12. bei drei Monaten Wiederholung (Adam) |
 | 1.10 | Unter «Als Nächstes» aufs gestrichelte Stempelfeld tippen | Stempel mit heutigem Datum, Zeile bleibt stehen; VoiceOver sagt «… erledigt.» | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Stempel von heute steht drin (Adam) |
 | 1.11 | **Expo Go ganz schliessen, neu öffnen** (Flugmodus weiter an) | Hund, Foto und Einträge sind da | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Alles noch da. WLAN war nötig, weil Expo Go das Bündel vom Mac lädt (Adam) |
-| 1.12 | Grösster Text (wie 0.4), dann Formular und «Als Nächstes» | Alles bricht um, nichts abgeschnitten, alles erreichbar | | | |
-| 1.13 | Dunkel (wie 0.3) | Alles lesbar, Karmin nur bei fällig | | | |
-| 1.14 | VoiceOver im Formular | Felder mit Namen, «Kastriert, Schalter, aus», Kacheln als Auswahl | | | |
-| 1.15 | Hund löschen: Profil, «Löschen» | Rückfrage nennt Einträge und Fotos; danach Liste ohne den Hund | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Rückfrage erscheint (Adam); was danach in der Liste steht, ist noch offen |
+| 1.12 | Grösster Text (wie 0.4), dann Formular und «Als Nächstes» | Alles bricht um, nichts abgeschnitten, alles erreichbar | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | In Ordnung (Adam, zusammenfassend: «alles funktioniert perfekt») |
+| 1.13 | Dunkel (wie 0.3) | Alles lesbar, Karmin nur bei fällig | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | In Ordnung (Adam, zusammenfassend) |
+| 1.14 | VoiceOver im Formular | Felder mit Namen, «Kastriert, Schalter, aus», Kacheln als Auswahl | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | In Ordnung (Adam, zusammenfassend) |
+| 1.15 | Hund löschen: Profil, «Löschen» | Rückfrage nennt Einträge und Fotos; danach Liste ohne den Hund | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Rückfrage erscheint, Löschen führt zur Liste ohne den Hund (Adam) |
+
+**Runde 1 ist durch.** Die Schritte 1.12 bis 1.14 hat Adam zusammenfassend als in Ordnung
+gemeldet, nicht Punkt für Punkt; grösste Schrift, dunkel und VoiceOver kommen in Runde 2 mit den
+Bildschirmen von Tag 3 erneut dran. Die Schritte 0.3 bis 0.6 aus Runde 0 sind damit ebenfalls
+abgedeckt, aber nicht einzeln protokolliert.
 
 **Zur Offline-Prüfung:** Expo Go lädt das Bündel bei jedem Start vom Mac; ohne WLAN startet es
 darum nicht. Was offline läuft, zeigt sich am Flugmodus während der Benutzung und an der APK

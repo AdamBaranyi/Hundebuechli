@@ -4,7 +4,7 @@ Hundebüechli (Swiss German for the little booklet every dog in Switzerland has)
 dog care app: health records, reminders, weight, documents and shareable PDFs for the vet, the dog
 sitter and a lost-dog poster.
 
-**Status:** in development, day 2 of 5. Dogs with profile and photo (re-encoded, location data
+**Status:** in development, day 2 of 5, tested on an iPhone. Dogs with profile and photo (re-encoded, location data
 removed and checked), health entries with due dates, and the "Up next" overview where one tap stamps
 an entry as done. Notifications, medication, weight, diary, documents and PDFs follow; nothing here is
 presented as working before it is tested.
