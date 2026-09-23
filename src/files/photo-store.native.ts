@@ -30,4 +30,8 @@ export const photoStore: PhotoStore = {
     const file = new File(Paths.document, path);
     if (file.exists) file.delete();
   },
+  async readBase64(path) {
+    assertPhotoPath(path);
+    return new File(Paths.document, path).base64();
+  },
 };

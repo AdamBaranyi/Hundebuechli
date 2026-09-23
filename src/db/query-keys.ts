@@ -24,4 +24,5 @@ export const queryKeys = {
   weights: ['weights'] as const,
   weightsOfDog: (dogId: string) => ['weights', 'dog', dogId] as const,
   settings: ['settings'] as const,
+  owner: ['owner'] as const,
 };

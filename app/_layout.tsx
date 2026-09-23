@@ -49,6 +49,7 @@ export default function RootLayout() {
           <Stack.Screen name="new-weight" options={{ presentation: 'modal' }} />
           <Stack.Screen name="new-diary" options={{ presentation: 'modal' }} />
           <Stack.Screen name="edit-diary/[id]" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="pdf/[id]" options={{ presentation: 'modal' }} />
           <Stack.Screen name="edit-entry/[id]" options={{ presentation: 'modal' }} />
         </Stack>
         <NotificationHub />

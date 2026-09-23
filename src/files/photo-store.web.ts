@@ -23,4 +23,8 @@ export const photoStore: PhotoStore = {
     assertPhotoPath(path);
     images.delete(path);
   },
+  async readBase64(path) {
+    assertPhotoPath(path);
+    return (images.get(path) ?? '').replace(/^data:image\/jpeg;base64,/, '');
+  },
 };

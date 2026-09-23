@@ -5,6 +5,7 @@ import { Linking, Pressable, StyleSheet, View } from 'react-native';
 import { dogsText } from '@/content/dogs';
 import { diaryText } from '@/content/diary';
 import { medicationsText } from '@/content/medications';
+import { pdfText } from '@/content/pdf';
 import { weightsText } from '@/content/weights';
 import { formatAge, formatLocal } from '@/content/format';
 import { chipCountryCode, formatChipNumber } from '@/domain/chip';
@@ -209,6 +210,20 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
         icon="plus"
         onPress={() => router.push({ pathname: '/new-entry', params: { dogId: data.id } })}
       />
+      <View style={{ gap: space.s3 }}>
+        <SectionTitle>{pdfText.section}</SectionTitle>
+        <Sheet>
+          {(['vet', 'sitter', 'poster'] as const).map((kind) => (
+            <Row
+              key={kind}
+              icon={kind === 'poster' ? 'alert' : 'document'}
+              title={pdfText.kinds[kind]}
+              secondary={pdfText.kindHints[kind]}
+              onPress={() => router.push({ pathname: '/pdf/[id]', params: { id: data.id, kind } })}
+            />
+          ))}
+        </Sheet>
+      </View>
       <DogActions dog={data} />
     </Screen>
   );

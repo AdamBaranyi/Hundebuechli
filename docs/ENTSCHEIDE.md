@@ -282,3 +282,21 @@ Eintrag. Im neuen Formular sagt ein ruhiger Hinweis, dass Fotos nach dem Sichern
 abends nicht» nicht aufschreiben, und die Kategorie (Appetit, Verdauung, Haut und Fell, Bewegung,
 Verhalten, Sonstiges) macht das PDF für die Praxis an Tag 4 lesbar. Beide Felder sind gesetzt,
 wenn der Eintrag entsteht: Datum heute, Uhrzeit jetzt.
+
+**E-56 · PDF-Vorlagen als reine Funktionen, Daten vorher fertig formatiert.** `collect.ts` liest aus
+der Datenbank und formatiert Daten, Gewichte und Uhrzeiten; `templates.ts` setzt nur zusammen und
+maskiert jede Zeichenkette. So prüfen Jest-Tests die Vorlagen ohne Gerät: feindselige Eingaben
+erscheinen als Text, es gibt keine Adresse nach aussen, A4 ist gesetzt, nichts steht unter 12 pt.
+Fotos kommen nur über `imageSource` hinein, das ausschliesslich Base64-JPEG zulässt.
+
+**E-57 · Gestaltet wird im PDF nur über Klassen.** Die Web-Vorschau sperrt style-Attribute per CSP
+(`style-src-attr 'none'`), und der Druck im Browser nutzt dieselbe Vorlage. Ein Test hält das fest.
+
+**E-58 · Im Browser öffnet «Teilen» den Druckdialog.** `printToFileAsync` von expo-print druckt im
+Browser nur die aktuelle Seite. Die Vorlage öffnet sich darum in einem eigenen Fenster mit dem
+Druckdialog; dort lässt sie sich als PDF sichern. Die Vorschau sagt das neben dem Knopf. Auf dem
+Gerät entsteht das PDF mit expo-print unter einem lesbaren Namen und geht über das Teilen-Blatt.
+
+**E-59 · Die Schrift steckt im PDF.** Atkinson Hyperlegible Next (normal und fett) wird als Base64
+eingebettet; unter iOS kann expo-print keine lokalen Dateien laden. Scheitert das Laden, nimmt das
+PDF die Systemschrift statt gar nicht zu entstehen.

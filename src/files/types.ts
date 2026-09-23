@@ -6,6 +6,8 @@ export type PhotoStore = {
   uri: (path: string) => string;
   /** Löscht eine Datei; fehlt sie, ist das kein Fehler. */
   remove: (path: string) => Promise<void>;
+  /** Der Inhalt als Base64 – für PDFs, die unter iOS keine Dateien laden dürfen. */
+  readBase64: (path: string) => Promise<string>;
 };
 
 /** Nur so sehen Pfade aus, die die App selbst angelegt hat. */
