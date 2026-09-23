@@ -43,8 +43,12 @@ export function cspViolations(page: Page): Promise<string[]> {
 }
 
 /** Öffnet einen Bildschirm und wartet, bis App, Datenbank und Schrift bereit sind. */
-export async function openScreen(page: Page, path: string) {
-  await page.goto(path);
+/**
+ * Öffnet die Vorschau leer: Ohne `leer` startet sie mit den Beispielhunden,
+ * die Tests beginnen aber beim Erststart.
+ */
+export async function openScreen(page: Page, path: string, { demo = false } = {}) {
+  await page.goto(demo ? path : `${path}${path.includes('?') ? '&' : '?'}leer`);
   await page.getByRole('heading', { level: 1 }).first().waitFor();
   await page.evaluate(() => document.fonts.ready);
 }

@@ -325,7 +325,7 @@ neben der Vorschau (gleicher Ursprung); fürs PDF liest ein Canvas es aus – oh
 Lint-Regel sperrt. Die beiden CC0-Fotos sind quadratisch zugeschnitten und ohne Metadaten im
 Repository (`assets/demo/`, Quellen in `QUELLEN.md`).
 
-**E-64 · Die Web-Vorschau startet an Tag 5 mit Beispieldaten.** Der Auftrag will, dass die Vorschau
+**E-64 · Die Web-Vorschau startet an Tag 5 mit Beispieldaten.** (Umgesetzt, siehe E-71.) Der Auftrag will, dass die Vorschau
 immer mit Beispieldaten beginnt. Das hängt mit «Web-Vorschau fertig» an Tag 5 zusammen, samt
 einem Weg, wie die Browsertests weiter mit dem leeren Erststart beginnen. Bis dahin gibt es den
 Knopf «Mit Beispieldaten starten» auf Gerät und Web.
@@ -362,3 +362,9 @@ reproduzierbar auf: iPhone-Hochformat in dreifacher Auflösung, hell, mit den Be
 und WebP in `docs/bilder/`. Die Uhr läuft ab 09:30 weiter (`clock.install`): Mit stehender Uhr
 bliebe die Stempel-Bewegung bei Deckkraft null stehen. Aufnahmen vom iPhone selbst kommen dazu,
 sobald es ohne Entwicklermodus läuft.
+
+**E-71 · Die Web-Vorschau startet mit Bäri und Mila; `?leer` startet leer.** Wer die Vorschau von
+der Website aus öffnet, sieht sofort eine gefüllte App statt eines leeren Erststarts. Die
+Beispieldaten entstehen beim Öffnen der Datenbank im Arbeitsspeicher, wie alles in der Vorschau;
+nichts landet im Browser. Die Browsertests hängen `?leer` an die Adresse und beginnen weiter beim
+Erststart; ein eigener Test prüft den Start mit Beispieldaten samt axe und leerem Browserspeicher.
