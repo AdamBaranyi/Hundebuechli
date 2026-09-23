@@ -64,6 +64,7 @@ updates:
       - dependency-name: 'expo-image-manipulator'
       - dependency-name: 'expo-image-picker'
       - dependency-name: 'expo-linking'
+      - dependency-name: 'expo-notifications'
       - dependency-name: 'expo-router'
       - dependency-name: 'expo-splash-screen'
       - dependency-name: 'expo-sqlite'

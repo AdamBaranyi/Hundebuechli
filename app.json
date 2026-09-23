@@ -31,6 +31,14 @@
       "expo-router",
       "expo-sqlite",
       [
+        "expo-notifications",
+        {
+          "color": "#B3223F",
+          "defaultChannel": "dates",
+          "enableBackgroundRemoteNotifications": false
+        }
+      ],
+      [
         "expo-image-picker",
         {
           "photosPermission": "Hundebüechli braucht Zugriff auf deine Fotos, damit du ein Bild deines Hundes oder eines Dokuments auswählen kannst. Das Bild bleibt auf deinem Gerät.",
