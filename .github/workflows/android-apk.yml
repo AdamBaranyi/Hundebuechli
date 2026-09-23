@@ -37,11 +37,11 @@ jobs:
         with:
           bun-version: ${{ env.BUN_VERSION }}
 
+      # Ohne Gradle-Cache: Die Gradle-Dateien entstehen erst mit expo prebuild.
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 17
-          cache: gradle
 
       - run: bun install --frozen-lockfile
 
