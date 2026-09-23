@@ -184,3 +184,10 @@ half dort nicht. Jeder Bildschirm ohne Leiste nimmt den oberen Rand nun aus
 `useSafeAreaInsets`, unten kommt der Platz für die schwebende Tab-Leiste dazu. Nur unter einer
 Navigationsleiste rechnet weiter das System; ein Blatt von unten beginnt unter iOS ohnehin unter der
 Statusleiste.
+
+**E-39 · Metadaten herausschneiden statt das Foto ablehnen.** Fast jedes Foto vom iPhone trägt einen
+Standort, und `expo-image-manipulator` gab das Bild auf dem Gerät mit EXIF zurück: Die App lehnte
+darum jedes Foto ab (Gerätetest 23.09.2026). Jetzt fallen nach dem Neukodieren alle beschreibenden
+Segmente weg (alle APPn ausser JFIF und Farbprofil, dazu Kommentare); die Prüfung auf EXIF, XMP und
+IPTC bleibt als letzte Sperre davor, etwas zu speichern. Bilddaten und Drehung ändern sich dabei
+nicht.

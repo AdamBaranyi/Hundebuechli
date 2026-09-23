@@ -48,7 +48,7 @@ export const dogsText = {
     label: (name: string) => `Foto von ${name}`,
     busy: 'Foto wird vorbereitet …',
     unsafe:
-      'Das Foto enthält noch Standortdaten und wird darum nicht gespeichert. Versuch es mit einem anderen Foto.',
+      'Dieses Foto liess sich nicht von seinen Standortdaten befreien und wird darum nicht gespeichert. Versuch es mit einem anderen Foto.',
     failed: 'Das Foto liess sich nicht übernehmen. Versuch es nochmals.',
     denied:
       'Die App darf die Kamera nicht benutzen. Du kannst ein Foto wählen oder die Kamera in den Einstellungen des Geräts erlauben.',

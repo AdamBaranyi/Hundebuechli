@@ -47,8 +47,21 @@ test('Foto wählen: gespeichert wird es ohne Standortdaten', async ({ page, base
   await page.getByRole('button', { name: 'Foto wählen' }).click();
   await (await chooser).setFiles(join(FIXTURES, 'mit-gps.jpg'));
   // react-native-web beschriftet das Bild doppelt: Rahmen und <img>.
-  await expect(page.getByRole('img', { name: 'Foto von Mila' }).first()).toBeVisible();
+  const photo = page.getByRole('img', { name: 'Foto von Mila' }).first();
+  await expect(photo).toBeVisible();
   await expect(page.getByRole('button', { name: 'Foto ersetzen' })).toBeVisible();
+
+  // Was gespeichert wurde, steckt im Bild selbst: ein JPEG ohne EXIF.
+  const source = await photo.evaluate((node) => {
+    const image = node instanceof HTMLImageElement ? node : node.querySelector('img');
+    if (image) return image.src;
+    return getComputedStyle(node).backgroundImage.replace(/^url\("?|"?\)$/g, '');
+  });
+  expect(source.startsWith('data:image/jpeg;base64,')).toBe(true);
+  const stored = Buffer.from(source.split(',')[1] ?? '', 'base64');
+  expect([...stored.subarray(0, 2)]).toEqual([0xff, 0xd8]);
+  expect(stored.includes('Exif')).toBe(false);
+  expect(stored.includes('http://ns.adobe.com/xap/1.0/')).toBe(false);
   expect(seen.errors).toEqual([]);
 });
 

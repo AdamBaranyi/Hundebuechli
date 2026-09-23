@@ -83,10 +83,16 @@ die Auswahl aus den Fotos braucht unter iOS keine Erlaubnis. Benachrichtigungen 
 Ziel: Die Release-APK verlangt nicht einmal `INTERNET`; die CI prüft die Berechtigungen in der
 fertigen APK (Tag 5).
 
-**Fotos ohne Standort:** Jedes Foto wird verkleinert und als JPEG neu kodiert; danach prüft
-`src/domain/jpeg-metadata.ts` auf EXIF und XMP (beide können GPS tragen). Findet es welche, wird
-nichts gespeichert. Die Testbilder mit GPS sind mit ImageIO von Apple gegengeprüft. Gelöscht wird
-nur, was nach einem selbst angelegten Pfad aussieht (`photos/<uuid>.jpg`).
+**Fotos ohne Standort:** Jedes Foto wird verkleinert und als JPEG neu kodiert. Danach schneidet
+`stripMetadata` in `src/domain/jpeg-metadata.ts` alle beschreibenden Segmente heraus – alle APPn
+ausser JFIF und Farbprofil sowie Kommentare –, denn EXIF (APP1), XMP (APP1) und IPTC (APP13) können
+einen Standort tragen. Die Bilddaten bleiben Byte für Byte gleich; die Drehung steckt nach dem
+Neukodieren in den Bildpunkten. Erst danach prüft `isSafeToStore`; findet es noch Metadaten, wird
+nichts gespeichert. Das Neukodieren allein genügt nicht: Auf dem iPhone kam das Foto mit EXIF aus
+`expo-image-manipulator` zurück und wurde abgelehnt (Gerätetest 23.09.2026); fast jedes Foto vom
+iPhone trägt einen Standort. Die Testbilder mit GPS sind mit ImageIO von Apple gegengeprüft, und der
+Playwright-Test liest das gespeicherte Bild aus der Seite und sucht darin nach «Exif» und XMP.
+Gelöscht wird nur, was nach einem selbst angelegten Pfad aussieht (`photos/<uuid>.jpg`).
 
 ## Daten auf dem Gerät
 

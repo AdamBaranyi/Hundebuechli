@@ -16,7 +16,7 @@ type Problem = 'unsafe' | 'failed' | 'denied' | null;
 
 /**
  * Das Foto des Hundes – das einzige Bild der App. Aufnehmen oder wählen;
- * gespeichert wird es erst nach der Prüfung auf Standortdaten. Im Browser
+ * gespeichert wird es ohne Metadaten und erst nach der Prüfung. Im Browser
  * wird die Kamera zur Dateiauswahl, darum gibt es dort nur «Foto wählen».
  */
 export function DogPhotoPanel({ dog }: { dog: DogWithPhoto }) {

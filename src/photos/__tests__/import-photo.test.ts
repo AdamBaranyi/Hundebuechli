@@ -4,6 +4,8 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+import { inspectJpeg } from '@/domain/jpeg-metadata';
+
 import { importPhoto, type PhotoDeps, resizeTarget, UnsafePhotoError } from '../import-photo';
 
 const fixtureBase64 = (name: string) =>
@@ -43,13 +45,27 @@ describe('Foto importieren', () => {
   });
 
   it.each(['mit-gps.jpg', 'mit-xmp.jpg'])(
-    'verwirft %s nach dem Neukodieren und speichert nichts',
+    'schneidet die Metadaten aus %s und speichert erst dann',
     async (name) => {
       const { deps, saved } = fakeDeps(fixtureBase64(name));
-      await expect(importPhoto(PICKED, deps)).rejects.toBeInstanceOf(UnsafePhotoError);
-      expect(saved).toEqual([]);
+      await importPhoto(PICKED, deps);
+      expect(saved).toHaveLength(1);
+      expect(inspectJpeg(saved[0] ?? new Uint8Array())).toEqual({
+        isJpeg: true,
+        metadata: [],
+        malformed: false,
+      });
     },
   );
+
+  it('speichert nichts, wenn das Foto kein sauberes JPEG wird', async () => {
+    const cut = readFileSync(join(__dirname, '..', '..', 'domain', '__fixtures__', 'mit-gps.jpg'))
+      .subarray(0, 40)
+      .toString('base64');
+    const { deps, saved } = fakeDeps(cut);
+    await expect(importPhoto(PICKED, deps)).rejects.toBeInstanceOf(UnsafePhotoError);
+    expect(saved).toEqual([]);
+  });
 
   it('verkleinert auf höchstens 1200 Pixel an der längsten Seite', async () => {
     const { deps, reencode } = fakeDeps(fixtureBase64('ohne-exif.jpg'));
