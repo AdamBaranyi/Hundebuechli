@@ -128,6 +128,19 @@ describe('Plan der Benachrichtigungen', () => {
     expect(planned.some((entry) => entry.id === 'due:e1:2026-09-30')).toBe(true);
   });
 
+  it('rückt eine Gabe in der Sprungstunde der Sommerzeit nach vorne, statt sie auszulassen', () => {
+    const planned = plan({
+      now: '2027-03-27T20:00',
+      medications: [medication({ times: [150], startDate: '2027-03-01' })],
+    });
+    const night = planned.find((entry) => entry.at === '2027-03-28T02:30');
+    expect(night).toBeDefined();
+    // Europe/Zurich springt am 28.03.2027 von 02:00 auf 03:00: 02:30 gibt es nicht.
+    const moment = toDate(night?.at ?? '');
+    expect(moment.toISOString()).toBe('2027-03-28T01:30:00.000Z');
+    expect(moment.getHours()).toBe(3);
+  });
+
   it('bleibt bei der Zeitumstellung acht Uhr morgens', () => {
     const planned = plan({
       now: '2026-10-20T09:00',

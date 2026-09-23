@@ -1,4 +1,4 @@
-import { createDog, setDogArchived } from '@/db/repositories/dogs';
+import { createDog, deleteDog, setDogArchived } from '@/db/repositories/dogs';
 import { createHealthEntry } from '@/db/repositories/health';
 import { createMedication, logDose } from '@/db/repositories/medications';
 import { updateSettings } from '@/db/repositories/settings';
@@ -131,6 +131,30 @@ describe('Abgleich mit dem Gerät', () => {
     expect(state.size).toBeGreaterThan(0);
 
     setDogArchived(db, dogId, true);
+    await syncNotifications(db, port, NOW);
+
+    expect(state.size).toBe(0);
+  });
+
+  it('lässt nach dem Löschen eines Hundes keine Benachrichtigung zurück', async () => {
+    createHealthEntry(db, {
+      dogId,
+      kind: 'vaccination',
+      date: '2026-01-02',
+      nextDueDate: '2026-10-02',
+    });
+    createMedication(db, {
+      dogId,
+      name: 'Apoquel',
+      dose: '1 Tablette',
+      times: [480, 1080],
+      startDate: '2026-09-01',
+    });
+    const { port, state } = fakePort();
+    await syncNotifications(db, port, NOW);
+    expect(state.size).toBeGreaterThan(0);
+
+    deleteDog(db, dogId);
     await syncNotifications(db, port, NOW);
 
     expect(state.size).toBe(0);

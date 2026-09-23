@@ -5,7 +5,8 @@ name: Android-APK
 # Von Hand gestartet (workflow_dispatch) entsteht eine Probe-APK mit dem
 # Debug-Schlüssel der Vorlage, nur als Artefakt – zum Prüfen, nie zum Verteilen.
 # Beide Wege prüfen die Berechtigungen der fertigen APK gegen
-# scripts/android-permissions.txt.
+# scripts/android-permissions.txt. Gebaut wird nur für ARM – echte Handys;
+# x86 bräuchten nur Emulatoren.
 
 on:
   push:
@@ -71,6 +72,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: >
           ./gradlew assembleRelease --no-daemon
+          -PreactNativeArchitectures=arm64-v8a,armeabi-v7a
           -Pandroid.injected.signing.store.file="$RUNNER_TEMP/release.keystore"
           -Pandroid.injected.signing.store.password="$STORE_PASSWORD"
           -Pandroid.injected.signing.key.alias="$KEY_ALIAS"
@@ -79,7 +81,7 @@ jobs:
       - name: Probe-APK bauen (Debug-Schlüssel der Vorlage)
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         working-directory: android
-        run: ./gradlew assembleRelease --no-daemon
+        run: ./gradlew assembleRelease --no-daemon -PreactNativeArchitectures=arm64-v8a,armeabi-v7a
 
       - name: Berechtigungen der fertigen APK prüfen
         run: node scripts/apk-permissions.mjs android/app/build/outputs/apk/release/app-release.apk

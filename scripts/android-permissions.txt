@@ -6,10 +6,11 @@
 android.permission.CAMERA
 
 # Erinnerungen: anzeigen (ab Android 13), nach einem Neustart wieder planen,
-# zur Minute auslösen, dabei vibrieren und das Gerät kurz wecken.
+# dabei vibrieren und das Gerät kurz wecken. Push über Firebase und Zähler am
+# App-Symbol bringt expo-notifications mit; die App nutzt beides nicht, app.json
+# sperrt es.
 android.permission.POST_NOTIFICATIONS
 android.permission.RECEIVE_BOOT_COMPLETED
-android.permission.SCHEDULE_EXACT_ALARM
 android.permission.VIBRATE
 android.permission.WAKE_LOCK
 
