@@ -21,7 +21,7 @@ type Props = {
 /** Blatt von unten: «Abbrechen» links, Titel in der Mitte, «Sichern» am Schluss. */
 export function FormScreen(props: Props) {
   return (
-    <Screen>
+    <Screen inModal>
       <View style={styles.header}>
         <View style={styles.side}>
           <Button label={props.cancelLabel} variant="text" onPress={props.onCancel} />

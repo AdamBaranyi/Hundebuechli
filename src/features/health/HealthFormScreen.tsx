@@ -44,14 +44,14 @@ export function HealthFormScreen({ entryId, dogId, kind }: Props) {
 
   if (dogs.isPending || (entryId && existing.isPending)) {
     return (
-      <Screen>
+      <Screen inModal>
         <LoadingState />
       </Screen>
     );
   }
   if (entryId && !existing.data) {
     return (
-      <Screen>
+      <Screen inModal>
         <EmptyState
           title={healthText.notFound}
           heading={1}

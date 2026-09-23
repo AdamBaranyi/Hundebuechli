@@ -28,14 +28,14 @@ export function DogFormScreen({ dogId }: { dogId: string | null }) {
   const existing = useDog(dogId);
   if (dogId && existing.isPending) {
     return (
-      <Screen>
+      <Screen inModal>
         <LoadingState />
       </Screen>
     );
   }
   if (dogId && !existing.data) {
     return (
-      <Screen>
+      <Screen inModal>
         <EmptyState
           title={dogsText.notFound}
           heading={1}

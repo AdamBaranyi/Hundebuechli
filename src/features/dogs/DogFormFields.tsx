@@ -4,6 +4,7 @@ import { dogsText } from '@/content/dogs';
 import { chipCountryCode, isValidChipNumber, normalizeChipNumber } from '@/domain/chip';
 import { AppText } from '@/ui/AppText';
 import { ChoiceChips } from '@/ui/ChoiceChips';
+import { DateField } from '@/ui/DateField';
 import { SectionTitle } from '@/ui/SectionTitle';
 import { SwitchRow } from '@/ui/SwitchRow';
 import { TextField } from '@/ui/TextField';
@@ -62,14 +63,14 @@ export function DogFormFields({ form, errors, onChange }: Props) {
           value={form.neutered}
           onChange={(value) => onChange('neutered', value)}
         />
+        <DateField label={f.birthDate} hint={f.birthDateHint} {...text('birthDate')} />
         <TextField
-          label={f.birthDate}
-          hint={f.birthDateHint}
+          label={f.birthYear}
           inputMode="numeric"
-          keyboardType="numbers-and-punctuation"
-          {...text('birthDate')}
+          keyboardType="number-pad"
+          maxLength={4}
+          {...text('birthYear')}
         />
-        <TextField label={f.birthYear} inputMode="numeric" maxLength={4} {...text('birthYear')} />
         <TextField label={f.colorMarkings} {...text('colorMarkings')} />
       </Section>
       <Section title={dogsText.sections.chip}>
@@ -87,13 +88,23 @@ export function DogFormFields({ form, errors, onChange }: Props) {
       </Section>
       <Section title={dogsText.sections.vet}>
         <TextField label={f.vetName} {...text('vetName')} />
-        <TextField label={f.vetPhone} inputMode="tel" {...text('vetPhone')} />
+        <TextField
+          label={f.vetPhone}
+          inputMode="tel"
+          keyboardType="phone-pad"
+          {...text('vetPhone')}
+        />
         <TextField label={f.vetAddress} multiline {...text('vetAddress')} />
       </Section>
       <Section title={dogsText.sections.insurance}>
         <TextField label={f.insuranceName} {...text('insuranceName')} />
         <TextField label={f.insurancePolicy} {...text('insurancePolicy')} />
-        <TextField label={f.insurancePhone} inputMode="tel" {...text('insurancePhone')} />
+        <TextField
+          label={f.insurancePhone}
+          inputMode="tel"
+          keyboardType="phone-pad"
+          {...text('insurancePhone')}
+        />
       </Section>
       <Section title={dogsText.sections.care}>
         <TextField label={f.food} multiline {...text('food')} />

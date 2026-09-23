@@ -7,6 +7,7 @@ import type { LocalDate } from '@/domain/local-date';
 import { AppText } from '@/ui/AppText';
 import { ChoiceChips } from '@/ui/ChoiceChips';
 import { ChoiceTiles } from '@/ui/ChoiceTiles';
+import { DateField } from '@/ui/DateField';
 import { DogChooser, type DogOption } from '@/ui/DogChooser';
 import { usePalette } from '@/ui/theme';
 import { TextField } from '@/ui/TextField';
@@ -103,10 +104,9 @@ export function HealthFormFields({ form, errors, dogs, recent, today, onChange }
           onSelect={(choice) => onChange('dateChoice', choice)}
         />
         {form.dateChoice === 'other' ? (
-          <TextField
+          <DateField
             label={f.otherDate}
             hint={formatLocal.input(today)}
-            inputMode="numeric"
             value={form.dateText}
             onChangeText={(value) => onChange('dateText', value)}
             error={errors.date ?? null}
@@ -137,10 +137,9 @@ export function HealthFormFields({ form, errors, dogs, recent, today, onChange }
           onSelect={(choice) => onChange('dueChoice', choice)}
         />
         {form.dueChoice === 'date' ? (
-          <TextField
+          <DateField
             label={f.nextDueDate}
             hint={formatLocal.input(today)}
-            inputMode="numeric"
             value={form.dueText}
             onChangeText={(value) => onChange('dueText', value)}
             error={errors.due ?? null}

@@ -28,9 +28,9 @@ braucht kein Netz.
 
 | Nr. | Schritt | Erwartet | Datum | Gerät, iOS | Beobachtet |
 |---|---|---|---|---|---|
-| 1.1 | Erststart: «Ersten Hund anlegen» | Formular «Neuer Hund» als Blatt von unten | | | |
+| 1.1 | Erststart: «Ersten Hund anlegen» | Formular «Neuer Hund» als Blatt von unten | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Blatt von unten kam, alle Felder ausfüllbar (Adam) |
 | 1.2 | Sichern ohne Name | Satz «Gib deinem Hund einen Namen.» unter dem Feld, VoiceOver liest ihn | | | |
-| 1.3 | Name, Rasse, «Rüde», Chipnummer «756 0981 2345 6789», Praxis mit Telefon; Sichern | Profil mit Name gross; «Chipnummer aus der Schweiz» | | | |
+| 1.3 | Name, Rasse, «Rüde», Chipnummer «756 0981 2345 6789», Praxis mit Telefon; Sichern | Profil mit Name gross; «Chipnummer aus der Schweiz» | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Datum war zuerst nicht einzugeben: Der Ziffernblock des iPhones hat keinen Punkt, darum liess sich nicht sichern (Adam). Behoben mit E-37; danach gesichert, das Profil zeigt den Hund |
 | 1.4 | Tab-Leiste unten ansehen | Drei Einträge, Beschriftung gross (16 pt), nichts abgeschnitten, Liquid Glass | | | |
 | 1.5 | «Foto aufnehmen» | Frage nach der Kamera erst jetzt; Foto erscheint, hochkant richtig gedreht | | | |
 | 1.6 | «Foto ersetzen» aus den Fotos | Neues Foto erscheint | | | |
@@ -43,3 +43,10 @@ braucht kein Netz.
 | 1.13 | Dunkel (wie 0.3) | Alles lesbar, Karmin nur bei fällig | | | |
 | 1.14 | VoiceOver im Formular | Felder mit Namen, «Kastriert, Schalter, aus», Kacheln als Auswahl | | | |
 | 1.15 | Hund löschen: Profil, «Löschen» | Rückfrage nennt Einträge und Fotos; danach Liste ohne den Hund | | | |
+
+**Befunde aus Runde 1 (23.09.2026, iPhone 17 Pro Max, iOS 27), behoben:**
+
+- Der Ziffernblock des iPhones hat keinen Punkt: «29.05.2022» war nicht einzugeben und ohne gültiges
+  Datum liess sich nichts sichern. Das Feld setzt die Punkte jetzt selbst (E-37).
+- Auf «Hunde» stand die Überschrift unter Uhr und Akku. Bildschirme ohne Navigationsleiste rechnen
+  den sicheren Rand jetzt selbst ein (E-38).

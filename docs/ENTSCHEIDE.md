@@ -172,3 +172,15 @@ Systemschrift aus dem Kreis wachsen.
 **E-36 · Zurück im Browser mit eigener Tippfläche.** Die Kopfleiste von React Navigation hat im
 Browser einen Zurück-Knopf von 30 × 30 Pixeln; im Web ersetzt ihn einer mit 48 und Beschriftung. Auf
 dem Gerät bleibt der Knopf des Systems.
+
+**E-37 · Das Datumsfeld setzt die Punkte selbst.** Auf dem iPhone zeigt ein Zahlenfeld einen
+Ziffernblock ohne Punkt: «29.05.2022» war nicht einzugeben, und ohne Datum liess sich nichts sichern
+(Gerätetest 23.09.2026). Das Feld nimmt nur Ziffern und gruppiert sie beim Tippen zu TT.MM.JJJJ;
+Löschen geht Ziffer für Ziffer. Geprüft wird weiter der Text, die Schnellwahl aus E-30 bleibt.
+
+**E-38 · Die sicheren Ränder rechnet der Bildschirm selbst.** Ohne Navigationsleiste stand die
+Überschrift unter Uhr und Akku (Gerätetest 23.09.2026): `contentInsetAdjustmentBehavior="automatic"`
+half dort nicht. Jeder Bildschirm ohne Leiste nimmt den oberen Rand nun aus
+`useSafeAreaInsets`, unten kommt der Platz für die schwebende Tab-Leiste dazu. Nur unter einer
+Navigationsleiste rechnet weiter das System; ein Blatt von unten beginnt unter iOS ohnehin unter der
+Statusleiste.

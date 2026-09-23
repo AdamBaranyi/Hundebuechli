@@ -9,28 +9,35 @@ type Props = {
   children: ReactNode;
   /** Bildschirm unter einer Navigationsleiste; der obere Rand kommt dann von ihr. */
   withHeader?: boolean;
-  /** Bildschirm in der Tab-Leiste; im Browser braucht die eigene Leiste unten Platz. */
+  /** Bildschirm in der Tab-Leiste; die Leiste schwebt über dem Inhalt. */
   inTabs?: boolean;
+  /** Blatt von unten; unter iOS beginnt es schon unter der Statusleiste. */
+  inModal?: boolean;
 };
+
+/** Platz für die Tab-Leiste, damit der letzte Eintrag nicht darunter liegt. */
+const tabBarHeight = Platform.OS === 'web' ? 96 : 64;
 
 /**
  * Ein Bildschirm: Kiesel als Grund, Seitenrand 16, Abschnitte im Abstand 32.
- * Unter iOS rechnet das System die sicheren Ränder selbst ein (auch unter den
- * nativen Tabs); unter Android und im Browser geschieht es hier.
+ * Die sicheren Ränder rechnet der Bildschirm selbst ein; nur unter einer
+ * Navigationsleiste kommt der obere Rand vom System.
  */
-export function Screen({ children, withHeader = false, inTabs = false }: Props) {
+export function Screen({ children, withHeader = false, inTabs = false, inModal = false }: Props) {
   const palette = usePalette();
   const insets = useSafeAreaInsets();
-  const ios = Platform.OS === 'ios';
-  const top = space.s3 + (ios || withHeader ? 0 : insets.top);
-  const bottom = space.s8 + (ios ? 0 : insets.bottom) + (inTabs && Platform.OS === 'web' ? 96 : 0);
+  // Ohne Navigationsleiste stand die Überschrift unter Uhr und Akku
+  // (Gerätetest 23.09.2026); ein Blatt von unten beginnt ohnehin tiefer.
+  const systemTop = withHeader || (Platform.OS === 'ios' && inModal);
+  const top = space.s3 + (systemTop ? 0 : insets.top);
+  const bottom = space.s8 + insets.bottom + (inTabs ? tabBarHeight : 0);
   return (
     <ScrollView
       role="main"
       // Im Browser scrollt dieser Bereich, nicht die Seite. Ohne Tastaturfokus
       // liesse er sich nur mit der Maus scrollen (axe: scrollable-region-focusable).
       focusable={Platform.OS === 'web'}
-      contentInsetAdjustmentBehavior="automatic"
+      contentInsetAdjustmentBehavior={systemTop ? 'automatic' : 'never'}
       keyboardShouldPersistTaps="handled"
       automaticallyAdjustKeyboardInsets
       style={[styles.scroll, { backgroundColor: palette.pebble }]}
