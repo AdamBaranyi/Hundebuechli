@@ -34,6 +34,7 @@ import { useDocuments } from '../documents/queries';
 import { useMedications } from '../medications/queries';
 import { useWeights } from '../weights/queries';
 import { DogActions } from './DogActions';
+import { DogHero } from './DogHero';
 import { DogPhotoPanel } from './DogPhotoPanel';
 import { type DogWithPhoto, useDog } from './queries';
 import { YearStamps } from './YearStamps';
@@ -112,39 +113,41 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
 
   return (
     <Screen withHeader inTabs>
-      <DogPhotoPanel dog={data} />
-      <View style={{ gap: space.s1 }}>
-        <AppText variant="display" heading={1}>
-          {data.name}
-        </AppText>
-        {subline(data, today) ? <AppText color="pencil">{subline(data, today)}</AppText> : null}
-      </View>
-      {data.archivedAt ? <Notice text={dogsText.archivedNote} /> : null}
-      {data.chipNumber || data.vetPhone ? (
-        <View style={styles.quickRow}>
-          {data.chipNumber ? (
-            <QuickAction
-              icon="copy"
-              label={dogsText.profile.copyChip}
-              value={formatChipNumber(data.chipNumber)}
-              onPress={() => void copyChip()}
-            />
-          ) : null}
-          {data.vetPhone ? (
-            <QuickAction
-              icon="phone"
-              label={dogsText.profile.callVet}
-              value={data.vetName ?? data.vetPhone}
-              onPress={() => void Linking.openURL(`tel:${data.vetPhone?.replace(/[^\d+]/g, '')}`)}
-            />
-          ) : null}
+      {data.photoUri ? null : <DogPhotoPanel dog={data} />}
+      <DogHero name={data.name} photoUri={data.photoUri}>
+        <View style={{ gap: space.s1 }}>
+          <AppText variant="display" heading={1}>
+            {data.name}
+          </AppText>
+          {subline(data, today) ? <AppText color="pencil">{subline(data, today)}</AppText> : null}
         </View>
-      ) : null}
-      {data.chipNumber && chipCountryCode(data.chipNumber) ? (
-        <AppText variant="secondary" color="pencil">
-          {dogsText.chipCountry.CH}
-        </AppText>
-      ) : null}
+        {data.archivedAt ? <Notice text={dogsText.archivedNote} /> : null}
+        {data.chipNumber || data.vetPhone ? (
+          <View style={styles.quickRow}>
+            {data.chipNumber ? (
+              <QuickAction
+                icon="copy"
+                label={dogsText.profile.copyChip}
+                value={formatChipNumber(data.chipNumber)}
+                onPress={() => void copyChip()}
+              />
+            ) : null}
+            {data.vetPhone ? (
+              <QuickAction
+                icon="phone"
+                label={dogsText.profile.callVet}
+                value={data.vetName ?? data.vetPhone}
+                onPress={() => void Linking.openURL(`tel:${data.vetPhone?.replace(/[^\d+]/g, '')}`)}
+              />
+            ) : null}
+          </View>
+        ) : null}
+        {data.chipNumber && chipCountryCode(data.chipNumber) ? (
+          <AppText variant="secondary" color="pencil">
+            {dogsText.chipCountry.CH}
+          </AppText>
+        ) : null}
+      </DogHero>
       {list.length > 0 ? (
         <View style={{ gap: space.s3 }}>
           <View>
@@ -239,6 +242,7 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
           ))}
         </Sheet>
       </View>
+      {data.photoUri ? <DogPhotoPanel dog={data} /> : null}
       <DogActions dog={data} />
     </Screen>
   );

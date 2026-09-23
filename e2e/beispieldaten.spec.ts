@@ -14,7 +14,8 @@ test('Mit Beispieldaten starten: Bäri und Mila mit einem Jahr Geschichte', asyn
   await page.getByRole('button', { name: 'Mit Beispieldaten starten' }).click();
 
   await expect(page.getByRole('heading', { level: 1, name: 'Als Nächstes' })).toBeVisible();
-  await expect(page.getByText('Beispieldaten', { exact: true })).toBeVisible();
+  // Der Streifen «Beispieldaten» gehört aufs Gerät; die Vorschau sagt es mit ihrem eigenen Hinweis.
+  await expect(page.getByText('Beispieldaten', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Überfällig' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Heute' })).toBeVisible();
   await expect(page.getByText('Apoquel 16 mg').first()).toBeVisible();

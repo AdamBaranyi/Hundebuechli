@@ -67,6 +67,9 @@ export const formatLocal = {
   input: (date: LocalDate) => date.split('-').reverse().join('.'),
   /** «13,8 kg» – Gramm als Kilogramm mit einer Nachkommastelle. */
   kilograms: (grams: number) => `${kilogram.format(grams / 1000)} kg`,
+  /** «8:04» – wie im Stempel und in «Gegeben um», ohne führende Null. */
+  shortTime: (minute: number) =>
+    `${Math.floor(minute / 60)}:${String(minute % 60).padStart(2, '0')}`,
   /** «08:00» – Minuten seit Mitternacht als Uhrzeit. */
   time: (minute: number) =>
     `${String(Math.floor(minute / 60)).padStart(2, '0')}:${String(minute % 60).padStart(2, '0')}`,

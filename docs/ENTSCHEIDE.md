@@ -337,3 +337,28 @@ in 150 ms ein; die Haptik bleibt. Das Ausblenden beim Zurücknehmen (Entwurf: 15
 bräuchte einen zweiten Zustand, der den Stempel nach dem Zurücknehmen noch zeigt, und das Risiko,
 dass ein schneller Doppeltipp etwas Falsches anzeigt, wiegt schwerer als die 150 ms. Im Browser
 keine Haptik: Die Web-Fassung von expo-haptics baut dafür versteckte Elemente ins Dokument.
+
+**E-66 · Der Streifen «Beispieldaten» nur auf dem Gerät.** In der Web-Vorschau sind alle Daten
+erfunden, und das sagt dort schon der Hinweis zur Vorschau; ein zweiter Streifen oben auf jedem
+Bildschirm wäre doppelt. Auf dem Gerät bleibt er, solange die Beispielhunde geladen sind.
+
+**E-67 · Das Hundeprofil nach dem Entwurf: Foto randlos, darüber das Blatt mit dem Namen.** Bisher
+stand das Foto mit Rand im Inhalt, darunter der Knopf «Foto ersetzen» und erst dann der Name. Jetzt
+steht das Foto randlos oben (380 Punkte hoch), das Blatt mit gerundeter Oberkante legt sich darüber
+und trägt Name, Schnellzugriffe und Chip-Hinweis. Die Knöpfe zum Foto stehen oben, solange es keines
+gibt, sonst weiter unten bei den Aktionen. Die Navigationsleiste bleibt über dem Foto statt
+durchsichtig darauf wie im Entwurf.
+
+**E-68 · Im Stempel die kurze Uhrzeit, fünf Zeichen enger gesetzt.** Wie im Entwurf steht im Stempel
+«9:30» statt «09:30», ebenso in «Gegeben um 9:30»; der Fahrplan links bleibt bei «08:00». Texte mit
+fünf Zeichen («23.9.», «18:05») setzt die SVG enger (`textLength`), damit sie im inneren Ring
+bleiben. Die Schrift bleibt 16.
+
+**E-69 · Die Tablette schräg von oben.** Ein Kreis mit Strich liest sich als Verbotszeichen, auch
+mit kurzer Kerbe. Die Tablette ist jetzt eine Scheibe mit Kante und Bruchkerbe.
+
+**E-70 · Bilder für die Website aus der Web-Vorschau.** `scripts/screens.mjs` nimmt drei Bildschirme
+reproduzierbar auf: iPhone-Hochformat in dreifacher Auflösung, hell, mit den Beispielhunden, als PNG
+und WebP in `docs/bilder/`. Die Uhr läuft ab 09:30 weiter (`clock.install`): Mit stehender Uhr
+bliebe die Stempel-Bewegung bei Deckkraft null stehen. Aufnahmen vom iPhone selbst kommen dazu,
+sobald es ohne Entwicklermodus läuft.

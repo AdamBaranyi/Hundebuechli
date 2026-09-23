@@ -24,7 +24,7 @@ export function DoseRows({ slots, nowMinute, onGive, onUndo }: Props) {
       {slots.map((slot) => {
         const given = slot.givenAt !== null;
         const time = formatLocal.time(slot.minute);
-        const givenTime = slot.givenAt ? formatLocal.time(minuteOf(slot.givenAt)) : '';
+        const givenTime = slot.givenAt ? formatLocal.shortTime(minuteOf(slot.givenAt)) : '';
         return (
           <Row
             key={slot.scheduledAt + slot.medicationId}

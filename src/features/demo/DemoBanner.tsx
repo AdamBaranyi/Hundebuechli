@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import { demoText } from '@/content/demo';
 import { AppText } from '@/ui/AppText';
@@ -9,11 +9,15 @@ import { radius, space } from '@/ui/tokens';
 
 import { useSettings } from '../settings/queries';
 
-/** Solange Beispieldaten geladen sind, sagt ein Streifen das – mit dem Weg hinaus. */
+/**
+ * Solange Beispieldaten geladen sind, sagt ein Streifen das – mit dem Weg
+ * hinaus. Nur auf dem Gerät: In der Web-Vorschau sind alle Daten erfunden,
+ * und das sagt dort schon der Hinweis zur Vorschau (E-66).
+ */
 export function DemoBanner() {
   const palette = usePalette();
   const settings = useSettings();
-  if (!settings.data?.demoLoaded) return null;
+  if (Platform.OS === 'web' || !settings.data?.demoLoaded) return null;
   return (
     <View
       role="note"

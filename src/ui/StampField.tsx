@@ -107,6 +107,9 @@ export function StampField({ id, state, label, stampText, onPress }: Props) {
               <SvgText
                 x={28}
                 y={33.5}
+                // Fünf Zeichen wie «18:05» wären breiter als der innere Ring: dann enger gesetzt.
+                textLength={(stampText ?? '').length >= 5 ? 34 : undefined}
+                lengthAdjust="spacingAndGlyphs"
                 textAnchor="middle"
                 fontSize={16}
                 fontFamily={fontFamily.extraBold}
