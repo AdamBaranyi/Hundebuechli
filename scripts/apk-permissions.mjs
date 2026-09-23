@@ -51,10 +51,14 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const found = parsePermissions(output);
   const allowedFile = join(fileURLToPath(new URL('.', import.meta.url)), 'android-permissions.txt');
   const extra = unexpected(found, parseAllowed(readFileSync(allowedFile, 'utf8')));
-  console.log(`Berechtigungen in der APK:\n${found.map((name) => `  ${name}`).join('\n')}`);
+  // Alles auf die Standardausgabe: Gemischt mit der Fehlerausgabe wäre die
+  // Reihenfolge im Protokoll des Workflows nicht mehr lesbar.
+  const list = (names) => names.map((name) => `  ${name}`).join('\n');
+  console.log(`Berechtigungen in der APK:\n${list(found)}`);
   if (extra.length > 0) {
-    console.error(`\nNicht auf der Liste:\n${extra.map((name) => `  ${name}`).join('\n')}`);
-    process.exit(1);
+    console.log(`\nNicht auf der Liste:\n${list(extra)}`);
+    process.exitCode = 1;
+  } else {
+    console.log('\nAlle auf der Liste.');
   }
-  console.log('\nAlle auf der Liste.');
 }
