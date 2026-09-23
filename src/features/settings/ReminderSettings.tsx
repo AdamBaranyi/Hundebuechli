@@ -9,7 +9,7 @@ import { AppText } from '@/ui/AppText';
 import { ChoiceChips } from '@/ui/ChoiceChips';
 import { Notice } from '@/ui/Notice';
 import { SectionTitle } from '@/ui/SectionTitle';
-import { TextField } from '@/ui/TextField';
+import { TimeField } from '@/ui/TimeField';
 import { space } from '@/ui/tokens';
 
 import { useSaveSettings, useSettings } from './queries';
@@ -46,11 +46,9 @@ export function ReminderSettings() {
     <View style={{ gap: space.s3 }}>
       <SectionTitle>{settingsText.reminders}</SectionTitle>
       {Platform.OS === 'web' ? <Notice text={notificationsText.permission.webNotice} /> : null}
-      <TextField
+      <TimeField
         label={settingsText.reminderTime}
         hint={settingsText.reminderTimeHint}
-        inputMode="numeric"
-        keyboardType="numbers-and-punctuation"
         value={timeText ?? formatLocal.time(minute)}
         onChangeText={(value) => {
           setTimeText(value);

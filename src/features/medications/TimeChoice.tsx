@@ -8,7 +8,7 @@ import { AppText } from '@/ui/AppText';
 import { Button } from '@/ui/Button';
 import { Icon } from '@/ui/Icon';
 import { usePalette } from '@/ui/theme';
-import { TextField } from '@/ui/TextField';
+import { TimeField } from '@/ui/TimeField';
 import { radius, space, touch } from '@/ui/tokens';
 
 import { parseTime, toggleTime } from './medication-form';
@@ -77,11 +77,9 @@ export function TimeChoice({ times, onChange }: Props) {
       </View>
       <View style={styles.other}>
         <View style={styles.field}>
-          <TextField
+          <TimeField
             label={f.otherTime}
             hint="18:30"
-            inputMode="numeric"
-            keyboardType="numbers-and-punctuation"
             value={text}
             onChangeText={(value) => {
               setText(value);

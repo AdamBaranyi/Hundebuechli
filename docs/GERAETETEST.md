@@ -67,3 +67,5 @@ darum nicht. Was offline läuft, zeigt sich am Flugmodus während der Benutzung 
   Systems, quadratisch (E-41).
 - «Chipnummer kopieren» zeigte nichts an. Es gibt jetzt eine Kurzmeldung über der Tab-Leiste
   (E-43).
+- Dasselbe wie beim Datum bei der Uhrzeit eines Medikaments: kein Doppelpunkt auf dem Ziffernblock.
+  Das Feld setzt ihn jetzt selbst (E-50).

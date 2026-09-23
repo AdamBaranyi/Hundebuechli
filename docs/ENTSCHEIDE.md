@@ -255,3 +255,9 @@ die Gabe ist einen Tipp entfernt. Das Formular des Medikaments hilft in dem Mome
 **E-49 · expo-notifications 57.0.19 statt 57.0.20.** Die Wartezeit von sieben Tagen gilt auch für
 neue Pakete; 57.0.20 war am 23.09.2026 fünf Tage alt. Die CI prüft die Fassungen offline gegen die
 SDK-Liste und bleibt grün. Am 25.09.2026 wird zusammen mit den anderen SDK-Patches nachgezogen.
+
+**E-50 · Das Uhrzeitfeld setzt den Doppelpunkt selbst.** Wie beim Datum (E-37) hat der Ziffernblock
+des iPhones kein Satzzeichen: «18:30» war nicht einzugeben (Gerätetest 23.09.2026). Das Feld nimmt
+nur Ziffern und gruppiert sie. Beginnt die Eingabe mit 3 bis 9, kann es keine zweistellige Stunde
+sein – «930» wird «9:30», «1830» wird «18:30»; für «2:00» tippt man «0200». Gilt für die Uhrzeiten
+der Medikamente und für die Uhrzeit der Terminerinnerungen.
