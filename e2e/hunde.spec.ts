@@ -12,6 +12,7 @@ const FIXTURES = join(__dirname, '..', 'src', 'domain', '__fixtures__');
 test('Ersten Hund anlegen: das Formular prüft, sichert und öffnet das Profil', async ({
   page,
   baseURL,
+  browserName,
 }) => {
   const seen = await observe(page, baseURL ?? '');
   await start(page);
@@ -21,7 +22,8 @@ test('Ersten Hund anlegen: das Formular prüft, sichert und öffnet das Profil',
   expect(await keyboardProblems(page), 'Formular per Tastatur').toEqual([]);
 
   await page.getByRole('button', { name: 'Sichern' }).click();
-  await expect(page.getByText('Gib deinem Hund einen Namen.')).toBeVisible();
+  // Der Satz steht unter dem Feld und zusätzlich im Live-Bereich für Screenreader.
+  await expect(page.getByRole('alert').getByText('Gib deinem Hund einen Namen.')).toBeVisible();
 
   await page.getByRole('textbox', { name: 'Name', exact: true }).fill('Bäri');
   await page.getByRole('textbox', { name: 'Rasse oder Mischung' }).fill('Whippet');
@@ -40,7 +42,10 @@ test('Ersten Hund anlegen: das Formular prüft, sichert und öffnet das Profil',
   const copied = page.locator('[aria-hidden="true"]').getByText('Chipnummer kopiert.');
   await copy.click();
   await expect(copied).toBeVisible();
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('756098123456789');
+  // Die Zwischenablage zurücklesen erlaubt Playwright nur in Chromium.
+  if (browserName === 'chromium') {
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('756098123456789');
+  }
   await expect(copied).toBeHidden({ timeout: 5000 });
   await expect(page.getByRole('navigation', { name: 'Hauptbereiche' })).toBeVisible();
   await expectScreenQuality(page, seen, 'Profil');

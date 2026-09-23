@@ -48,7 +48,11 @@ export function cspViolations(page: Page): Promise<string[]> {
  * die Tests beginnen aber beim Erststart.
  */
 export async function openScreen(page: Page, path: string, { demo = false } = {}) {
-  await page.goto(demo ? path : `${path}${path.includes('?') ? '&' : '?'}leer`);
+  // Nicht auf «load» warten: Firefox meldet es unter Last manchmal spät; die
+  // Überschrift ist das verlässlichere Zeichen, dass die App steht.
+  await page.goto(demo ? path : `${path}${path.includes('?') ? '&' : '?'}leer`, {
+    waitUntil: 'domcontentloaded',
+  });
   await page.getByRole('heading', { level: 1 }).first().waitFor();
   await page.evaluate(() => document.fonts.ready);
 }
@@ -118,6 +122,15 @@ export async function keyboardProblems(page: Page): Promise<string[]> {
     elements.forEach((el, index) => el.setAttribute('data-tastatur', String(index)));
     return elements.length;
   });
+  // Von vorne beginnen: Firefox springt vom letzten Element nicht an den
+  // Anfang zurück, sondern in die Leiste des Browsers.
+  await page.evaluate(() => {
+    const start = document.createElement('span');
+    start.tabIndex = -1;
+    start.setAttribute('data-tastatur-start', '');
+    document.body.prepend(start);
+    start.focus();
+  });
   const reached = new Set<string>();
   const problems: string[] = [];
   for (let press = 0; press < total + 5 && reached.size < total; press += 1) {
@@ -138,6 +151,7 @@ export async function keyboardProblems(page: Page): Promise<string[]> {
     reached.add(state.mark);
     if (!state.visible) problems.push(`kein sichtbarer Fokus: ${state.name}`);
   }
+  await page.evaluate(() => document.querySelector('[data-tastatur-start]')?.remove());
   if (reached.size < total) {
     const missing = await page.evaluate(
       (seen) =>
@@ -159,4 +173,20 @@ export function storedData(page: Page) {
     cookies: document.cookie,
     indexedDb: (await indexedDB.databases()).map((db) => db.name),
   }));
+}
+
+/**
+ * Der Druckdialog lässt sich ohne Bildschirm nicht bedienen, und Firefox hält
+ * die Seite an, solange er offen ist. Für die Tests öffnet sich die Vorlage
+ * darum ohne Druckdialog; geprüft wird, was im Fenster steht.
+ */
+export async function withoutPrintDialog(page: Page) {
+  await page.evaluate(() => {
+    const open = window.open.bind(window);
+    window.open = (...args: Parameters<typeof window.open>) => {
+      const opened = open(...args);
+      if (opened) opened.print = () => undefined;
+      return opened;
+    };
+  });
 }

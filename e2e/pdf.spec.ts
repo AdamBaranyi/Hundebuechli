@@ -2,7 +2,7 @@
 import { expect, test } from '@playwright/test';
 
 import { createDog, start } from './flows';
-import { observe } from './helpers';
+import { observe, withoutPrintDialog } from './helpers';
 import { expectScreenQuality } from './quality';
 
 test('Vermisst-Plakat: Ort eintragen, die Vorlage öffnet sich zum Drucken', async ({
@@ -28,6 +28,7 @@ test('Vermisst-Plakat: Ort eintragen, die Vorlage öffnet sich zum Drucken', asy
   await page.getByRole('textbox', { name: 'Telefonnummer auf dem Plakat' }).fill('000 000 00 00');
   await expectScreenQuality(page, seen, 'PDF erstellen');
 
+  await withoutPrintDialog(page);
   const popup = page.waitForEvent('popup');
   await page.getByRole('button', { name: 'PDF erstellen und teilen' }).click();
   const poster = await popup;
@@ -45,6 +46,7 @@ test('Tierarzt-PDF: feindselige Eingaben bleiben Text', async ({ page, baseURL }
   await createDog(page, { name: '<img src=x onerror=alert(1)>' });
 
   await page.getByRole('button', { name: /^Für die Tierarztpraxis/ }).click();
+  await withoutPrintDialog(page);
   const popup = page.waitForEvent('popup');
   await page.getByRole('button', { name: 'PDF erstellen und teilen' }).click();
   const pdf = await popup;

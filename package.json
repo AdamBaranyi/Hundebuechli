@@ -22,6 +22,7 @@
     "export:web": "rm -rf dist && expo export --platform web && node scripts/web-harden.mjs",
     "serve:web": "node scripts/serve-web.mjs",
     "test:e2e": "playwright test",
+    "test:e2e:browsers": "playwright test -c playwright.browsers.config.ts",
     "db:generate": "drizzle-kit generate",
     "verify": "bun run format:check && bun run check:file-length && bun run lint && bun run typecheck && bun run test && bun run check:expo"
   },

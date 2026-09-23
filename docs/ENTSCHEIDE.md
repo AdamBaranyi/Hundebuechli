@@ -368,3 +368,12 @@ der Website aus öffnet, sieht sofort eine gefüllte App statt eines leeren Erst
 Beispieldaten entstehen beim Öffnen der Datenbank im Arbeitsspeicher, wie alles in der Vorschau;
 nichts landet im Browser. Die Browsertests hängen `?leer` an die Adresse und beginnen weiter beim
 Erststart; ein eigener Test prüft den Start mit Beispieldaten samt axe und leerem Browserspeicher.
+
+**E-72 · Safari und Firefox vor jedem Deploy, nicht in der CI.** `bun run test:e2e:browsers` fährt
+dieselben Tests auf iPhone SE, iPhone 15 und iPad Pro 11 (WebKit), Safari 1440 sowie Firefox 1440
+und 390: 156 von 156 grün (23.09.2026). Drei Unterschiede waren Eigenheiten der Testumgebung, keine
+Fehler der App, und sind in den Tests gelöst: Firefox auf dem Mac springt mit Tab nur zwischen
+Textfeldern (`accessibility.tabfocus` auf 7, wie Tastaturnutzende es einstellen) und vom letzten
+Element nicht zurück an den Anfang (die Prüfung beginnt jetzt oben); Firefox hält die Seite beim
+Druckdialog an (die Tests öffnen die Vorlage ohne Druckdialog); die Zwischenablage zurücklesen
+erlaubt Playwright nur in Chromium.

@@ -2,7 +2,7 @@
 import { expect, test } from '@playwright/test';
 
 import { start, TODAY } from './flows';
-import { observe, openScreen, storedData } from './helpers';
+import { observe, openScreen, storedData, withoutPrintDialog } from './helpers';
 import { expectScreenQuality } from './quality';
 
 test('Mit Beispieldaten starten: Bäri und Mila mit einem Jahr Geschichte', async ({
@@ -31,6 +31,7 @@ test('Mit Beispieldaten starten: Bäri und Mila mit einem Jahr Geschichte', asyn
   await page.getByRole('button', { name: /^Vermisst-Plakat/ }).click();
   await page.getByRole('textbox', { name: 'Wo zuletzt gesehen?' }).fill('Beispielhausen');
   await page.getByRole('textbox', { name: 'Telefonnummer auf dem Plakat' }).fill('000 000 00 00');
+  await withoutPrintDialog(page);
   const popup = page.waitForEvent('popup');
   await page.getByRole('button', { name: 'PDF erstellen und teilen' }).click();
   const poster = await popup;
