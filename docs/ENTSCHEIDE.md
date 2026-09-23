@@ -191,3 +191,11 @@ darum jedes Foto ab (Gerätetest 23.09.2026). Jetzt fallen nach dem Neukodieren 
 Segmente weg (alle APPn ausser JFIF und Farbprofil, dazu Kommentare); die Prüfung auf EXIF, XMP und
 IPTC bleibt als letzte Sperre davor, etwas zu speichern. Bilddaten und Drehung ändern sich dabei
 nicht.
+
+**E-40 · Eigene Tab-Leiste statt der nativen (löst E-17 auf).** Mit `labelStyle` in 16 pt setzt
+iOS 27 die Beschriftung zwar gross, lässt der Zeile aber ihre Höhe: Das Symbol lag auf dem Text
+(Gerätetest 23.09.2026). Die App nutzt darum auf dem Gerät dieselbe schwebende Leiste wie im
+Browser – Symbol über der Beschriftung, 4 px Luft dazwischen, Tippfläche mindestens 64, aktiver
+Eintrag mit Kapsel in der Farbe Linie. Adams Regel «Schrift ab 16» geht vor dem Systemlook, so
+steht es auch im Entwurf. Preis: kein Liquid Glass des Systems; die Leiste bleibt mindestens 90 %
+deckend. Gewinn: eine Leiste, ein Test – die Playwright-Prüfungen gelten jetzt für beide Seiten.

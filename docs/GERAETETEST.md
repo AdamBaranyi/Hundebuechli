@@ -31,7 +31,7 @@ braucht kein Netz.
 | 1.1 | Erststart: «Ersten Hund anlegen» | Formular «Neuer Hund» als Blatt von unten | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Blatt von unten kam, alle Felder ausfüllbar (Adam) |
 | 1.2 | Sichern ohne Name | Satz «Gib deinem Hund einen Namen.» unter dem Feld, VoiceOver liest ihn | | | |
 | 1.3 | Name, Rasse, «Rüde», Chipnummer «756 0981 2345 6789», Praxis mit Telefon; Sichern | Profil mit Name gross; «Chipnummer aus der Schweiz» | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Datum war zuerst nicht einzugeben: Der Ziffernblock des iPhones hat keinen Punkt, darum liess sich nicht sichern (Adam). Behoben mit E-37; danach gesichert, das Profil zeigt den Hund |
-| 1.4 | Tab-Leiste unten ansehen | Drei Einträge, Beschriftung gross (16 pt), nichts abgeschnitten, Liquid Glass | | | |
+| 1.4 | Tab-Leiste unten ansehen | Drei Einträge, Beschriftung gross (16 pt), nichts abgeschnitten, Liquid Glass | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Beschriftung gross, aber ohne Platz zum Symbol: «die Ikon liegt einfach auf den Text drauf» (Adam). Behoben mit E-40, eigene Leiste; erneut zu prüfen |
 | 1.5 | «Foto aufnehmen» | Frage nach der Kamera erst jetzt; Foto erscheint, hochkant richtig gedreht | | | |
 | 1.6 | «Foto ersetzen» aus den Fotos | Neues Foto erscheint | | | |
 | 1.7 | «Chipnummer kopieren», in Notizen einfügen | 756098123456789 | | | |
@@ -50,3 +50,7 @@ braucht kein Netz.
   Datum liess sich nichts sichern. Das Feld setzt die Punkte jetzt selbst (E-37).
 - Auf «Hunde» stand die Überschrift unter Uhr und Akku. Bildschirme ohne Navigationsleiste rechnen
   den sicheren Rand jetzt selbst ein (E-38).
+- In der nativen Tab-Leiste lag das Symbol auf der Beschriftung, weil die Leiste bei 16 pt ihre
+  Höhe behält. Auf dem Gerät läuft jetzt dieselbe eigene Leiste wie im Browser (E-40).
+- Jedes Foto wurde abgelehnt: «alle meine Fotos enthalten Standortdaten». Die Metadaten werden
+  jetzt herausgeschnitten statt das Foto abzulehnen (E-39).

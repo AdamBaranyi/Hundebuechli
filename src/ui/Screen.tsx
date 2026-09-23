@@ -15,8 +15,8 @@ type Props = {
   inModal?: boolean;
 };
 
-/** Platz für die Tab-Leiste, damit der letzte Eintrag nicht darunter liegt. */
-const tabBarHeight = Platform.OS === 'web' ? 96 : 64;
+/** Platz für die schwebende Tab-Leiste, damit der letzte Eintrag frei bleibt. */
+const tabBarHeight = 96;
 
 /**
  * Ein Bildschirm: Kiesel als Grund, Seitenrand 16, Abschnitte im Abstand 32.
