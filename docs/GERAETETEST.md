@@ -34,15 +34,19 @@ braucht kein Netz.
 | 1.4 | Tab-Leiste unten ansehen | Drei Einträge, Beschriftung gross (16 pt), nichts abgeschnitten, Liquid Glass | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Beschriftung gross, aber ohne Platz zum Symbol: «die Ikon liegt einfach auf den Text drauf» (Adam). Behoben mit E-40, eigene Leiste; erneut zu prüfen |
 | 1.5 | «Foto aufnehmen» | Frage nach der Kamera erst jetzt; Foto erscheint, hochkant richtig gedreht | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Foto erscheint richtig; nach E-39 und E-41 in Ordnung (Adam) |
 | 1.6 | «Foto ersetzen» aus den Fotos | Neues Foto erscheint | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Funktioniert; Ausschnitt mit dem Zuschnitt des Systems (E-41) |
-| 1.7 | «Chipnummer kopieren», in Notizen einfügen | 756098123456789 | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Keine sichtbare Rückmeldung: «ich sehe das nicht, dass es kopiert wurde» (Adam). Behoben mit E-43, Kurzmeldung; Einfügen noch zu prüfen |
+| 1.7 | «Chipnummer kopieren», in Notizen einfügen | 756098123456789 | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Erst ohne Rückmeldung: «ich sehe das nicht, dass es kopiert wurde» (Adam). Mit der Kurzmeldung aus E-43 funktioniert es |
 | 1.8 | «Tierarztpraxis anrufen» | Telefon öffnet mit der Nummer (nicht anrufen) | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Telefon öffnet sich (Adam) |
 | 1.9 | «Eintrag hinzufügen»: Entwurmung, Produkt, «Datum wählen» in 3 Tagen; Sichern | Im Profil «Das Jahr in Stempeln»; unter «Als Nächstes» bei «Diese Woche» | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Eintrag angelegt, nächstes Datum 23.12. bei drei Monaten Wiederholung (Adam) |
-| 1.10 | Unter «Als Nächstes» aufs gestrichelte Stempelfeld tippen | Stempel mit heutigem Datum, Zeile bleibt stehen; VoiceOver sagt «… erledigt.» | | | |
-| 1.11 | **Expo Go ganz schliessen, neu öffnen** (Flugmodus weiter an) | Hund, Foto und Einträge sind da | | | |
+| 1.10 | Unter «Als Nächstes» aufs gestrichelte Stempelfeld tippen | Stempel mit heutigem Datum, Zeile bleibt stehen; VoiceOver sagt «… erledigt.» | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Stempel von heute steht drin (Adam) |
+| 1.11 | **Expo Go ganz schliessen, neu öffnen** (Flugmodus weiter an) | Hund, Foto und Einträge sind da | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Alles noch da. WLAN war nötig, weil Expo Go das Bündel vom Mac lädt (Adam) |
 | 1.12 | Grösster Text (wie 0.4), dann Formular und «Als Nächstes» | Alles bricht um, nichts abgeschnitten, alles erreichbar | | | |
 | 1.13 | Dunkel (wie 0.3) | Alles lesbar, Karmin nur bei fällig | | | |
 | 1.14 | VoiceOver im Formular | Felder mit Namen, «Kastriert, Schalter, aus», Kacheln als Auswahl | | | |
-| 1.15 | Hund löschen: Profil, «Löschen» | Rückfrage nennt Einträge und Fotos; danach Liste ohne den Hund | | | |
+| 1.15 | Hund löschen: Profil, «Löschen» | Rückfrage nennt Einträge und Fotos; danach Liste ohne den Hund | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Rückfrage erscheint (Adam); was danach in der Liste steht, ist noch offen |
+
+**Zur Offline-Prüfung:** Expo Go lädt das Bündel bei jedem Start vom Mac; ohne WLAN startet es
+darum nicht. Was offline läuft, zeigt sich am Flugmodus während der Benutzung und an der APK
+(Tag 5). Die Daten selbst liegen auf dem Gerät: Nach dem Neustart waren Hund, Foto und Einträge da.
 
 **Befunde aus Runde 1 (23.09.2026, iPhone 17 Pro Max, iOS 27), behoben:**
 
