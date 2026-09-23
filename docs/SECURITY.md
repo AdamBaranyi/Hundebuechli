@@ -2,7 +2,7 @@
 
 **Faustregel:** Echt schützen, was den Betreiber schützt; dokumentieren, was nur hypothetische
 Nutzer schützt. Die App hat keinen Server, keine Konten und keine Schlüssel im Bundle. Zu schützen
-sind die Lieferkette, die Web-Vorschau, der Signierschlüssel der Android-App (ab Tag 5) und die
+sind die Lieferkette, die Web-Vorschau, der Signierschlüssel der Android-App und die
 Daten auf dem Gerät.
 
 ## Was läuft, seit dem ersten Commit
@@ -44,8 +44,8 @@ eine behobene Fassung mitbringt.
 
 **GHSA-w5hq-g745-h8pq – uuid < 11.1.1 über `@expo/config-plugins` › xcode (moderat).** Eng gefasst
 `"overrides": { "uuid": "11.1.1" }`. xcode 3.0.1 lädt uuid 11 per `require`, und `v4()` läuft
-(geprüft am 22.09.2026). xcode gehört zu `expo prebuild`, nicht in die App; den vollen Beleg bringt
-der APK-Workflow an Tag 5.
+(geprüft am 22.09.2026). xcode gehört zu `expo prebuild`, nicht in die App; der APK-Workflow führt
+`expo prebuild` mit der Ausnahme aus und baut durch (23.09.2026).
 
 ## Web-Vorschau: Header und Content Security Policy
 
@@ -83,9 +83,13 @@ die Auswahl aus den Fotos braucht unter iOS keine Erlaubnis. Nach der Erlaubnis 
 Benachrichtigungen fragt die App, wenn die erste Erinnerung entsteht – nicht beim ersten Start –
 und höchstens einmal je Sitzung (E-46). `expo-notifications` bringt eigene Berechtigungen mit
 (unter Android `POST_NOTIFICATIONS`, dazu Einträge für den Neustart des Geräts); was davon in der
-fertigen APK landet, prüft der Workflow an Tag 5, und Überflüssiges wird dort gesperrt.
-Ziel: Die Release-APK verlangt nicht einmal `INTERNET`; die CI prüft die Berechtigungen in der
-fertigen APK (Tag 5).
+fertigen APK landet, prüft der APK-Workflow.
+Die Release-APK verlangt nicht einmal `INTERNET`: `app.json` sperrt es zusammen mit Mikrofon,
+externem Speicher, Überlagerungsfenstern, dem Push-Empfang von Firebase und den Zähler-Rechten
+für Launcher, die `expo-notifications` mitbringt (E-73). Der Workflow `android-apk.yml` prüft die
+fertige APK gegen `scripts/android-permissions.txt` – erst dort sind die Manifeste aller
+Bibliotheken zusammengeführt. Eine Berechtigung, die nicht auf der Liste steht, lässt den Lauf
+scheitern.
 
 **Fotos ohne Standort:** Jedes Foto wird verkleinert und als JPEG neu kodiert. Danach schneidet
 `stripMetadata` in `src/domain/jpeg-metadata.ts` alle beschreibenden Segmente heraus – alle APPn

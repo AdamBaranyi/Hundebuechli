@@ -377,3 +377,21 @@ Textfeldern (`accessibility.tabfocus` auf 7, wie Tastaturnutzende es einstellen)
 Element nicht zurück an den Anfang (die Prüfung beginnt jetzt oben); Firefox hält die Seite beim
 Druckdialog an (die Tests öffnen die Vorlage ohne Druckdialog); die Zwischenablage zurücklesen
 erlaubt Playwright nur in Chromium.
+
+**E-73 · Die APK verlangt nur, was die App braucht – geprüft in der fertigen APK.** Der erste
+Probe-Build zeigte, was `expo-notifications` still mitbringt: Firebase Cloud Messaging (Push
+empfangen, Install-Referrer, Netzwerkstatus) und eine Bibliothek für Zähler am App-Symbol mit
+Berechtigungen für ein Dutzend Launcher. Die App nutzt weder Push vom Server noch Zähler am Symbol;
+`app.json` sperrt alles davon, dazu Internet, Mikrofon, externen Speicher und
+Überlagerungsfenster. Erlaubt bleiben Kamera, Benachrichtigungen, Neustart, Vibration und Wake
+Lock (`scripts/android-permissions.txt`). Jede Abweichung lässt den Workflow scheitern.
+
+**E-74 · Android-Erinnerungen ohne exakte Alarme.** `SCHEDULE_EXACT_ALARM` muss man ab Android 14
+in den Einstellungen selbst erlauben, und `USE_EXACT_ALARM` ist Wecker- und Kalender-Apps
+vorbehalten. Ohne beides stellt Android die Erinnerung womöglich einige Minuten später zu, um Akku
+zu sparen. Für «Entwurmung heute» genügt das; ob es für die Uhrzeiten der Medikamente genügt,
+zeigt erst ein Android-Gerät – bis dahin steht es als offen im Geräteprotokoll.
+
+**E-75 · APK nur für ARM.** Gebaut wird für `arm64-v8a` und `armeabi-v7a`, also für echte Handys
+bis zurück zu älteren 32-Bit-Geräten. x86 bräuchten nur Emulatoren; ohne sie halbieren sich
+Bauzeit und Grösse der APK.

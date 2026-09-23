@@ -1,6 +1,6 @@
 # Bilder für die Website
 
-Drei Bildschirme von Hundebüechli, Stand 23. September 2026, Bau an Tag 4 von 5. iPhone-Hochformat
+Drei Bildschirme von Hundebüechli, aufgenommen am 23. September 2026. iPhone-Hochformat
 (390 × 844 Punkte, dreifache Auflösung: 1170 × 2532 Pixel), hell, als PNG und WebP. Die Hunde Bäri
 und Mila sind erfundene Beispieldaten; die Fotos stehen unter CC0 (Quellen in
 `assets/demo/QUELLEN.md`). Aufgenommen aus der Web-Vorschau, die dieselben Bausteine und dieselbe
@@ -36,18 +36,21 @@ dem iPhone; die Android-Fassung folgt an Tag 5 als APK.
 
 ## Wo der Bau steht
 
-Tag 4 von 5 ist gebaut. Geprüft wird bei jedem Push: 284 Jest-Tests (Fälligkeiten, der Plan der
-Erinnerungen mit Zeitumstellung und Monatsende, PDFs mit feindseligen Eingaben, Löschen samt
-Dateien) und 75 Browserprüfungen in drei Breiten mit axe, Schriftgrösse, Tastatur und Content
-Security Policy. Auf dem iPhone geprüft sind Tag 1 und 2 und die Erinnerungen von Tag 3; der Rest
-von Tag 3 und die PDFs von Tag 4 kommen als Nächstes aufs Gerät.
+Die fünf Tage Bau sind abgeschlossen (Stand 23. September 2026). Bei jedem Push laufen 295
+Jest-Tests (Fälligkeiten, der Plan der Erinnerungen mit Zeitumstellung und Monatsende, PDFs mit
+feindseligen Eingaben, Löschen samt Dateien, Deep Links) und 78 Browserprüfungen in drei Breiten
+mit axe, Schriftgrösse, Tastatur und Content Security Policy; vor jedem Deploy zusätzlich 156 in
+Safari (iPhone und iPad) und Firefox. Auf dem iPhone geprüft sind Tag 1 und 2 und die Erinnerungen
+von Tag 3; der Rest folgt in den nächsten Geräterunden. Die Android-App entsteht in GitHub Actions
+und wird dort auf ihre Berechtigungen geprüft; die signierte Fassung folgt.
 
 ## Was noch kommt
 
-- **Tag 5:** Die Web-Vorschau zum Ausprobieren im Browser, startet mit den Beispielhunden; die
-  Android-App als APK aus GitHub Actions, samt Prüfung, dass sie nur die nötigen Berechtigungen
-  verlangt; Dokumentation und Fallstudie.
-- **Danach zwei Wochen Alltag** mit meinen eigenen zwei Whippets. Was dabei auffällt, fliesst in
-  die App und in die Fallstudie.
+- **Geräterunden** auf dem iPhone für Medikamente, Gewicht, Tagebuch, Dokumente und die PDFs, dazu
+  Messungen von Kaltstart und PDF-Erzeugung.
+- **Die Web-Vorschau geht online**, sie startet mit den Beispielhunden; die signierte Android-APK
+  erscheint als Release auf GitHub.
+- **Zwei Wochen Alltag** mit meinen eigenen zwei Whippets. Was dabei auffällt, fliesst in die App
+  und in die Fallstudie.
 - **Später:** Synchronisation im Haushalt, damit zwei Menschen sehen, ob die Tablette schon gegeben
   ist.

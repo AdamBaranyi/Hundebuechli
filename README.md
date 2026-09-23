@@ -4,12 +4,14 @@ Hundebüechli (Swiss German for the little booklet every dog in Switzerland has)
 dog care app: health records, reminders, weight, documents and shareable PDFs for the vet, the dog
 sitter and a lost-dog poster.
 
-**Status:** in development, day 4 of 5, tested on an iPhone. Dogs with profile and photo (re-encoded,
-location data stripped and checked), health entries with due dates, the "Up next" overview where one
-tap stamps an entry as done, local notifications derived from the data, medication with a daily
-schedule and "given", weight with a curve and a table, a diary and documents with photos, three
-PDFs (for the vet, the dog sitter and a lost-dog poster) shared from the device, owner details, demo
-data and "delete all data". Nothing here is presented as working before it is tested.
+**Status:** built in five days, tested on an iPhone; two weeks of daily use follow. Dogs with profile
+and photo (re-encoded, location data stripped and checked), health entries with due dates, the "Up
+next" overview where one tap stamps an entry as done, local notifications derived from the data,
+medication with a daily schedule and "given", weight with a curve and a table, a diary and documents
+with photos, three PDFs (for the vet, the dog sitter and a lost-dog poster) shared from the device,
+owner details, demo data and "delete all data". What is and is not verified yet is listed in
+[the acceptance checklist](docs/ABNAHME.md); nothing here is presented as working before it is
+tested.
 
 ## Run it on your iPhone in under ten minutes
 
@@ -27,13 +29,21 @@ Mac and iPhone must be on the same Wi-Fi.
 
 ## Web preview
 
-A static export for visitors. It always starts fresh and stores nothing in the browser; the real app
-runs on the phone, offline, with local notifications.
+A static export for visitors. It starts with two invented greyhounds, Bäri and Mila, and stores
+nothing in the browser; the real app runs on the phone, offline, with local notifications. Add
+`?leer` to the address to start empty.
 
 ```sh
 bun run export:web   # dist/ with Content Security Policy and .htaccess
 bun run serve:web    # http://127.0.0.1:8095
 ```
+
+## Android
+
+A GitHub Actions workflow builds the APK without EAS (`expo prebuild`, then Gradle) and checks the
+permissions of the finished APK against an allowlist: camera and what the notifications need,
+nothing else – not even internet access. Run it by hand for a probe APK; a `v*` tag builds a signed
+release. Keystore and release steps: [docs/RELEASE.md](docs/RELEASE.md).
 
 ## Checks
 
@@ -42,21 +52,27 @@ bun run serve:web    # http://127.0.0.1:8095
 | `bun run verify` | format, file length (max. 400 lines), lint incl. the network ban, types, Jest, Expo SDK versions |
 | `bun run test` | domain logic, repositories against sql.js, components with React Native Testing Library |
 | `bun run test:e2e` | Playwright against the web export at 320, 768 and 1440 px: axe, font size ≥ 16 px, no horizontal scroll, keyboard, reduced motion, no third-party requests, CSP with a counter-test |
+| `bun run test:e2e:browsers` | the same tests in WebKit on iPhone SE, iPhone 15 and iPad Pro 11, Safari and Firefox – before every deploy of the preview |
 
-CI runs all of it on every push, plus a daily secret scan and dependency audit.
+CI runs all but the last on every push, plus a daily secret scan and dependency audit.
 
 ## Architecture in one paragraph
 
 Expo SDK 57 (React Native 0.86) with Expo Router, TypeScript strict and Bun. Repository functions
 take a Drizzle database as a parameter: `expo-sqlite` on the device, `sql.js` (SQLite as
 WebAssembly, in memory) in the web preview and in tests, with the same schema and the same
-migrations. TanStack Query sits on top, Zod validates at every boundary. The app contains no
-network code; a lint rule and a browser test enforce that.
+migrations. TanStack Query sits on top, Zod validates at every boundary. Notifications are derived
+from the data: a pure function plans what should be scheduled, a second one reconciles it with what
+the system holds, and running it twice changes nothing. The app contains no network code; a lint
+rule and a browser test enforce that. Diagrams: [docs/ARCHITEKTUR.md](docs/ARCHITEKTUR.md).
 
 ## Documentation
 
-German, in `docs/`: [design](docs/DESIGN.md), [decisions](docs/ENTSCHEIDE.md),
-[security](docs/SECURITY.md), [device test log](docs/GERAETETEST.md), [release](docs/RELEASE.md).
+German, in `docs/`: [case study](docs/FALLSTUDIE.md), [architecture](docs/ARCHITEKTUR.md),
+[acceptance](docs/ABNAHME.md), [design](docs/DESIGN.md), [decisions](docs/ENTSCHEIDE.md),
+[security](docs/SECURITY.md), [accessibility](docs/BARRIEREFREIHEIT.md),
+[device test log](docs/GERAETETEST.md), [release](docs/RELEASE.md), [daily use](docs/ALLTAG.md),
+[images for the website](docs/bilder/README.md).
 
 ## Deliberately not built
 

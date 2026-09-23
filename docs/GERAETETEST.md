@@ -104,3 +104,27 @@ ausprobieren** – es löscht auch die echten Einträge; der Ablauf ist im Brows
 | 3.5 | Unter «Als Nächstes» stempeln | Der Stempel kommt gedreht herein und setzt sich, das iPhone gibt einen kurzen Erfolgs-Ruck | | | |
 | 3.6 | Bedienungshilfen › Bewegung › «Bewegung reduzieren» an, nochmals stempeln | Nur Einblenden, keine Drehung; der Ruck bleibt | | | |
 | 3.7 | Einstellungen › Beispieldaten laden, ansehen, wieder entfernen | Bäri und Mila mit Fotos und Geschichte; nach dem Entfernen ist nur der eigene Hund da | | | |
+
+## Runde 4 – Messungen
+
+**Vorbereitung:** Am Mac `bunx expo start --no-dev --minify` – ohne Entwicklermodus, so wie die App
+später läuft. Beispieldaten geladen (Einstellungen › Beispieldaten), Mila bekommt sechs
+Tagebuchfotos in den letzten 30 Tagen. Gemessen wird mit der Stoppuhr des iPhones, je fünf Läufe;
+eingetragen wird der Median. In Expo Go gehört das Laden des Bündels vom Mac zum Kaltstart – der
+Wert liegt darum über dem einer fertigen App und wird so beschriftet.
+
+| Nr. | Messung | Läufe (s) | Median | Datum | Gerät, iOS |
+|---|---|---|---|---|---|
+| 4.1 | Kaltstart: Expo Go ganz schliessen, Projekt antippen, bis «Als Nächstes» steht | | | | |
+| 4.2 | Tierarzt-PDF von Mila (Tagebuch 30 Tage, sechs Fotos): «PDF erstellen und teilen» antippen, bis das Teilen-Blatt erscheint | | | | |
+
+## Android (sobald ein Gerät da ist)
+
+Die APK ist gebaut und in der CI auf ihre Berechtigungen geprüft, aber noch auf keinem Android-Gerät
+installiert. Bis dahin gilt sie als «nicht auf einem Gerät belegt».
+
+| Nr. | Schritt | Erwartet | Datum | Gerät, Android | Beobachtet |
+|---|---|---|---|---|---|
+| A.1 | APK aus dem Release installieren, öffnen | Start ohne Fehler, Einstellungen › App-Info zeigt nur Kamera und Benachrichtigungen | | | |
+| A.2 | Medikament in zwei Minuten, App schliessen | Erinnerung kommt; notieren, wie viele Minuten später (E-74) | | | |
+| A.3 | Tierarzt-PDF teilen | PDF öffnet sich in einer anderen App | | | |
