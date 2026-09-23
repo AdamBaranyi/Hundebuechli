@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { Linking, Pressable, StyleSheet, View } from 'react-native';
 
 import { dogsText } from '@/content/dogs';
+import { diaryText } from '@/content/diary';
 import { medicationsText } from '@/content/medications';
 import { weightsText } from '@/content/weights';
 import { formatAge, formatLocal } from '@/content/format';
@@ -26,6 +27,7 @@ import { radius, space } from '@/ui/tokens';
 import { useToday } from '@/ui/useToday';
 
 import { useHealthEntries } from '../health/queries';
+import { useDiaryEntries } from '../diary/queries';
 import { useMedications } from '../medications/queries';
 import { useWeights } from '../weights/queries';
 import { DogActions } from './DogActions';
@@ -70,6 +72,7 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
   const entries = useHealthEntries(dogId ?? '');
   const medications = useMedications(dogId ?? '');
   const weights = useWeights(dogId ?? '');
+  const diary = useDiaryEntries(dogId ?? '');
 
   if (dog.isPending)
     return (
@@ -188,6 +191,16 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
                 : dogsText.profile.noWeight
             }
             onPress={() => router.push({ pathname: '/dogs/[id]/weight', params: { id: data.id } })}
+          />
+          <Row
+            icon="notebook"
+            title={diaryText.title}
+            secondary={
+              diary.data?.length
+                ? dogsText.profile.diaryCount(diary.data.length)
+                : dogsText.profile.noDiary
+            }
+            onPress={() => router.push({ pathname: '/dogs/[id]/diary', params: { id: data.id } })}
           />
         </Sheet>
       </View>

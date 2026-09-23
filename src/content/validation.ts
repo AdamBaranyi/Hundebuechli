@@ -11,6 +11,7 @@ const MESSAGES: Record<string, string> = {
   due_before_date: 'Die nächste Fälligkeit liegt nach dem Datum des Eintrags.',
   email_invalid: 'Das sieht nicht nach einer E-Mail-Adresse aus.',
   weight_invalid: 'Gib das Gewicht in Kilogramm an, etwa 13,8.',
+  invalid_time: 'Schreib die Uhrzeit so: 18:30.',
 };
 
 /** Besondere Sätze für einzelne Felder, wo der allgemeine zu knapp wäre. */
@@ -18,6 +19,8 @@ const FIELD_MESSAGES: Record<string, Record<string, string>> = {
   name: { required: 'Gib deinem Hund einen Namen.' },
   dogId: { required: 'Wähle, für welchen Hund der Eintrag ist.' },
   kind: { required: 'Wähle die Art des Eintrags.' },
+  category: { required: 'Wähle, worum es geht.' },
+  text: { required: 'Schreib, was dir aufgefallen ist.' },
 };
 
 export function validationMessage(field: string, code: string): string {

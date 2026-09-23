@@ -273,3 +273,12 @@ Aus demselben Grund gibt es keine Zielgewichte und keine Farben für «zu viel»
 **E-53 · Tabelle als Gegenstück zur Kurve, nicht als Notlösung.** Die Kurve ist für VoiceOver ein
 Bild mit einem Satz; die Zahlen stehen in der Tabelle, die über denselben Umschalter erreichbar
 ist. Gelöscht wird eine Wiegung dort, mit Rückfrage.
+
+**E-54 · Fotos kommen zum gesicherten Tagebucheintrag.** Wie beim Hund (E-34): Erst steht der
+Eintrag, dann kommen die Fotos dazu. Ein abgebrochenes Formular hinterlässt so keine Datei ohne
+Eintrag. Im neuen Formular sagt ein ruhiger Hinweis, dass Fotos nach dem Sichern dazukommen.
+
+**E-55 · Das Tagebuch trägt Uhrzeit und Kategorie.** Ohne Uhrzeit liesse sich «morgens gefressen,
+abends nicht» nicht aufschreiben, und die Kategorie (Appetit, Verdauung, Haut und Fell, Bewegung,
+Verhalten, Sonstiges) macht das PDF für die Praxis an Tag 4 lesbar. Beide Felder sind gesetzt,
+wenn der Eintrag entsteht: Datum heute, Uhrzeit jetzt.

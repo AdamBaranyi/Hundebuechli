@@ -76,10 +76,14 @@ object-src 'none'; frame-ancestors 'none'
 
 ## Berechtigungen
 
-Stand Tag 2: Kamera und Fotos über `expo-image-picker`, mit deutschen Texten, wozu sie dienen
+Stand Tag 3: Kamera und Fotos über `expo-image-picker`, mit deutschen Texten, wozu sie dienen
 (`app.json`). Mikrofon ausgeschaltet (`microphonePermission: false`) und `RECORD_AUDIO` über
 `android.blockedPermissions` gesperrt. Die Kamera wird erst gefragt, wenn jemand ein Foto aufnimmt;
-die Auswahl aus den Fotos braucht unter iOS keine Erlaubnis. Benachrichtigungen folgen an Tag 3.
+die Auswahl aus den Fotos braucht unter iOS keine Erlaubnis. Nach der Erlaubnis für
+Benachrichtigungen fragt die App, wenn die erste Erinnerung entsteht – nicht beim ersten Start –
+und höchstens einmal je Sitzung (E-46). `expo-notifications` bringt eigene Berechtigungen mit
+(unter Android `POST_NOTIFICATIONS`, dazu Einträge für den Neustart des Geräts); was davon in der
+fertigen APK landet, prüft der Workflow an Tag 5, und Überflüssiges wird dort gesperrt.
 Ziel: Die Release-APK verlangt nicht einmal `INTERNET`; die CI prüft die Berechtigungen in der
 fertigen APK (Tag 5).
 
