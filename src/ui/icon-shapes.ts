@@ -82,6 +82,10 @@ export const ICON_SHAPES = {
   chevronRight: [path('m9 5 7 7-7 7')],
   chevronLeft: [path('m15 5-7 7 7 7')],
   plus: [path('M12 5v14M5 12h14')],
+  trash: [
+    path('M5 7h14M10 7V5.5A1.5 1.5 0 0 1 11.5 4h1A1.5 1.5 0 0 1 14 5.5V7'),
+    path('M6.5 7l.8 11.2A2 2 0 0 0 9.3 20h5.4a2 2 0 0 0 2-1.8L17.5 7'),
+  ],
   check: [path('m5 12.5 4.5 4.5L19 7.5')],
   alert: [circle(12, 12, 9), path('M12 7.5V13M12 16.6v.1')],
   info: [circle(12, 12, 9), path('M12 11v6M12 7.5v.1')],

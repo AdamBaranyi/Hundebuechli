@@ -10,6 +10,7 @@ const MESSAGES: Record<string, string> = {
   year_invalid: 'Gib ein Jahr zwischen 1980 und heute an.',
   due_before_date: 'Die nächste Fälligkeit liegt nach dem Datum des Eintrags.',
   email_invalid: 'Das sieht nicht nach einer E-Mail-Adresse aus.',
+  weight_invalid: 'Gib das Gewicht in Kilogramm an, etwa 13,8.',
 };
 
 /** Besondere Sätze für einzelne Felder, wo der allgemeine zu knapp wäre. */

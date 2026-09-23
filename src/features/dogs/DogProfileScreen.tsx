@@ -4,6 +4,7 @@ import { Linking, Pressable, StyleSheet, View } from 'react-native';
 
 import { dogsText } from '@/content/dogs';
 import { medicationsText } from '@/content/medications';
+import { weightsText } from '@/content/weights';
 import { formatAge, formatLocal } from '@/content/format';
 import { chipCountryCode, formatChipNumber } from '@/domain/chip';
 import { ageOf } from '@/domain/dog-age';
@@ -26,6 +27,7 @@ import { useToday } from '@/ui/useToday';
 
 import { useHealthEntries } from '../health/queries';
 import { useMedications } from '../medications/queries';
+import { useWeights } from '../weights/queries';
 import { DogActions } from './DogActions';
 import { DogPhotoPanel } from './DogPhotoPanel';
 import { type DogWithPhoto, useDog } from './queries';
@@ -67,6 +69,7 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
   const dog = useDog(dogId);
   const entries = useHealthEntries(dogId ?? '');
   const medications = useMedications(dogId ?? '');
+  const weights = useWeights(dogId ?? '');
 
   if (dog.isPending)
     return (
@@ -175,6 +178,16 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
             onPress={() =>
               router.push({ pathname: '/dogs/[id]/medication', params: { id: data.id } })
             }
+          />
+          <Row
+            icon="scale"
+            title={weightsText.title}
+            secondary={
+              weights.data?.at(-1)
+                ? formatLocal.kilograms(weights.data.at(-1)?.grams ?? 0)
+                : dogsText.profile.noWeight
+            }
+            onPress={() => router.push({ pathname: '/dogs/[id]/weight', params: { id: data.id } })}
           />
         </Sheet>
       </View>

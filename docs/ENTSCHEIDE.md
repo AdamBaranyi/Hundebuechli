@@ -261,3 +261,15 @@ des iPhones kein Satzzeichen: «18:30» war nicht einzugeben (Gerätetest 23.09.
 nur Ziffern und gruppiert sie. Beginnt die Eingabe mit 3 bis 9, kann es keine zweistellige Stunde
 sein – «930» wird «9:30», «1830» wird «18:30»; für «2:00» tippt man «0200». Gilt für die Uhrzeiten
 der Medikamente und für die Uhrzeit der Terminerinnerungen.
+
+**E-51 · Ein Gewicht je Hund und Tag.** Wer zweimal am selben Tag wiegt, ersetzt den Wert. Zwei
+Punkte übereinander sagen in der Kurve nichts, und «welcher gilt?» wäre eine Frage, die niemand
+beantworten will.
+
+**E-52 · Die Kurve sagt nichts über gut oder schlecht.** Die App nennt Betrag und Richtung («0,6 kg
+mehr als am 20. Juni») und wertet nicht. Gewicht ist ein Befund für die Tierarztpraxis, keine Note.
+Aus demselben Grund gibt es keine Zielgewichte und keine Farben für «zu viel».
+
+**E-53 · Tabelle als Gegenstück zur Kurve, nicht als Notlösung.** Die Kurve ist für VoiceOver ein
+Bild mit einem Satz; die Zahlen stehen in der Tabelle, die über denselben Umschalter erreichbar
+ist. Gelöscht wird eine Wiegung dort, mit Rückfrage.

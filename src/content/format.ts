@@ -31,6 +31,10 @@ const fullDate = new Intl.DateTimeFormat('de-CH', {
 });
 const monthYear = new Intl.DateTimeFormat('de-CH', { month: 'long', year: 'numeric' });
 const monthNarrow = new Intl.DateTimeFormat('de-CH', { month: 'narrow' });
+const kilogram = new Intl.NumberFormat('de-CH', {
+  minimumFractionDigits: 1,
+  maximumFractionDigits: 1,
+});
 
 /** «22.9.» – so steht das Datum im Stempel. */
 export function formatStampDate(moment: Date): string {
@@ -61,6 +65,8 @@ export const formatLocal = {
   monthInitial: (month: string) => monthNarrow.format(toDisplayDate(`${month}-01`)),
   /** «22.09.2026» für Eingabefelder. */
   input: (date: LocalDate) => date.split('-').reverse().join('.'),
+  /** «13,8 kg» – Gramm als Kilogramm mit einer Nachkommastelle. */
+  kilograms: (grams: number) => `${kilogram.format(grams / 1000)} kg`,
   /** «08:00» – Minuten seit Mitternacht als Uhrzeit. */
   time: (minute: number) =>
     `${String(Math.floor(minute / 60)).padStart(2, '0')}:${String(minute % 60).padStart(2, '0')}`,
