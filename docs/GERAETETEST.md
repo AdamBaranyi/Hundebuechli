@@ -88,3 +88,19 @@ Terminerinnerungen in den Einstellungen auf wenige Minuten in der Zukunft stelle
 | 2.9 | Tagebuch: Eintrag schreiben, sichern, Foto mit der Kamera dazu | Foto erscheint beim Eintrag, hochkant richtig gedreht | | | |
 | 2.10 | Hund löschen (oder archivieren) | Keine Mitteilungen mehr für diesen Hund | | | |
 | 2.11 | Grösster Text und dunkler Modus auf den neuen Bildschirmen | Alles lesbar, nichts abgeschnitten, Karmin nur bei fällig | | | |
+
+## Runde 3 – Tag 4: PDFs, Teilen, Dokumente, Stempel-Moment
+
+**Vorbereitung:** In Expo Go neu laden. **«Alle Daten löschen» nicht auf dem eigenen iPhone
+ausprobieren** – es löscht auch die echten Einträge; der Ablauf ist im Browser geprüft
+(`e2e/einstellungen.spec.ts`).
+
+| Nr. | Schritt | Erwartet | Datum | Gerät, iOS | Beobachtet |
+|---|---|---|---|---|---|
+| 3.1 | Profil › PDF › «Für die Tierarztpraxis», Tagebuch 30 Tage, «PDF erstellen und teilen», «In Dateien sichern» | Teilen-Blatt kommt; in Dateien heisst es `<Name>-Tierarzt-<Datum>.pdf`; A4, Foto, Schrift Atkinson, nichts abgeschnitten | | | |
+| 3.2 | Einstellungen › Halterangaben mit Name und Telefon, dann «Für den Hundesitter» | Grosse Schrift, Futter, Medikamente mit Uhrzeiten, am Schluss «So erreichst du mich» | | | |
+| 3.3 | «Vermisst-Plakat»: Ort eintragen, erstellen, teilen – Zeit messen | In unter einer Minute geteilt; grosses Foto, acht Abreissstreifen mit der Nummer, keine Fusszeile | | | |
+| 3.4 | Profil › Dokumente › «Dokument hinzufügen», sichern, Seite fotografieren, antippen | Vollbild; mit zwei Fingern vergrössern | | | |
+| 3.5 | Unter «Als Nächstes» stempeln | Der Stempel kommt gedreht herein und setzt sich, das iPhone gibt einen kurzen Erfolgs-Ruck | | | |
+| 3.6 | Bedienungshilfen › Bewegung › «Bewegung reduzieren» an, nochmals stempeln | Nur Einblenden, keine Drehung; der Ruck bleibt | | | |
+| 3.7 | Einstellungen › Beispieldaten laden, ansehen, wieder entfernen | Bäri und Mila mit Fotos und Geschichte; nach dem Entfernen ist nur der eigene Hund da | | | |
