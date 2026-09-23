@@ -69,3 +69,22 @@ darum nicht. Was offline läuft, zeigt sich am Flugmodus während der Benutzung 
   (E-43).
 - Dasselbe wie beim Datum bei der Uhrzeit eines Medikaments: kein Doppelpunkt auf dem Ziffernblock.
   Das Feld setzt ihn jetzt selbst (E-50).
+
+## Runde 2 – Tag 3: Erinnerungen, Medikamente, Gewicht, Tagebuch
+
+**Vorbereitung:** Metro läuft, in Expo Go neu laden. Für Schritt 2.4 die Uhrzeit der
+Terminerinnerungen in den Einstellungen auf wenige Minuten in der Zukunft stellen.
+
+| Nr. | Schritt | Erwartet | Datum | Gerät, iOS | Beobachtet |
+|---|---|---|---|---|---|
+| 2.1 | Medikament mit einer Uhrzeit in zwei Minuten anlegen, App schliessen | Mitteilung «Medikament für …» kommt pünktlich | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Kam pünktlich (Adam) |
+| 2.2 | Erlaubnisfrage beim ersten Medikament | Frage erscheint erst jetzt, nicht beim Start; «Später» fragt in dieser Sitzung nicht wieder | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Frage kam beim Sichern (Adam) |
+| 2.3 | Mitteilung lange drücken, «Gegeben» tippen | Gabe ist eingetragen, ohne die App zu öffnen; in «Als Nächstes» steht der Stempel | | | |
+| 2.4 | Mitteilung selbst antippen | App öffnet «Als Nächstes» mit dem Fahrplan | | | |
+| 2.5 | Termin mit Fälligkeit heute, Uhrzeit wie oben gestellt | Mitteilung «Termin für …»; «Erledigt» in der Mitteilung stempelt den Termin | | | |
+| 2.6 | Im Fahrplan «Heute» eine Gabe stempeln | Stempel mit Uhrzeit, Zeile bleibt stehen; die Erinnerung dieses Zeitpunkts kommt nicht mehr | | | |
+| 2.7 | Gewicht zweimal eintragen | Zahl gross, Satz «… mehr als am …», Kurve und Tabelle stimmen überein | | | |
+| 2.8 | VoiceOver über die Kurve | Liest «Gewichtskurve von … mit n Werten»; die Zahlen stehen in der Tabelle | | | |
+| 2.9 | Tagebuch: Eintrag schreiben, sichern, Foto mit der Kamera dazu | Foto erscheint beim Eintrag, hochkant richtig gedreht | | | |
+| 2.10 | Hund löschen (oder archivieren) | Keine Mitteilungen mehr für diesen Hund | | | |
+| 2.11 | Grösster Text und dunkler Modus auf den neuen Bildschirmen | Alles lesbar, nichts abgeschnitten, Karmin nur bei fällig | | | |
