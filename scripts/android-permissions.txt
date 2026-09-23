@@ -1,0 +1,17 @@
+# Berechtigungen, die die Release-APK verlangen darf. Alles andere lässt den
+# Workflow scheitern (scripts/apk-permissions.mjs). Neue Einträge nur mit
+# Begründung und Eintrag in docs/ENTSCHEIDE.md.
+
+# Foto aufnehmen – gefragt erst, wenn jemand die Kamera wählt.
+android.permission.CAMERA
+
+# Erinnerungen: anzeigen (ab Android 13), nach einem Neustart wieder planen,
+# zur Minute auslösen, dabei vibrieren und das Gerät kurz wecken.
+android.permission.POST_NOTIFICATIONS
+android.permission.RECEIVE_BOOT_COMPLETED
+android.permission.SCHEDULE_EXACT_ALARM
+android.permission.VIBRATE
+android.permission.WAKE_LOCK
+
+# Von AndroidX für App-interne Empfänger vergeben, nur für die eigene App.
+xyz.adambaranyi.hundebuechli.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
