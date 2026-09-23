@@ -61,6 +61,9 @@ export const formatLocal = {
   monthInitial: (month: string) => monthNarrow.format(toDisplayDate(`${month}-01`)),
   /** «22.09.2026» für Eingabefelder. */
   input: (date: LocalDate) => date.split('-').reverse().join('.'),
+  /** «08:00» – Minuten seit Mitternacht als Uhrzeit. */
+  time: (minute: number) =>
+    `${String(Math.floor(minute / 60)).padStart(2, '0')}:${String(minute % 60).padStart(2, '0')}`,
 };
 
 /** Liest «22.09.2026» oder «22.9.2026»; gibt das lokale Datum zurück oder null. */

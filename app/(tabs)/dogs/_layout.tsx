@@ -38,6 +38,7 @@ export default function DogsLayout() {
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="[id]/index" options={backOptions('Hunde')} />
       <Stack.Screen name="[id]/health" options={backOptions('Profil')} />
+      <Stack.Screen name="[id]/medication" options={backOptions('Profil')} />
     </Stack>
   );
 }

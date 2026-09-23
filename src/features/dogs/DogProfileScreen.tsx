@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { Linking, Pressable, StyleSheet, View } from 'react-native';
 
 import { dogsText } from '@/content/dogs';
+import { medicationsText } from '@/content/medications';
 import { formatAge, formatLocal } from '@/content/format';
 import { chipCountryCode, formatChipNumber } from '@/domain/chip';
 import { ageOf } from '@/domain/dog-age';
@@ -24,6 +25,7 @@ import { radius, space } from '@/ui/tokens';
 import { useToday } from '@/ui/useToday';
 
 import { useHealthEntries } from '../health/queries';
+import { useMedications } from '../medications/queries';
 import { DogActions } from './DogActions';
 import { DogPhotoPanel } from './DogPhotoPanel';
 import { type DogWithPhoto, useDog } from './queries';
@@ -64,6 +66,7 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
   const today = useToday();
   const dog = useDog(dogId);
   const entries = useHealthEntries(dogId ?? '');
+  const medications = useMedications(dogId ?? '');
 
   if (dog.isPending)
     return (
@@ -160,6 +163,18 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
               list.length > 0 ? dogsText.profile.entries(list.length) : dogsText.profile.noEntries
             }
             onPress={() => router.push({ pathname: '/dogs/[id]/health', params: { id: data.id } })}
+          />
+          <Row
+            icon="pill"
+            title={medicationsText.title}
+            secondary={
+              medications.data?.length
+                ? dogsText.profile.medicationCount(medications.data.length)
+                : dogsText.profile.noMedications
+            }
+            onPress={() =>
+              router.push({ pathname: '/dogs/[id]/medication', params: { id: data.id } })
+            }
           />
         </Sheet>
       </View>

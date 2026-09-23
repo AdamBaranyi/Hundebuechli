@@ -26,6 +26,8 @@ function fakePort(permission: PermissionState = 'granted') {
       calls.scheduled.push(...plans.map((plan) => plan.id));
       for (const plan of plans) state.set(plan.id, { id: plan.id, at: plan.at });
     },
+    onResponse: () => () => undefined,
+    lastResponse: async () => null,
   };
   return { port, state, calls };
 }

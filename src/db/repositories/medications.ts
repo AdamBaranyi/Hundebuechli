@@ -152,6 +152,7 @@ export function undoDose(db: Db, medicationId: string, scheduledAt: LocalDateTim
 /** Der Fahrplan eines Tages: jede Uhrzeit je laufendem Medikament. */
 export type DoseSlot = {
   medicationId: string;
+  dogId: string;
   dogName: string;
   name: string;
   dose: string;
@@ -170,6 +171,7 @@ export function listDoseSlots(db: Db, date: LocalDate): DoseSlot[] {
         const scheduledAt = atMinute(date, minute);
         return {
           medicationId: medication.id,
+          dogId: medication.dogId,
           dogName: medication.dogName,
           name: medication.name,
           dose: medication.dose,

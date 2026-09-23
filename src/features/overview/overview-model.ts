@@ -47,6 +47,8 @@ export function buildOverview(
   open: readonly OpenDue[],
   today: LocalDate,
   dogId: string | null,
+  /** «Heute» steht auch dann, wenn nur Medikamente anstehen. */
+  hasDosesToday = false,
 ): OverviewSection[] {
   const rows = open
     .filter((entry) => dogId === null || entry.dogId === dogId)
@@ -67,5 +69,5 @@ export function buildOverview(
     bucket,
     title: overviewText.sections[bucket],
     rows: rows.filter((row) => row.bucket === bucket),
-  })).filter((section) => section.rows.length > 0);
+  })).filter((section) => section.rows.length > 0 || (section.bucket === 'today' && hasDosesToday));
 }

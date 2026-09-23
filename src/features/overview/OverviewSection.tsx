@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { View } from 'react-native';
 
 import { formatLocal } from '@/content/format';
@@ -13,6 +14,8 @@ import type { OverviewRow, OverviewSection as Section } from './overview-model';
 
 type Props = {
   section: Section;
+  /** Zeilen vor den Terminen, etwa der Fahrplan der Medikamente. */
+  before?: ReactNode;
   today: LocalDate;
   /** Zeilen, die in dieser Sitzung gestempelt wurden: bleiben an ihrem Platz. */
   stamped: ReadonlySet<string>;
@@ -21,11 +24,12 @@ type Props = {
 };
 
 /** Ein Abschnitt von «Als Nächstes»: Titel und ein Blatt mit Zeilen und Stempelfeldern. */
-export function OverviewSection({ section, today, stamped, onStamp, onUndo }: Props) {
+export function OverviewSection({ section, before, today, stamped, onStamp, onUndo }: Props) {
   return (
     <View style={{ gap: space.s3 }}>
       <SectionTitle due={section.bucket === 'overdue'}>{section.title}</SectionTitle>
       <Sheet>
+        {before}
         {section.rows.map((row) => {
           const done = stamped.has(row.id);
           return (

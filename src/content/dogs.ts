@@ -55,6 +55,8 @@ export const dogsText = {
     openSettings: 'Einstellungen öffnen',
   },
   profile: {
+    medicationCount: (count: number) => (count === 1 ? '1 Medikament' : `${count} Medikamente`),
+    noMedications: 'Noch keine Medikamente',
     copyChip: 'Chipnummer kopieren',
     chipCopied: 'Chipnummer kopiert.',
     callVet: 'Tierarztpraxis anrufen',

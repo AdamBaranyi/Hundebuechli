@@ -28,6 +28,8 @@ type Props = Pick<
   error?: string | null;
   /** Zusatz unter dem Feld, etwa «Chipnummer aus der Schweiz». */
   note?: string | null;
+  /** Läuft, wenn das Feld den Fokus verliert – etwa um den Wert zu übernehmen. */
+  onEndEditing?: () => void;
 };
 
 /**
@@ -35,7 +37,7 @@ type Props = Pick<
  * Feldrand, Fokus mit 2 Punkten Graphit. Ein Fehler steht als Satz darunter,
  * nicht nur als Farbe, und wird mit dem Feld vorgelesen.
  */
-export function TextField({ label, hint, error, note, multiline, ...input }: Props) {
+export function TextField({ label, hint, error, note, multiline, onEndEditing, ...input }: Props) {
   const palette = usePalette();
   const [focused, setFocused] = useState(false);
   const borderColor = error ? palette.carmine : focused ? palette.graphite : palette.fieldBorder;
@@ -56,7 +58,10 @@ export function TextField({ label, hint, error, note, multiline, ...input }: Pro
         accessibilityHint={[hint, error].filter(Boolean).join(' ') || undefined}
         aria-invalid={error ? true : undefined}
         onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
+        onBlur={() => {
+          setFocused(false);
+          onEndEditing?.();
+        }}
         placeholderTextColor={palette.pencil}
         style={[
           styles.input,

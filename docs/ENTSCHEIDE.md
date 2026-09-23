@@ -223,3 +223,35 @@ blendet in 150 ms ein – erlaubt auch bei reduzierter Bewegung. Sie nimmt keine
 ist für Screenreader ausgeblendet, sonst käme die Meldung doppelt: `announce` spricht sie bereits.
 Sie erscheint nur, wo sonst nichts sichtbar geschieht: beim Kopieren und wenn ein Zurücknehmen
 misslingt. Beim Sichern, Stempeln und Löschen ändert sich der Bildschirm selbst.
+
+**E-44 · Benachrichtigungen als Ableitung, hinter einer schmalen Schnittstelle.** `planNotifications`
+rechnet aus Terminen, Medikamenten und den Einstellungen, was geplant sein soll; `reconcile`
+vergleicht das mit dem, was das System hält. Beides sind reine Funktionen und laufen in Jest ohne
+Gerät. Das Gerät selbst liegt hinter `NotificationPort` (`src/notifications/port.ts`, im Browser
+`port.web.ts`, in den Tests eine Attrappe). Geplant wird nur mit Einmal-Auslösern und echtem Datum,
+weil die wiederholenden Auslöser von `expo-notifications` je Plattform verschieden sind; höchstens
+60 auf einmal, weil iOS nur die nächsten 64 behält.
+
+**E-45 · Der Abgleich läuft nach jeder erfolgreichen Änderung.** Statt an jeder Stelle daran zu
+denken, hört `NotificationHub` den Mutation-Cache von TanStack Query ab und gleicht nach jeder
+erfolgreichen Änderung ab, dazu beim Start und beim Zurückkommen in die App. Eine Stelle, die es
+tut, statt zwanzig, die es vergessen können.
+
+**E-46 · Nach der Erlaubnis wird höchstens einmal je Sitzung gefragt.** Gefragt wird erst, wenn der
+Plan wirklich etwas enthält – nicht beim ersten Start. Wer «Später» wählt, wird in dieser Sitzung
+nicht wieder gefragt; die Übersicht in der App bleibt vollständig. Die Frage steht in einem kleinen
+Speicher ausserhalb von React (`ask-store.ts`), weil der Abgleich in einem Effekt läuft und der
+keinen Zustand setzen darf (ESLint-Regel `react-hooks/set-state-in-effect`).
+
+**E-47 · «Gegeben» ist ein Protokolleintrag, kein Schalter.** Eine Gabe schreibt eine Zeile in
+`dose_log` mit geplantem Zeitpunkt und Uhrzeit der Gabe; der eindeutige Schlüssel aus Medikament
+und Zeitpunkt lässt nur eine zu. Zweimal getippt ändert nichts, und für die spätere Synchronisation
+im Haushalt ist genau das die konfliktfreie Form. Zurücknehmen löscht die Zeile wieder.
+
+**E-48 · Tippen auf eine Gabe öffnet «Als Nächstes».** Bei einem Termin öffnet die Benachrichtigung
+den Eintrag. Bei einem Medikament führt sie in die Übersicht: Dort steht der Fahrplan des Tages, und
+die Gabe ist einen Tipp entfernt. Das Formular des Medikaments hilft in dem Moment niemandem.
+
+**E-49 · expo-notifications 57.0.19 statt 57.0.20.** Die Wartezeit von sieben Tagen gilt auch für
+neue Pakete; 57.0.20 war am 23.09.2026 fünf Tage alt. Die CI prüft die Fassungen offline gegen die
+SDK-Liste und bleibt grün. Am 25.09.2026 wird zusammen mit den anderen SDK-Patches nachgezogen.

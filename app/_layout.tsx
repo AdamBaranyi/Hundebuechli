@@ -7,6 +7,7 @@ import * as SystemUI from 'expo-system-ui';
 import { useCallback, useEffect, useState } from 'react';
 
 import { DatabaseProvider } from '@/db/DatabaseProvider';
+import { NotificationHub } from '@/notifications/NotificationHub';
 import { LiveRegion } from '@/ui/LiveRegion';
 import { ToastLayer } from '@/ui/ToastLayer';
 import { createQueryClient } from '@/db/query-client';
@@ -43,8 +44,11 @@ export default function RootLayout() {
           <Stack.Screen name="new-dog" options={{ presentation: 'modal' }} />
           <Stack.Screen name="edit-dog/[id]" options={{ presentation: 'modal' }} />
           <Stack.Screen name="new-entry" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="new-medication" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="edit-medication/[id]" options={{ presentation: 'modal' }} />
           <Stack.Screen name="edit-entry/[id]" options={{ presentation: 'modal' }} />
         </Stack>
+        <NotificationHub />
         <LiveRegion />
         <ToastLayer />
       </DatabaseProvider>

@@ -2,10 +2,14 @@ import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
 
 import { notificationsText } from '@/content/notifications';
-import type { PlannedNotification, ScheduledNotification } from '@/domain/notifications';
+import type {
+  NotificationTarget,
+  PlannedNotification,
+  ScheduledNotification,
+} from '@/domain/notifications';
 import { toDate } from '@/domain/local-time';
 
-import type { NotificationPort, PermissionState } from './types';
+import type { NotificationPort, NotificationResponse, PermissionState } from './types';
 
 /*
  * Das Gerät. Geplant wird nur mit Einmal-Auslösern und echtem Datum: Die
@@ -61,6 +65,20 @@ function scheduledFrom(
   return typeof at === 'string' ? { id: request.identifier, at } : undefined;
 }
 
+/** Liest das Ziel aus einer Antwort; alles andere wird verworfen. */
+function responseFrom(
+  response: Notifications.NotificationResponse | null,
+): NotificationResponse | null {
+  const target = response?.notification.request.content.data?.target as
+    NotificationTarget | undefined;
+  if (!target || (target.kind !== 'health' && target.kind !== 'dose')) return null;
+  const action = response?.actionIdentifier;
+  return {
+    target,
+    action: action && action !== Notifications.DEFAULT_ACTION_IDENTIFIER ? action : null,
+  };
+}
+
 export const devicePort: NotificationPort = {
   prepare,
 
@@ -100,5 +118,17 @@ export const devicePort: NotificationPort = {
         },
       });
     }
+  },
+
+  onResponse(handler) {
+    const subscription = Notifications.addNotificationResponseReceivedListener((response) => {
+      const parsed = responseFrom(response);
+      if (parsed) handler(parsed);
+    });
+    return () => subscription.remove();
+  },
+
+  async lastResponse() {
+    return responseFrom(await Notifications.getLastNotificationResponseAsync());
   },
 };

@@ -9,6 +9,8 @@ import { SectionTitle } from '@/ui/SectionTitle';
 import { Sheet } from '@/ui/Sheet';
 import { space } from '@/ui/tokens';
 
+import { ReminderSettings } from './ReminderSettings';
+
 function Block({ title, text }: { title: string; text: string }) {
   return (
     <View style={{ gap: space.s3 }}>
@@ -23,9 +25,9 @@ function Block({ title, text }: { title: string; text: string }) {
 }
 
 /**
- * Einstellungen, Stand Tag 2: Hinweis zur Tiermedizin, Datenschutz, Version.
- * Uhrzeit und Vorlauf der Erinnerungen, Halterangaben, Beispieldaten und
- * «Alle Daten löschen» kommen mit ihren Funktionen dazu.
+ * Einstellungen, Stand Tag 3: Uhrzeit und Vorlauf der Erinnerungen, Hinweis
+ * zur Tiermedizin, Datenschutz, Version. Halterangaben, Beispieldaten und
+ * «Alle Daten löschen» kommen an Tag 4 dazu.
  */
 export function SettingsScreen() {
   return (
@@ -33,6 +35,7 @@ export function SettingsScreen() {
       <AppText variant="largeTitle" heading={1}>
         {settingsText.title}
       </AppText>
+      <ReminderSettings />
       <Block title={settingsText.about} text={common.disclaimer} />
       <Block title={settingsText.privacy} text={settingsText.privacyText} />
       <AppText variant="secondary" color="pencil">

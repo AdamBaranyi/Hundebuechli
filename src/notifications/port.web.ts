@@ -12,6 +12,8 @@ export const devicePort: NotificationPort = {
   getScheduled: async () => [],
   cancel: async () => undefined,
   schedule: async () => undefined,
+  onResponse: () => () => undefined,
+  lastResponse: async () => null,
 };
 
 export const ACTION_DONE = 'erledigt';

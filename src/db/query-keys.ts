@@ -14,5 +14,9 @@ export const queryKeys = {
   healthEntry: (id: string) => ['health', 'entry', id] as const,
   recentProducts: (dogId: string, kind: string) => ['health', 'products', dogId, kind] as const,
   openDue: ['open-due'] as const,
+  medications: ['medications'] as const,
+  medicationsOfDog: (dogId: string) => ['medications', 'dog', dogId] as const,
+  medication: (id: string) => ['medications', 'one', id] as const,
+  doseSlots: (date: string) => ['medications', 'slots', date] as const,
   settings: ['settings'] as const,
 };

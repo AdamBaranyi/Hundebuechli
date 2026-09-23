@@ -1,4 +1,15 @@
-import type { PlannedNotification, ScheduledNotification } from '@/domain/notifications';
+import type {
+  NotificationTarget,
+  PlannedNotification,
+  ScheduledNotification,
+} from '@/domain/notifications';
+
+/** Was jemand mit einer Benachrichtigung gemacht hat. */
+export type NotificationResponse = {
+  target: NotificationTarget;
+  /** Kennung der Aktion, oder null fürs blosse Tippen. */
+  action: string | null;
+};
 
 /** Ob die App Benachrichtigungen schicken darf. */
 export type PermissionState = 'granted' | 'denied' | 'undetermined' | 'unsupported';
@@ -17,4 +28,8 @@ export type NotificationPort = {
   getScheduled: () => Promise<ScheduledNotification[]>;
   cancel: (ids: string[]) => Promise<void>;
   schedule: (plans: PlannedNotification[]) => Promise<void>;
+  /** Tippen und Aktionen; gibt die Abmeldung zurück. */
+  onResponse: (handler: (response: NotificationResponse) => void) => () => void;
+  /** Die Antwort, die die App geöffnet hat – einmal beim Start. */
+  lastResponse: () => Promise<NotificationResponse | null>;
 };
