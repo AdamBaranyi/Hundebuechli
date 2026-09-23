@@ -309,3 +309,23 @@ nicht. Eine eigene Zoom-Geste wäre viel Code für wenig Nutzen – der Auftrag 
 **E-61 · Ein Fotofeld für Tagebuch und Dokumente.** `AttachedPhotos` nimmt den Besitzer als
 Parameter (Tagebucheintrag oder Dokument) und geht durch dieselbe Prüfung auf Standortdaten.
 Seiten eines Dokuments lassen sich gross öffnen.
+
+**E-62 · Beispieldaten relativ zu heute, mit festen Kennungen.** Bäri und Mila bekommen ihr Jahr
+Geschichte immer vom heutigen Tag aus gerechnet: So steht zu jedem Zeitpunkt etwas unter
+«Überfällig», «Diese Woche» und «Später», der Fahrplan hat ein laufendes Medikament, die Kurven
+reichen bis heute. Die zwei Hunde tragen feste UUIDs; «Beispieldaten entfernen» löscht genau sie
+und lässt eigene Hunde stehen. Die Praxis ist erfunden und in Zefix geprüft (23.09.2026: kein
+Unternehmen «Rehbach», Gegenprobe «Tierarztpraxis» liefert Treffer); alle Telefonnummern beginnen
+mit 000. Ein Streifen «Beispieldaten» steht über «Als Nächstes» und der Hundeliste, solange sie
+geladen sind.
+
+**E-63 · Mitgelieferte Fotos ohne Netzwerkcode.** Auf dem Gerät lädt `Asset.loadAsync` das Bild aus
+dem App-Paket, und es geht durch dieselbe Prüfung wie jedes Foto. Im Browser liegt es als Datei
+neben der Vorschau (gleicher Ursprung); fürs PDF liest ein Canvas es aus – ohne `fetch`, das die
+Lint-Regel sperrt. Die beiden CC0-Fotos sind quadratisch zugeschnitten und ohne Metadaten im
+Repository (`assets/demo/`, Quellen in `QUELLEN.md`).
+
+**E-64 · Die Web-Vorschau startet an Tag 5 mit Beispieldaten.** Der Auftrag will, dass die Vorschau
+immer mit Beispieldaten beginnt. Das hängt mit «Web-Vorschau fertig» an Tag 5 zusammen, samt
+einem Weg, wie die Browsertests weiter mit dem leeren Erststart beginnen. Bis dahin gibt es den
+Knopf «Mit Beispieldaten starten» auf Gerät und Web.

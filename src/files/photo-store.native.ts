@@ -1,6 +1,8 @@
+import { Asset } from 'expo-asset';
 import { Directory, File, Paths } from 'expo-file-system';
 
 import { newId } from '@/db/time';
+import { isSafeToStore } from '@/domain/jpeg-metadata';
 
 import { assertPhotoPath, type PhotoStore } from './types';
 
@@ -12,6 +14,14 @@ const FOLDER = 'photos';
  * der Datenbank kann so keine fremde Datei treffen.
  */
 export const photoStore: PhotoStore = {
+  async saveBundled(module) {
+    const [asset] = await Asset.loadAsync(module);
+    if (!asset?.localUri) throw new Error('Foto aus dem Paket nicht gefunden');
+    const bytes = await new File(asset.localUri).bytes();
+    // Auch mitgelieferte Fotos gehen durch dieselbe Prüfung.
+    if (!isSafeToStore(bytes)) throw new Error('Mitgeliefertes Foto trägt Metadaten');
+    return this.save(bytes);
+  },
   async save(bytes) {
     const folder = new Directory(Paths.document, FOLDER);
     if (!folder.exists) folder.create({ intermediates: true });

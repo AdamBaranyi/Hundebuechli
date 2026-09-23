@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { Platform, StyleSheet, View } from 'react-native';
 
 import { common } from '@/content/common';
+import { demoText } from '@/content/demo';
 import { dogsText } from '@/content/dogs';
 import { formatLongDate, formatStampDate } from '@/content/format';
 import { welcome } from '@/content/welcome';
@@ -11,13 +12,16 @@ import { Notice } from '@/ui/Notice';
 import { Screen } from '@/ui/Screen';
 import { StampMark } from '@/ui/StampMark';
 
+import { useLoadDemo } from '../demo/queries';
+
 /**
  * Erststart: die Marke stempelt den heutigen Tag, darunter das Versprechen und
- * der Hinweis zur Tiermedizin. «Mit Beispieldaten starten» kommt an Tag 4 –
- * kein Knopf ohne Wirkung vorher.
+ * der Hinweis zur Tiermedizin. Dann «Ersten Hund anlegen» oder «Mit
+ * Beispieldaten starten».
  */
 export function WelcomeScreen() {
   const today = new Date();
+  const demo = useLoadDemo();
   return (
     <Screen>
       <View style={styles.intro}>
@@ -34,7 +38,15 @@ export function WelcomeScreen() {
           {common.disclaimer}
         </AppText>
       </View>
-      <Button label={dogsText.firstDog} onPress={() => router.push('/new-dog')} />
+      <View style={styles.actions}>
+        <Button label={dogsText.firstDog} onPress={() => router.push('/new-dog')} />
+        <Button
+          label={demo.isPending ? demoText.loading : demoText.start}
+          variant="secondary"
+          disabled={demo.isPending}
+          onPress={() => demo.mutate(undefined, { onSuccess: () => router.replace('/') })}
+        />
+      </View>
       {Platform.OS === 'web' ? <Notice text={common.webPreview} /> : null}
     </Screen>
   );
@@ -42,4 +54,5 @@ export function WelcomeScreen() {
 
 const styles = StyleSheet.create({
   intro: { gap: 24, paddingTop: 20 },
+  actions: { gap: 12 },
 });

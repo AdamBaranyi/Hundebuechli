@@ -21,6 +21,7 @@ import { minuteOf, nowLocal } from '@/domain/local-time';
 import type { DoseSlot } from '@/db/repositories/medications';
 import type { LocalDateTime } from '@/domain/local-time';
 
+import { DemoBanner } from '../demo/DemoBanner';
 import { useDogList } from '../dogs/queries';
 import { useCompleteEntry, useOpenDue, useUndoCompletion } from '../health/queries';
 import { DoseRows } from '../medications/DoseRows';
@@ -147,6 +148,7 @@ export function OverviewScreen() {
         </AppText>
         <AppText color="pencil">{formatLocal.weekday(today)}</AppText>
       </View>
+      <DemoBanner />
       {dogOptions.length > 1 ? (
         <DogChooser
           label={overviewText.filterLabel}

@@ -19,10 +19,11 @@ export type Dog = typeof dogs.$inferSelect;
 
 type ListOptions = { includeArchived?: boolean };
 
-export function createDog(db: Db, input: DogInput): Dog {
+/** `id` nur für feste Kennungen, etwa die der Beispielhunde; sonst eine neue UUID. */
+export function createDog(db: Db, input: DogInput, id: string = newId()): Dog {
   const stamp = nowUtc();
   const row: Dog = {
-    id: newId(),
+    id,
     ...dogInputSchema.parse(input),
     archivedAt: null,
     createdAt: stamp,

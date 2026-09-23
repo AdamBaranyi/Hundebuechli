@@ -9,6 +9,7 @@ import { SectionTitle } from '@/ui/SectionTitle';
 import { Sheet } from '@/ui/Sheet';
 import { space } from '@/ui/tokens';
 
+import { DemoSettings } from './DemoSettings';
 import { OwnerSettings } from './OwnerSettings';
 import { ReminderSettings } from './ReminderSettings';
 import { WipeSettings } from './WipeSettings';
@@ -38,6 +39,7 @@ export function SettingsScreen() {
       </AppText>
       <ReminderSettings />
       <OwnerSettings />
+      <DemoSettings />
       <Block title={settingsText.about} text={common.disclaimer} />
       <Block title={settingsText.privacy} text={settingsText.privacyText} />
       <WipeSettings />

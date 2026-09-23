@@ -16,6 +16,7 @@ import { usePalette } from '@/ui/theme';
 import { space } from '@/ui/tokens';
 import { useToday } from '@/ui/useToday';
 
+import { DemoBanner } from '../demo/DemoBanner';
 import { type DogWithPhoto, useDogList } from './queries';
 
 function DogRow({ dog, today }: { dog: DogWithPhoto; today: string }) {
@@ -55,6 +56,7 @@ export function DogsScreen() {
       <AppText variant="largeTitle" heading={1}>
         {dogsText.title}
       </AppText>
+      <DemoBanner />
       {dogs.isPending ? <LoadingState /> : null}
       {dogs.isError ? <ErrorState onRetry={() => void dogs.refetch()} /> : null}
       {dogs.isSuccess && active.length === 0 ? <EmptyState title={dogsText.empty} /> : null}
