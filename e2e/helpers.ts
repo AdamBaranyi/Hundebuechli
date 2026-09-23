@@ -42,10 +42,10 @@ export function cspViolations(page: Page): Promise<string[]> {
   return page.evaluate(() => (window as unknown as { __cspViolations: string[] }).__cspViolations);
 }
 
-/** Öffnet einen Bildschirm und wartet, bis App, Datenbank und Schrift bereit sind. */
 /**
- * Öffnet die Vorschau leer: Ohne `leer` startet sie mit den Beispielhunden,
- * die Tests beginnen aber beim Erststart.
+ * Öffnet einen Bildschirm und wartet, bis App, Datenbank und Schrift bereit
+ * sind. Standardmässig leer: Ohne `leer` startet die Vorschau mit den
+ * Beispielhunden, die Tests beginnen aber beim Erststart.
  */
 export async function openScreen(page: Page, path: string, { demo = false } = {}) {
   // Nicht auf «load» warten: Firefox meldet es unter Last manchmal spät; die
