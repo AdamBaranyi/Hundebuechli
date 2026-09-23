@@ -300,3 +300,12 @@ Gerät entsteht das PDF mit expo-print unter einem lesbaren Namen und geht über
 **E-59 · Die Schrift steckt im PDF.** Atkinson Hyperlegible Next (normal und fett) wird als Base64
 eingebettet; unter iOS kann expo-print keine lokalen Dateien laden. Scheitert das Laden, nimmt das
 PDF die Systemschrift statt gar nicht zu entstehen.
+
+**E-60 · Dokumente im Vollbild, Zoom nur unter iOS.** Die ScrollView von React Native vergrössert
+unter iOS selbst mit zwei Fingern (`maximumZoomScale`); unter Android und im Browser kann sie das
+nicht. Eine eigene Zoom-Geste wäre viel Code für wenig Nutzen – der Auftrag erlaubt ausdrücklich
+«einfaches Vollbild genügt». Unter Android und im Browser bleibt es darum beim Vollbild.
+
+**E-61 · Ein Fotofeld für Tagebuch und Dokumente.** `AttachedPhotos` nimmt den Besitzer als
+Parameter (Tagebucheintrag oder Dokument) und geht durch dieselbe Prüfung auf Standortdaten.
+Seiten eines Dokuments lassen sich gross öffnen.

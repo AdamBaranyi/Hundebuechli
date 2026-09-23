@@ -60,6 +60,8 @@ export const dogsText = {
     noWeight: 'Noch nicht gewogen',
     diaryCount: (count: number) => (count === 1 ? '1 Eintrag' : `${count} Einträge`),
     noDiary: 'Noch nichts notiert',
+    documentCount: (count: number) => (count === 1 ? '1 Dokument' : `${count} Dokumente`),
+    noDocuments: 'Noch keine Dokumente',
     copyChip: 'Chipnummer kopieren',
     chipCopied: 'Chipnummer kopiert.',
     callVet: 'Tierarztpraxis anrufen',

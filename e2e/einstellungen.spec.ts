@@ -20,9 +20,10 @@ test('Halterangaben: sichern und auf dem Plakat vorgeschlagen', async ({ page, b
 
   await page.getByRole('textbox', { name: 'Name', exact: true }).fill('Adam');
   await page.getByRole('button', { name: 'Halterangaben sichern' }).click();
+  // Geprüft wird, was bleibt – nicht die Kurzmeldung, die nach 2,5 s verschwindet.
   await expect(
-    page.locator('[aria-hidden="true"]').getByText('Halterangaben gesichert.'),
-  ).toBeVisible();
+    page.getByText('Gib deinen Namen an, damit man weiss, wen man anruft.'),
+  ).toBeHidden();
   await expectScreenQuality(page, seen, 'Einstellungen mit Halterangaben');
 
   // Der Reiter «Hunde» kehrt zum zuletzt offenen Profil zurück.

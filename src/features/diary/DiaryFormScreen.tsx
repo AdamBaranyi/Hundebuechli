@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 
 import { diaryCategories, diaryText } from '@/content/diary';
+import { photosText } from '@/content/photos';
 import { formatLocal, parseInputDate } from '@/content/format';
 import { statesText } from '@/content/states';
 import { validationMessage } from '@/content/validation';
@@ -22,7 +23,7 @@ import { useToday } from '@/ui/useToday';
 
 import { useDogList } from '../dogs/queries';
 import { parseTime } from '../medications/medication-form';
-import { DiaryPhotos } from './DiaryPhotos';
+import { AttachedPhotos } from '../photos/AttachedPhotos';
 import {
   type DiaryEntryView,
   useDeleteDiaryEntry,
@@ -178,9 +179,9 @@ function DiaryForm({ entryId, entry, dogs, initialDogId, today }: FormProps) {
         error={errors.text ?? null}
       />
       {entryId && entry ? (
-        <DiaryPhotos entryId={entryId} photos={entry.photos} />
+        <AttachedPhotos parent={{ diaryEntryId: entryId }} photos={entry.photos} />
       ) : (
-        <Notice text={diaryText.photos.onlyAfterSave} />
+        <Notice text={photosText.onlyAfterSave} />
       )}
       {entryId ? (
         <>

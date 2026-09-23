@@ -2,6 +2,7 @@ import { router } from 'expo-router';
 import { Image, StyleSheet, View } from 'react-native';
 
 import { diaryCategories, diaryText } from '@/content/diary';
+import { photosText } from '@/content/photos';
 import { formatLocal } from '@/content/format';
 import { AppText } from '@/ui/AppText';
 import { Button } from '@/ui/Button';
@@ -63,7 +64,7 @@ export function DiaryScreen({ dogId }: { dogId: string | null }) {
                   <Image
                     key={photo.id}
                     source={{ uri: photo.uri }}
-                    accessibilityLabel={diaryText.photos.label(index + 1, entry.photos.length)}
+                    accessibilityLabel={photosText.label(index + 1, entry.photos.length)}
                     accessibilityRole="image"
                     style={[styles.photo, { backgroundColor: palette.line }]}
                     resizeMode="cover"

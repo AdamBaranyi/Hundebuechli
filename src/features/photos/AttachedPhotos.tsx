@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Image, Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
 
-import { diaryText } from '@/content/diary';
+import { photosText } from '@/content/photos';
+import type { AttachmentParent } from '@/db/repositories/attachments';
 import { UnsafePhotoError } from '@/photos/import-photo';
 import { pickPhoto, type PhotoSource } from '@/photos/pick';
 import { AppText } from '@/ui/AppText';
@@ -11,21 +12,30 @@ import { Icon } from '@/ui/Icon';
 import { usePalette } from '@/ui/theme';
 import { radius, space, touch } from '@/ui/tokens';
 
-import { type DiaryPhotoView, useAddDiaryPhoto, useRemoveDiaryPhoto } from './queries';
+import { useAddPhoto, useRemovePhoto } from './queries';
 
 type Problem = 'unsafe' | 'failed' | 'denied' | null;
 
-const t = diaryText.photos;
+export type PhotoView = { id: string; uri: string };
+
+const t = photosText;
+
+type Props = {
+  parent: AttachmentParent;
+  photos: readonly PhotoView[];
+  /** Tippen aufs Bild öffnet es gross, etwa bei Dokumenten. */
+  onOpen?: (photo: PhotoView) => void;
+};
 
 /**
- * Fotos eines Tagebucheintrags. Wie beim Hund wird erst gespeichert, wenn der
- * Eintrag schon steht – so bleibt keine Datei ohne Eintrag zurück. Jedes Foto
- * geht durch dieselbe Prüfung auf Standortdaten.
+ * Fotos eines Tagebucheintrags oder Dokuments. Wie beim Hund wird erst
+ * gespeichert, wenn der Eintrag schon steht – so bleibt keine Datei ohne
+ * Eintrag zurück. Jedes Foto geht durch dieselbe Prüfung auf Standortdaten.
  */
-export function DiaryPhotos({ entryId, photos }: { entryId: string; photos: DiaryPhotoView[] }) {
+export function AttachedPhotos({ parent, photos, onOpen }: Props) {
   const palette = usePalette();
-  const add = useAddDiaryPhoto();
-  const remove = useRemoveDiaryPhoto();
+  const add = useAddPhoto();
+  const remove = useRemovePhoto();
   const [problem, setProblem] = useState<Problem>(null);
 
   async function choose(source: PhotoSource) {
@@ -34,7 +44,7 @@ export function DiaryPhotos({ entryId, photos }: { entryId: string; photos: Diar
     if (picked.status === 'denied') return setProblem('denied');
     if (picked.status !== 'picked') return;
     add.mutate(
-      { entryId, image: picked.image },
+      { parent, image: picked.image },
       {
         onError: (error) => {
           const next = error instanceof UnsafePhotoError ? 'unsafe' : 'failed';
@@ -55,13 +65,22 @@ export function DiaryPhotos({ entryId, photos }: { entryId: string; photos: Diar
         <View style={styles.grid}>
           {photos.map((photo, index) => (
             <View key={photo.id} style={styles.item}>
-              <Image
-                source={{ uri: photo.uri }}
-                accessibilityLabel={t.label(index + 1, photos.length)}
-                accessibilityRole="image"
-                style={[styles.photo, { backgroundColor: palette.line }]}
-                resizeMode="cover"
-              />
+              <Pressable
+                role={onOpen ? 'button' : undefined}
+                accessibilityLabel={
+                  onOpen ? t.open(index + 1, photos.length) : t.label(index + 1, photos.length)
+                }
+                disabled={!onOpen}
+                onPress={() => onOpen?.(photo)}
+              >
+                <Image
+                  source={{ uri: photo.uri }}
+                  accessibilityLabel={t.label(index + 1, photos.length)}
+                  accessibilityRole="image"
+                  style={[styles.photo, { backgroundColor: palette.line }]}
+                  resizeMode="cover"
+                />
+              </Pressable>
               <Pressable
                 role="button"
                 accessibilityLabel={t.remove(index + 1)}

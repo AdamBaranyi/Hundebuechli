@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useDb } from '@/db/DatabaseProvider';
 import { queryKeys } from '@/db/query-keys';
-import { addAttachment, deleteAttachment } from '@/db/repositories/attachments';
 import {
   createDiaryEntry,
   deleteDiaryEntry,
@@ -14,8 +13,6 @@ import {
 } from '@/db/repositories/diary';
 import type { DiaryInput } from '@/domain/diary';
 import { photoStore } from '@/files/photo-store';
-import { devicePhotoDeps } from '@/photos/device';
-import { importPhoto, type PickedImage } from '@/photos/import-photo';
 
 /** Ein Eintrag mit Adressen seiner Bilder, wie die Oberfläche sie braucht. */
 export type DiaryPhotoView = { id: string; uri: string };
@@ -75,31 +72,6 @@ export function useDeleteDiaryEntry() {
     mutationFn: async (id: string) => {
       const { attachmentPaths } = deleteDiaryEntry(db, id);
       await Promise.all(attachmentPaths.map((path) => photoStore.remove(path)));
-    },
-    onSuccess: invalidate,
-  });
-}
-
-/** Ein Foto zu einem gesicherten Eintrag; erst nach der Prüfung gespeichert. */
-export function useAddDiaryPhoto() {
-  const db = useDb();
-  const invalidate = useInvalidateDiary();
-  return useMutation({
-    mutationFn: async ({ entryId, image }: { entryId: string; image: PickedImage }) => {
-      const stored = await importPhoto(image, devicePhotoDeps);
-      return addAttachment(db, { diaryEntryId: entryId }, stored);
-    },
-    onSuccess: invalidate,
-  });
-}
-
-export function useRemoveDiaryPhoto() {
-  const db = useDb();
-  const invalidate = useInvalidateDiary();
-  return useMutation({
-    mutationFn: async (attachmentId: string) => {
-      const path = deleteAttachment(db, attachmentId);
-      if (path) await photoStore.remove(path);
     },
     onSuccess: invalidate,
   });

@@ -4,6 +4,7 @@ import { Linking, Pressable, StyleSheet, View } from 'react-native';
 
 import { dogsText } from '@/content/dogs';
 import { diaryText } from '@/content/diary';
+import { documentsText } from '@/content/documents';
 import { medicationsText } from '@/content/medications';
 import { pdfText } from '@/content/pdf';
 import { weightsText } from '@/content/weights';
@@ -29,6 +30,7 @@ import { useToday } from '@/ui/useToday';
 
 import { useHealthEntries } from '../health/queries';
 import { useDiaryEntries } from '../diary/queries';
+import { useDocuments } from '../documents/queries';
 import { useMedications } from '../medications/queries';
 import { useWeights } from '../weights/queries';
 import { DogActions } from './DogActions';
@@ -74,6 +76,7 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
   const medications = useMedications(dogId ?? '');
   const weights = useWeights(dogId ?? '');
   const diary = useDiaryEntries(dogId ?? '');
+  const documents = useDocuments(dogId ?? '');
 
   if (dog.isPending)
     return (
@@ -202,6 +205,18 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
                 : dogsText.profile.noDiary
             }
             onPress={() => router.push({ pathname: '/dogs/[id]/diary', params: { id: data.id } })}
+          />
+          <Row
+            icon="document"
+            title={documentsText.title}
+            secondary={
+              documents.data?.length
+                ? dogsText.profile.documentCount(documents.data.length)
+                : dogsText.profile.noDocuments
+            }
+            onPress={() =>
+              router.push({ pathname: '/dogs/[id]/documents', params: { id: data.id } })
+            }
           />
         </Sheet>
       </View>

@@ -41,6 +41,7 @@ export default function DogsLayout() {
       <Stack.Screen name="[id]/medication" options={backOptions('Profil')} />
       <Stack.Screen name="[id]/weight" options={backOptions('Profil')} />
       <Stack.Screen name="[id]/diary" options={backOptions('Profil')} />
+      <Stack.Screen name="[id]/documents" options={backOptions('Profil')} />
     </Stack>
   );
 }
