@@ -9,7 +9,9 @@ import { SectionTitle } from '@/ui/SectionTitle';
 import { Sheet } from '@/ui/Sheet';
 import { space } from '@/ui/tokens';
 
+import { OwnerSettings } from './OwnerSettings';
 import { ReminderSettings } from './ReminderSettings';
+import { WipeSettings } from './WipeSettings';
 
 function Block({ title, text }: { title: string; text: string }) {
   return (
@@ -25,9 +27,8 @@ function Block({ title, text }: { title: string; text: string }) {
 }
 
 /**
- * Einstellungen, Stand Tag 3: Uhrzeit und Vorlauf der Erinnerungen, Hinweis
- * zur Tiermedizin, Datenschutz, Version. Halterangaben, Beispieldaten und
- * «Alle Daten löschen» kommen an Tag 4 dazu.
+ * Einstellungen: Erinnerungen, Halterangaben, Hinweis zur Tiermedizin,
+ * Datenschutz, «Alle Daten löschen» als letztes, Version.
  */
 export function SettingsScreen() {
   return (
@@ -36,8 +37,10 @@ export function SettingsScreen() {
         {settingsText.title}
       </AppText>
       <ReminderSettings />
+      <OwnerSettings />
       <Block title={settingsText.about} text={common.disclaimer} />
       <Block title={settingsText.privacy} text={settingsText.privacyText} />
+      <WipeSettings />
       <AppText variant="secondary" color="pencil">
         {settingsText.version(Constants.expoConfig?.version ?? '–')}
       </AppText>

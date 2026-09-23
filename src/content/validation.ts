@@ -20,6 +20,7 @@ const FIELD_MESSAGES: Record<string, Record<string, string>> = {
   dogId: { required: 'Wähle, für welchen Hund der Eintrag ist.' },
   kind: { required: 'Wähle die Art des Eintrags.' },
   category: { required: 'Wähle, worum es geht.' },
+  ownerName: { required: 'Gib deinen Namen an, damit man weiss, wen man anruft.' },
   text: { required: 'Schreib, was dir aufgefallen ist.' },
 };
 

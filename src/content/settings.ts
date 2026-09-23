@@ -16,5 +16,27 @@ export const settingsText = {
     7: 'Eine Woche vorher',
     14: 'Zwei Wochen vorher',
   },
+  owner: {
+    title: 'Halterangaben',
+    hint: 'Erscheinen nur auf dem Hundesitter-Blatt und dem Vermisst-Plakat – und nur, wenn du sie einträgst.',
+    name: 'Name',
+    phone: 'Telefon',
+    email: 'E-Mail',
+    address: 'Adresse',
+    save: 'Halterangaben sichern',
+    saved: 'Halterangaben gesichert.',
+    removed: 'Halterangaben entfernt.',
+  },
+  wipe: {
+    title: 'Alle Daten löschen',
+    hint: 'Entfernt alle Hunde, Einträge, Fotos, Erinnerungen und Einstellungen von diesem Gerät.',
+    button: 'Alle Daten löschen',
+    confirmTitle: 'Wirklich alles löschen?',
+    confirmText:
+      'Alle Hunde mit allen Einträgen, Medikamenten, Gewichten, Tagebüchern, Dokumenten und Fotos verschwinden, dazu Halterangaben und Erinnerungen. Es lässt sich nicht rückgängig machen.',
+    confirm: 'Alles löschen',
+    cancel: 'Abbrechen',
+    done: 'Alle Daten gelöscht.',
+  },
   version: (version: string) => `Version ${version}`,
 } as const;
