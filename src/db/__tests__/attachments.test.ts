@@ -28,12 +28,13 @@ describe('Repository Bilder', () => {
 
   it('hängt Bilder an einen Eintrag und listet sie in ihrer Reihenfolge', () => {
     const entry = createHealthEntry(db, { dogId, kind: 'vet_visit', date: '2026-09-22' });
-    addAttachment(db, { healthEntryId: entry.id }, image('a'));
-    addAttachment(db, { healthEntryId: entry.id }, image('b'));
-    expect(listAttachments(db, { healthEntryId: entry.id }).map((a) => a.path)).toEqual([
-      'photos/a.jpg',
-      'photos/b.jpg',
-    ]);
+    // Alle in derselben Millisekunde: Die Reihenfolge darf nicht an der
+    // zufälligen ID hängen, sondern an der Reihenfolge des Einfügens.
+    const names = ['a', 'b', 'c', 'd', 'e', 'f'];
+    for (const name of names) addAttachment(db, { healthEntryId: entry.id }, image(name));
+    expect(listAttachments(db, { healthEntryId: entry.id }).map((a) => a.path)).toEqual(
+      names.map((name) => `photos/${name}.jpg`),
+    );
     expect(listAttachments(db, { dogId })).toEqual([]);
   });
 
@@ -43,6 +44,12 @@ describe('Repository Bilder', () => {
     expect(removedPaths).toEqual(['photos/alt.jpg']);
     expect(dogPhoto(db, dogId)?.id).toBe(photo.id);
     expect(listAttachments(db, { dogId })).toHaveLength(1);
+  });
+
+  it('nimmt als Profilfoto das zuletzt eingefügte, auch in derselben Millisekunde', () => {
+    addAttachment(db, { dogId }, image('alt'));
+    const neu = addAttachment(db, { dogId }, image('neu'));
+    expect(dogPhoto(db, dogId)?.id).toBe(neu.id);
   });
 
   it('löscht ein Bild und gibt seinen Pfad zurück', () => {

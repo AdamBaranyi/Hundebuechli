@@ -1,4 +1,4 @@
-import { desc, eq } from 'drizzle-orm';
+import { desc, eq, sql } from 'drizzle-orm';
 
 import { attachments } from '../schema';
 import { newId, nowUtc } from '../time';
@@ -41,13 +41,19 @@ export function addAttachment(db: Db, parent: AttachmentParent, image: StoredIma
   return row;
 }
 
+/**
+ * Die Reihenfolge des Einfügens. Zwei Bilder können dieselbe Zeit tragen, und
+ * die IDs sind zufällig; dann entscheidet die Zeilennummer von SQLite.
+ */
+const insertionOrder = sql`rowid`;
+
 /** Bilder eines Besitzers in der Reihenfolge, in der sie dazukamen. */
 export function listAttachments(db: Db, parent: AttachmentParent): Attachment[] {
   return db
     .select()
     .from(attachments)
     .where(parentFilter(parent))
-    .orderBy(attachments.createdAt, attachments.id)
+    .orderBy(attachments.createdAt, insertionOrder)
     .all();
 }
 
@@ -57,7 +63,7 @@ export function dogPhoto(db: Db, dogId: string): Attachment | undefined {
     .select()
     .from(attachments)
     .where(eq(attachments.dogId, dogId))
-    .orderBy(desc(attachments.createdAt), desc(attachments.id))
+    .orderBy(desc(attachments.createdAt), desc(insertionOrder))
     .get();
 }
 

@@ -199,3 +199,19 @@ Browser – Symbol über der Beschriftung, 4 px Luft dazwischen, Tippfläche min
 Eintrag mit Kapsel in der Farbe Linie. Adams Regel «Schrift ab 16» geht vor dem Systemlook, so
 steht es auch im Entwurf. Preis: kein Liquid Glass des Systems; die Leiste bleibt mindestens 90 %
 deckend. Gewinn: eine Leiste, ein Test – die Playwright-Prüfungen gelten jetzt für beide Seiten.
+
+**E-41 · Ausschnitt mit dem Zuschnitt des Systems, quadratisch.** Auf dem Gerät stand der Hund
+nicht in der Mitte und liess sich nicht verschieben (Gerätetest 23.09.2026). Statt eigener Gesten
+(Ziehen, Zoomen, Zuschneiden – viel Code, auf dem Gerät kaum automatisch prüfbar) übernimmt das
+den Zuschnitt des Systems: `allowsEditing` in `expo-image-picker`, verschieben und zoomen wie in
+Fotos. iOS schneidet dabei immer quadratisch zu, Android nur mit `aspect`; darum ist der
+Ausschnitt überall 1:1 und das Profil zeigt ihn quadratisch statt in 4:3. So sieht man genau das,
+was zugeschnitten wurde, und das runde Bild in der Liste schneidet nichts ab. Der Entwurf sieht
+ohnehin vor, dass die App beim Hochladen einen Ausschnitt speichert. In der Web-Vorschau gibt es
+keinen Zuschnitt; dort wird die Mitte des Bildes gezeigt.
+
+**E-42 · Reihenfolge der Bilder über die Zeilennummer.** Zwei Bilder im selben Moment tragen
+dieselbe Zeit, und die IDs sind zufällig: Die Liste kam mal so, mal so (sprunghafter Test am
+23.09.2026). Sortiert wird jetzt nach Zeit und danach nach `rowid` von SQLite, also nach der
+Reihenfolge des Einfügens. Der Test legt sechs Bilder in derselben Millisekunde an; mit der
+alten Sortierung fällt er.

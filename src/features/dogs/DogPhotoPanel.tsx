@@ -97,7 +97,7 @@ export function DogPhotoPanel({ dog }: { dog: DogWithPhoto }) {
 
 const styles = StyleSheet.create({
   panel: { gap: space.s3 },
-  photo: { width: '100%', aspectRatio: 4 / 3, borderRadius: radius.photo },
+  photo: { width: '100%', aspectRatio: 1, borderRadius: radius.photo },
   problem: { gap: space.s2 },
   buttons: { flexDirection: 'row', flexWrap: 'wrap', gap: space.s2 },
   button: { flexGrow: 1, flexBasis: 160 },
