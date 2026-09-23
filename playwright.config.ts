@@ -21,6 +21,8 @@ export default defineConfig({
   use: {
     baseURL: `http://127.0.0.1:${PORT}`,
     locale: 'de-CH',
+    // «Chipnummer kopieren» schreibt in die Zwischenablage.
+    permissions: ['clipboard-write', 'clipboard-read'],
     timezoneId: 'Europe/Zurich',
   },
   webServer: {

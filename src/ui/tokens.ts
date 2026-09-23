@@ -85,6 +85,9 @@ export const space = {
   section: 32, // Abstand zwischen Abschnitten
 } as const;
 
+/** Platz unter dem Inhalt für die schwebende Tab-Leiste. */
+export const tabBarSpace = 96;
+
 /** Radien nach Rang, nicht einer für alles. */
 export const radius = {
   sheet: 20,

@@ -215,3 +215,11 @@ dieselbe Zeit, und die IDs sind zufällig: Die Liste kam mal so, mal so (sprungh
 23.09.2026). Sortiert wird jetzt nach Zeit und danach nach `rowid` von SQLite, also nach der
 Reihenfolge des Einfügens. Der Test legt sechs Bilder in derselben Millisekunde an; mit der
 alten Sortierung fällt er.
+
+**E-43 · Kurzmeldung für Handlungen ohne sichtbare Folge.** «Chipnummer kopieren» sagte nur
+VoiceOver etwas; auf dem Bildschirm blieb alles gleich, und Adam sah nicht, ob es geklappt hat
+(Gerätetest 23.09.2026). Eine Kapsel über der Tab-Leiste zeigt den Satz 2,5 Sekunden lang und
+blendet in 150 ms ein – erlaubt auch bei reduzierter Bewegung. Sie nimmt keine Tipps entgegen und
+ist für Screenreader ausgeblendet, sonst käme die Meldung doppelt: `announce` spricht sie bereits.
+Sie erscheint nur, wo sonst nichts sichtbar geschieht: beim Kopieren und wenn ein Zurücknehmen
+misslingt. Beim Sichern, Stempeln und Löschen ändert sich der Bildschirm selbst.

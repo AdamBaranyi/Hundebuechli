@@ -9,6 +9,7 @@ import { ageOf } from '@/domain/dog-age';
 import { lastTwelveMonths } from '@/domain/calendar';
 import { AppText } from '@/ui/AppText';
 import { announce } from '@/ui/announce';
+import { toast } from '@/ui/toast';
 import { Button } from '@/ui/Button';
 import { Icon } from '@/ui/Icon';
 import type { IconName } from '@/ui/icon-shapes';
@@ -90,6 +91,9 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
   async function copyChip() {
     if (!data.chipNumber) return;
     await Clipboard.setStringAsync(data.chipNumber);
+    // Kopieren verändert nichts auf dem Bildschirm: Ohne Meldung bliebe offen,
+    // ob es geklappt hat (Gerätetest 23.09.2026).
+    toast(dogsText.profile.chipCopied);
     announce(dogsText.profile.chipCopied);
   }
 

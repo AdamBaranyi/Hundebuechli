@@ -7,6 +7,7 @@ import { formatLocal } from '@/content/format';
 import { overviewText } from '@/content/overview';
 import { AppText } from '@/ui/AppText';
 import { announce } from '@/ui/announce';
+import { toast } from '@/ui/toast';
 import { Button } from '@/ui/Button';
 import { DogChooser } from '@/ui/DogChooser';
 import { Notice } from '@/ui/Notice';
@@ -69,7 +70,12 @@ export function OverviewScreen() {
         });
         announce(overviewText.announceOpen(row.title, row.dogName));
       },
-      onError: () => announce(overviewText.undoFailed),
+      onError: () => {
+        // Misslingt das Zurücknehmen, bleibt der Stempel stehen: Ohne Meldung
+        // sähe es aus, als wäre nichts geschehen.
+        toast(overviewText.undoFailed);
+        announce(overviewText.undoFailed);
+      },
     });
   }
 

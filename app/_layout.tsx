@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { DatabaseProvider } from '@/db/DatabaseProvider';
 import { LiveRegion } from '@/ui/LiveRegion';
+import { ToastLayer } from '@/ui/ToastLayer';
 import { createQueryClient } from '@/db/query-client';
 import { usePalette } from '@/ui/theme';
 import { fontFiles } from '@/ui/tokens';
@@ -45,6 +46,7 @@ export default function RootLayout() {
           <Stack.Screen name="edit-entry/[id]" options={{ presentation: 'modal' }} />
         </Stack>
         <LiveRegion />
+        <ToastLayer />
       </DatabaseProvider>
     </QueryClientProvider>
   );

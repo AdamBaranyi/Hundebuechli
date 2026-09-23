@@ -3,7 +3,7 @@ import { Platform, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { usePalette } from './theme';
-import { CONTENT_MAX_WIDTH, space } from './tokens';
+import { CONTENT_MAX_WIDTH, space, tabBarSpace } from './tokens';
 
 type Props = {
   children: ReactNode;
@@ -14,9 +14,6 @@ type Props = {
   /** Blatt von unten; unter iOS beginnt es schon unter der Statusleiste. */
   inModal?: boolean;
 };
-
-/** Platz für die schwebende Tab-Leiste, damit der letzte Eintrag frei bleibt. */
-const tabBarHeight = 96;
 
 /**
  * Ein Bildschirm: Kiesel als Grund, Seitenrand 16, Abschnitte im Abstand 32.
@@ -30,7 +27,7 @@ export function Screen({ children, withHeader = false, inTabs = false, inModal =
   // (Gerätetest 23.09.2026); ein Blatt von unten beginnt ohnehin tiefer.
   const systemTop = withHeader || (Platform.OS === 'ios' && inModal);
   const top = space.s3 + (systemTop ? 0 : insets.top);
-  const bottom = space.s8 + insets.bottom + (inTabs ? tabBarHeight : 0);
+  const bottom = space.s8 + insets.bottom + (inTabs ? tabBarSpace : 0);
   return (
     <ScrollView
       role="main"

@@ -32,9 +32,16 @@ test('Ersten Hund anlegen: das Formular prüft, sichert und öffnet das Profil',
 
   await expect(page.getByRole('heading', { level: 1, name: 'Bäri' })).toBeVisible();
   await expect(page.getByText('Whippet, Rüde')).toBeVisible();
-  await expect(
-    page.getByRole('button', { name: /Chipnummer kopieren, 756 0981 2345 6789/ }),
-  ).toBeVisible();
+  const copy = page.getByRole('button', { name: /Chipnummer kopieren, 756 0981 2345 6789/ });
+  await expect(copy).toBeVisible();
+
+  // Kopieren verändert sonst nichts auf dem Bildschirm: Die Meldung ist der Beleg.
+  // Sie steht im ausgeblendeten Bereich; der Live-Bereich trägt denselben Satz.
+  const copied = page.locator('[aria-hidden="true"]').getByText('Chipnummer kopiert.');
+  await copy.click();
+  await expect(copied).toBeVisible();
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('756098123456789');
+  await expect(copied).toBeHidden({ timeout: 5000 });
   await expect(page.getByRole('navigation', { name: 'Hauptbereiche' })).toBeVisible();
   await expectScreenQuality(page, seen, 'Profil');
 });

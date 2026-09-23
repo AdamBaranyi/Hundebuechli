@@ -32,11 +32,11 @@ braucht kein Netz.
 | 1.2 | Sichern ohne Name | Satz «Gib deinem Hund einen Namen.» unter dem Feld, VoiceOver liest ihn | | | |
 | 1.3 | Name, Rasse, «Rüde», Chipnummer «756 0981 2345 6789», Praxis mit Telefon; Sichern | Profil mit Name gross; «Chipnummer aus der Schweiz» | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Datum war zuerst nicht einzugeben: Der Ziffernblock des iPhones hat keinen Punkt, darum liess sich nicht sichern (Adam). Behoben mit E-37; danach gesichert, das Profil zeigt den Hund |
 | 1.4 | Tab-Leiste unten ansehen | Drei Einträge, Beschriftung gross (16 pt), nichts abgeschnitten, Liquid Glass | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Beschriftung gross, aber ohne Platz zum Symbol: «die Ikon liegt einfach auf den Text drauf» (Adam). Behoben mit E-40, eigene Leiste; erneut zu prüfen |
-| 1.5 | «Foto aufnehmen» | Frage nach der Kamera erst jetzt; Foto erscheint, hochkant richtig gedreht | | | |
-| 1.6 | «Foto ersetzen» aus den Fotos | Neues Foto erscheint | | | |
-| 1.7 | «Chipnummer kopieren», in Notizen einfügen | 756098123456789 | | | |
-| 1.8 | «Tierarztpraxis anrufen» | Telefon öffnet mit der Nummer (nicht anrufen) | | | |
-| 1.9 | «Eintrag hinzufügen»: Entwurmung, Produkt, «Datum wählen» in 3 Tagen; Sichern | Im Profil «Das Jahr in Stempeln»; unter «Als Nächstes» bei «Diese Woche» | | | |
+| 1.5 | «Foto aufnehmen» | Frage nach der Kamera erst jetzt; Foto erscheint, hochkant richtig gedreht | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Foto erscheint richtig; nach E-39 und E-41 in Ordnung (Adam) |
+| 1.6 | «Foto ersetzen» aus den Fotos | Neues Foto erscheint | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Funktioniert; Ausschnitt mit dem Zuschnitt des Systems (E-41) |
+| 1.7 | «Chipnummer kopieren», in Notizen einfügen | 756098123456789 | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Keine sichtbare Rückmeldung: «ich sehe das nicht, dass es kopiert wurde» (Adam). Behoben mit E-43, Kurzmeldung; Einfügen noch zu prüfen |
+| 1.8 | «Tierarztpraxis anrufen» | Telefon öffnet mit der Nummer (nicht anrufen) | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Telefon öffnet sich (Adam) |
+| 1.9 | «Eintrag hinzufügen»: Entwurmung, Produkt, «Datum wählen» in 3 Tagen; Sichern | Im Profil «Das Jahr in Stempeln»; unter «Als Nächstes» bei «Diese Woche» | 23.09.2026 | iPhone 17 Pro Max, iOS 27 | Eintrag angelegt, nächstes Datum 23.12. bei drei Monaten Wiederholung (Adam) |
 | 1.10 | Unter «Als Nächstes» aufs gestrichelte Stempelfeld tippen | Stempel mit heutigem Datum, Zeile bleibt stehen; VoiceOver sagt «… erledigt.» | | | |
 | 1.11 | **Expo Go ganz schliessen, neu öffnen** (Flugmodus weiter an) | Hund, Foto und Einträge sind da | | | |
 | 1.12 | Grösster Text (wie 0.4), dann Formular und «Als Nächstes» | Alles bricht um, nichts abgeschnitten, alles erreichbar | | | |
@@ -54,3 +54,7 @@ braucht kein Netz.
   Höhe behält. Auf dem Gerät läuft jetzt dieselbe eigene Leiste wie im Browser (E-40).
 - Jedes Foto wurde abgelehnt: «alle meine Fotos enthalten Standortdaten». Die Metadaten werden
   jetzt herausgeschnitten statt das Foto abzulehnen (E-39).
+- Der Hund stand nicht in der Mitte des Bildes. Nach dem Wählen kommt jetzt der Zuschnitt des
+  Systems, quadratisch (E-41).
+- «Chipnummer kopieren» zeigte nichts an. Es gibt jetzt eine Kurzmeldung über der Tab-Leiste
+  (E-43).
