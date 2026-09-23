@@ -127,5 +127,6 @@ export function posterPdf(data: PosterPdfData, common: Common): string {
   <p class="poster-call">${esc(t.call)} <strong>${esc(data.phone)}</strong></p>
 </div>
 <div class="keep strips">${strips}</div>`;
-  return pdfDocument({ title: `${t.heading}: ${data.name}`, body, ...common });
+  // Ohne Fusszeile: Der Hinweis zum Heimtierausweis gehört nicht an die Laterne.
+  return pdfDocument({ title: `${t.heading}: ${data.name}`, body, ...common, footer: null });
 }

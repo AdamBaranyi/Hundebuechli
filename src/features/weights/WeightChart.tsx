@@ -23,7 +23,8 @@ export function WeightChart({ points, dogName }: Props) {
   const [width, setWidth] = useState(0);
   const onLayout = (event: LayoutChangeEvent) => setWidth(event.nativeEvent.layout.width);
   if (points.length === 0) return null;
-  const curve = buildCurve(points, Math.max(width, 1), HEIGHT);
+  // Oben mehr Rand: Dort steht die Zahl des letzten Werts über dem Punkt.
+  const curve = buildCurve(points, Math.max(width, 1), HEIGHT, 30);
   const last = curve.points.at(-1);
   return (
     <View
@@ -67,9 +68,10 @@ export function WeightChart({ points, dogName }: Props) {
             />
           ))}
           {last ? (
+            // Links vom letzten Punkt und darüber, damit weder Linie noch Rand die Zahl schneiden.
             <SvgText
-              x={Math.min(last.x, width - 4)}
-              y={Math.max(last.y - 12, 16)}
+              x={last.x - 10}
+              y={last.y - 14}
               textAnchor="end"
               fill={palette.graphite}
               fontFamily={fontFamily.bold}

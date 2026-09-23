@@ -30,7 +30,8 @@ function fontFaces(fonts: PdfFonts): string {
 export function pdfDocument(parts: {
   title: string;
   body: string;
-  footer: string;
+  /** Fusszeile; das Plakat hängt öffentlich und braucht keine. */
+  footer: string | null;
   fonts: PdfFonts;
 }): string {
   return `<!doctype html>
@@ -87,7 +88,7 @@ export function pdfDocument(parts: {
 </head>
 <body>
 ${parts.body}
-<footer>${esc(parts.footer)}</footer>
+${parts.footer ? `<footer>${esc(parts.footer)}</footer>` : ''}
 </body>
 </html>`;
 }

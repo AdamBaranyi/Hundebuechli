@@ -175,7 +175,7 @@ export function DogProfileScreen({ dogId }: { dogId: string | null }) {
             onPress={() => router.push({ pathname: '/dogs/[id]/health', params: { id: data.id } })}
           />
           <Row
-            icon="pill"
+            icon="capsule"
             title={medicationsText.title}
             secondary={
               medications.data?.length

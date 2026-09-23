@@ -39,7 +39,8 @@ export const ICON_SHAPES = {
     path('m14.5 5.5 4 4-9 9h-4v-4z'),
     path('M5.5 18.5 2.5 21.5M16.5 3.5l4 4M18.5 5.5l2-2M11 9l2 2M8.5 11.5l2 2'),
   ],
-  pill: [circle(12, 12, 7.5), path('M6.7 17.3 17.3 6.7')],
+  // Tablette mit kurzer Bruchkerbe: Reicht der Strich bis an den Rand, liest er sich als Verbotszeichen.
+  pill: [circle(12, 12, 7.5), path('M9.6 14.4 14.4 9.6')],
   shield: [
     path('M12 3l7 3v5c0 4.6-3 8.3-7 10-4-1.7-7-5.4-7-10V6z'),
     path('M12 8.5c1.6 2 2.5 3.4 2.5 4.6a2.5 2.5 0 0 1-5 0c0-1.2.9-2.6 2.5-4.6z'),

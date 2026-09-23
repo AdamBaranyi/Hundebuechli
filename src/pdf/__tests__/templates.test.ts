@@ -115,6 +115,11 @@ describe('PDF-Vorlagen', () => {
     expect(broken).not.toContain('onload');
   });
 
+  it('lässt auf dem Plakat die Fusszeile weg', () => {
+    expect(vetPdf(vet(), common)).toContain('<footer>');
+    expect(posterPdf(poster(), common)).not.toContain('<footer>');
+  });
+
   it('druckt acht Abreissstreifen mit der Nummer', () => {
     const html = posterPdf(poster(), common);
     expect(html.match(/<strong>000 000 00 00<\/strong><br>Bäri vermisst/g)).toHaveLength(8);

@@ -272,6 +272,15 @@ Stempel und Rückgängig, reduzierte Bewegung, Tastaturfokus, Fälligkeit mit Mo
 gleich Tabelle, 135 % und 200 % Schrift. **Stand 22.09.2026: 579 Prüfungen, alle grün.**
 Bildschirmfotos je Gerät in `screenshots/`.
 
+**Durchgang 2 in der App (23.09.2026):** `avoid-ai-design` im Erkennungsmodus über die Bildschirme
+von Tag 3 und 4 (Medikamente, Gewicht, Tagebuch, Dokumente, PDF, Einstellungen, Beispieldaten,
+Tab-Leiste, Kurzmeldung, PDF-Vorlagen), gerendert bei 390 px hell und dunkel. Kein P0. Behoben:
+Das Tabletten-Symbol las sich als Verbotszeichen – Medikamente tragen jetzt die Kapsel, die
+Tablette eine kurze Bruchkerbe; die Zahl über der Gewichtskurve lag auf der Linie; das
+Vermisst-Plakat trug die Fusszeile zum Heimtierausweis. Bewusst gelassen: jeder Tagebucheintrag
+als eigenes Blatt (er trägt eigene Fotos), die Systemschrift im Browser-Druck. Offen: das
+Fadenkreuz beim Berühren der Kurve – die Tabelle zeigt dieselben Zahlen.
+
 ## Umsetzbarkeit in React Native
 
 Der Prototyp nutzt nur, was React Native kann: Flexbox, Kanten, Radien, Vollfarben, `transform`,

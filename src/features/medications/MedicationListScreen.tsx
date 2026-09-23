@@ -38,7 +38,7 @@ export function MedicationListScreen({ dogId }: { dogId: string | null }) {
           {list.map((medication) => (
             <Row
               key={medication.id}
-              icon="pill"
+              icon="capsule"
               title={medication.name}
               secondary={medicationsText.summary(
                 medication.dose,

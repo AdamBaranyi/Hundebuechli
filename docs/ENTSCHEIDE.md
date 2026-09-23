@@ -329,3 +329,11 @@ Repository (`assets/demo/`, Quellen in `QUELLEN.md`).
 immer mit Beispieldaten beginnt. Das hängt mit «Web-Vorschau fertig» an Tag 5 zusammen, samt
 einem Weg, wie die Browsertests weiter mit dem leeren Erststart beginnen. Bis dahin gibt es den
 Knopf «Mit Beispieldaten starten» auf Gerät und Web.
+
+**E-65 · Der Stempel-Moment: hinein mit Bewegung, hinaus ohne.** Beim Stempeln kommt der Stempel
+wie im Entwurf leicht grösser und gedreht herein (200 ms, `cubic-bezier(0.23, 1, 0.32, 1)`, nur
+Deckkraft und Transformation), dazu die Haptik «Erfolg». Mit «Bewegung reduzieren» blendet er nur
+in 150 ms ein; die Haptik bleibt. Das Ausblenden beim Zurücknehmen (Entwurf: 150 ms) fehlt: Es
+bräuchte einen zweiten Zustand, der den Stempel nach dem Zurücknehmen noch zeigt, und das Risiko,
+dass ein schneller Doppeltipp etwas Falsches anzeigt, wiegt schwerer als die 150 ms. Im Browser
+keine Haptik: Die Web-Fassung von expo-haptics baut dafür versteckte Elemente ins Dokument.
