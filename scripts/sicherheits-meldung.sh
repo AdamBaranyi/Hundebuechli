@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Liest den Bericht des täglichen Laufs und hält genau ein Issue «Sicherheitsmeldungen»:
+# anlegen beim ersten Fund, ergänzen nur bei geänderter Kennungsliste, schliessen ohne Funde.
+# Braucht GH_TOKEN (issues: write) und GH_REPO.
+set -euo pipefail
+bericht="${1:-audit.txt}"
+titel="Sicherheitsmeldungen"
+label="sicherheit"
+zuweisung="${ZUWEISUNG:-AdamBaranyi}"
+heute=$(date -u +%F)
+ids=$(grep -o -E 'GHSA-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}' "$bericht" | sort -u || true)
+stand=$(printf '%s' "$ids" | sha256sum | cut -c1-12)
+nummer=$(gh issue list --label "$label" --state open --search "in:title $titel" --json number --jq '.[0].number // empty')
+
+if [ -z "$ids" ]; then
+  [ -n "$nummer" ] && gh issue close "$nummer" --comment "Der tägliche Lauf vom $heute findet keine Befunde mehr."
+  exit 0
+fi
+
+koerper=$(printf '<!-- stand:%s -->\nStand %s, Prüfung ab moderat mit den Ausnahmen aus scripts/audit.sh:\n\n```\n%s\n```\n\nRegel: high und critical mit Fix sofort (Laufzeit) oder mit dem nächsten Update-PR (Werkzeuge); moderate beim nächsten Update-PR; ohne Fix namentlich und befristet ausnehmen (docs/SECURITY.md).' "$stand" "$heute" "$(cat "$bericht")")
+
+if [ -z "$nummer" ]; then
+  gh label create "$label" --color B60205 --description "Befunde des täglichen Sicherheitslaufs" 2>/dev/null || true
+  gh issue create --title "$titel" --label "$label" --assignee "$zuweisung" --body "$koerper"
+elif ! gh issue view "$nummer" --json body --jq .body | grep -q "stand:$stand"; then
+  gh issue edit "$nummer" --body "$koerper"
+  gh issue comment "$nummer" --body "$(printf 'Geänderte Befunde am %s:\n\n```\n%s\n```' "$heute" "$(cat "$bericht")")"
+fi

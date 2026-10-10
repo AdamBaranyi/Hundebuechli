@@ -395,3 +395,23 @@ zeigt erst ein Android-Gerät – bis dahin steht es als offen im Geräteprotoko
 **E-75 · APK nur für ARM.** Gebaut wird für `arm64-v8a` und `armeabi-v7a`, also für echte Handys
 bis zurück zu älteren 32-Bit-Geräten. x86 bräuchten nur Emulatoren; ohne sie halbieren sich
 Bauzeit und Grösse der APK.
+
+**E-76 · Der tägliche Sicherheitslauf meldet, die CI blockiert ab «hoch».** Vom 02. bis 09.10.2026
+war der tägliche Lauf jeden Tag rot: neue Meldungen zu Werkzeugen, drei davon ohne Fix. Jeder rote
+geplante Lauf schickt eine E-Mail und hängt ein rotes Kreuz an den letzten Commit auf `main` – wer
+das Repository ansieht, sieht das Kreuz, nicht den Grund, und nach drei Wochen liest niemand mehr
+die tägliche Post. Seit 10.10.2026 wird der tägliche Lauf nur noch wegen eines Geheimnisses rot.
+Befunde ab «moderat» landen in einem einzigen Issue «Sicherheitsmeldungen»
+(`scripts/sicherheits-meldung.sh`): angelegt beim ersten Fund, ergänzt nur, wenn sich die
+Kennungen ändern, geschlossen, sobald nichts mehr übrig ist. Push und Pull Request blockieren ab
+«hoch». Stufe und Ausnahmen stehen an einer Stelle (`scripts/audit.sh`); jede Ausnahme ist
+namentlich, begründet und auf höchstens einen Monat befristet (`docs/SECURITY.md`). Tests halten
+Skript, Tabelle und Workflows zusammen, 21 Sabotagen wurden rot. Die Regel gilt für alle eigenen
+Repositories.
+
+**E-77 · shell-quote und source-map-js per Override, ohne Ausnahme von der Wartezeit.** Beide
+Meldungen betreffen Werkzeuge (DevTools-Server, postcss), nicht die App. Die behobenen Fassungen
+erschienen am 29. und 30.09.2026 und sind älter als sieben Tage; die Meldung zu shell-quote kam erst
+am 06.10.2026. Ein Override statt nur des Lockfiles, obwohl die Bereiche der Elternpakete die
+Fassungen erlauben: Es hält auch künftige Kopien auf der behobenen Fassung und steht sichtbar in
+`package.json`. Es fällt weg, sobald die Elternpakete die Fassung selbst verlangen.

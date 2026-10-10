@@ -11,9 +11,11 @@ exact = true
 # Grenzen: Wirkt nur aus dieser projekteigenen Datei, nicht aus ~/.bunfig.toml,
 # und nicht für Fassungen, die schon in bun.lock stehen.
 #
-# Dringender Sicherheitsfix, der nicht warten kann: das betroffene Paket
-# vorübergehend in minimumReleaseAgeExcludes eintragen, mit Datum und Grund in
-# docs/SECURITY.md.
+# Dringender Sicherheitsfix, der nicht warten kann – nur für ein erreichbares
+# Laufzeitpaket, nie für ein Werkzeug (docs/ENTSCHEIDE.md, E-76): das Paket für
+# den einen `bun install`, der die Fassung ins Lockfile schreibt, in
+# minimumReleaseAgeExcludes eintragen und danach wieder entfernen; Datum und
+# Grund in docs/SECURITY.md.
 minimumReleaseAge = 604800
 
 # Klassisches node_modules ohne Symlinks. Metro und Expo Go erwarten die
