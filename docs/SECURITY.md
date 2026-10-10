@@ -91,7 +91,9 @@ nutzt es beim Bündeln von CSS, nur als Werkzeug. Seit 10.10.2026 `"source-map-j
 postcss verlangt `^1.2.1`. Fällt weg, sobald postcss mindestens 1.2.2 verlangt.
 
 Geprüft am 10.10.2026: Beide bleiben CommonJS (`require('shell-quote').quote()` und eine Source Map
-über postcss laufen), es gibt je genau eine Kopie, und Web-Export, Playwright und die APK bauen.
+über postcss laufen), es gibt je genau eine Kopie, der Web-Export enthält weder react-devtools noch
+shell-quote, Playwright läuft in Chrome, Safari und Firefox grün, und die Probe-APK baut (Lauf
+38053947160, 33 MB) mit genau den erlaubten Berechtigungen.
 **Keine Ausnahme von der Wartezeit nötig:** shell-quote 1.11.0 erschien am 29.09.2026,
 source-map-js 1.2.2 am 30.09.2026 – beide älter als sieben Tage. Die Meldung zu shell-quote kam
 erst am 06.10.2026.
