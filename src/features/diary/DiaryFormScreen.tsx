@@ -157,6 +157,7 @@ function DiaryForm({ entryId, entry, dogs, initialDogId, today }: FormProps) {
         choices={DIARY_CATEGORIES.map((value) => ({ value, label: diaryCategories[value] }))}
         selected={category}
         onSelect={setCategory}
+        error={errors.category ?? null}
       />
       <DateField
         label={diaryText.fields.date}

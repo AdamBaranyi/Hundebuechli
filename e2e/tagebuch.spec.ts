@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 
 import { createDog, start } from './flows';
-import { observe } from './helpers';
+import { formError, observe } from './helpers';
 import { expectScreenQuality } from './quality';
 
 const FIXTURES = join(__dirname, '..', 'src', 'domain', '__fixtures__');
@@ -20,7 +20,7 @@ test('Tagebuch: Eintrag mit Foto ohne Standortdaten', async ({ page, baseURL }) 
 
   await page.getByRole('button', { name: 'Eintrag schreiben' }).click();
   await page.getByRole('button', { name: 'Sichern' }).click();
-  await expect(page.getByText('Wähle, worum es geht.')).toBeVisible();
+  await expect(formError(page, 'Wähle, worum es geht.')).toBeVisible();
 
   await page.getByRole('radio', { name: 'Appetit' }).click();
   await page.getByRole('textbox', { name: 'Notiz' }).fill('Hat nur die Hälfte gefressen.');
