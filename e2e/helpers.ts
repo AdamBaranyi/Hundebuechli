@@ -48,10 +48,12 @@ export function cspViolations(page: Page): Promise<string[]> {
  * Beispielhunden, die Tests beginnen aber beim Erststart.
  */
 export async function openScreen(page: Page, path: string, { demo = false } = {}) {
-  // Nicht auf «load» warten: Firefox meldet es unter Last manchmal spät; die
-  // Überschrift ist das verlässlichere Zeichen, dass die App steht.
+  // Nur auf die Antwort warten, nicht auf «load» oder «domcontentloaded»: Firefox
+  // meldet beides unter Last manchmal gar nicht, obwohl die Seite steht (Spur vom
+  // 10.10.2026: alle Antworten 200, Erststart gezeichnet, nach 30 s kein
+  // Ereignis). Die Überschrift ist das verlässlichere Zeichen, dass die App steht.
   await page.goto(demo ? path : `${path}${path.includes('?') ? '&' : '?'}leer`, {
-    waitUntil: 'domcontentloaded',
+    waitUntil: 'commit',
   });
   await page.getByRole('heading', { level: 1 }).first().waitFor();
   await page.evaluate(() => document.fonts.ready);
