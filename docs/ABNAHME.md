@@ -21,7 +21,7 @@ ist, nennt sein Hindernis.
 | Playwright bei 320, 768 und 1440 grün samt axe, Schrift, Querscrollen, Tastatur, reduzierter Bewegung; `test:e2e:browsers` grün vor dem Deploy | erfüllt | CI bei jedem Push (78 Tests); `test:e2e:browsers` 156 von 156 am 23.09.2026 |
 | APK aus einem Tag in der CI, signiert, als Release-Anhang | offen | Workflow baut und prüft (Probe-APK 33 MB in 16 Minuten); es fehlen der Keystore und die vier Secrets (Adam, `docs/RELEASE.md`) und ein Tag `v0.1.0` mit Adams OK |
 | Kaltstart bis zur Übersicht und Tierarzt-PDF mit sechs Fotos, gemessen auf dem iPhone, Median aus fünf Läufen | offen | braucht das iPhone ohne Entwicklermodus (`bunx expo start --no-dev --minify`); Anleitung in `docs/GERAETETEST.md`, Runde 4 |
-| `expo install --check`, keine Datei über 400 Zeilen, Format, Lint, Typecheck, Tests, täglicher Sicherheitslauf | erfüllt | CI und `sicherheit-taeglich.yml`; Ausnahmen namentlich in `docs/SECURITY.md` |
+| `expo install --check`, keine Datei über 400 Zeilen, Format, Lint, Typecheck, Tests, täglicher Sicherheitslauf | erfüllt | CI und `sicherheit-taeglich.yml`; seit 10.10.2026 meldet der tägliche Lauf als Issue, die CI blockiert ab «hoch»; Ausnahmen namentlich und befristet in `docs/SECURITY.md` (E-76) |
 
 ## Ausserdem offen
 

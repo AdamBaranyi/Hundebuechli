@@ -24,6 +24,9 @@ export default defineConfig({
     // «Chipnummer kopieren» schreibt in die Zwischenablage.
     permissions: ['clipboard-write', 'clipboard-read'],
     timezoneId: 'Europe/Zurich',
+    // Ein Ausfall hinterlässt eine Spur in test-results/ (in der CI als
+    // Artefakt): Wer unter Last wackelt, soll Daten liefern, keine Vermutung.
+    trace: 'retain-on-failure',
   },
   webServer: {
     command: `node scripts/serve-web.mjs ${PORT}`,

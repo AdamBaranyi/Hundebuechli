@@ -54,7 +54,10 @@ release. Keystore and release steps: [docs/RELEASE.md](docs/RELEASE.md).
 | `bun run test:e2e` | Playwright against the web export at 320, 768 and 1440 px: axe, font size ≥ 16 px, no horizontal scroll, keyboard, reduced motion, no third-party requests, CSP with a counter-test |
 | `bun run test:e2e:browsers` | the same tests in WebKit on iPhone SE, iPhone 15 and iPad Pro 11, Safari and Firefox – before every deploy of the preview |
 
-CI runs all but the last on every push, plus a daily secret scan and dependency audit.
+CI runs all but the last on every push and pull request and blocks on dependency advisories
+rated high or critical. A daily run scans the whole history for secrets and reports advisories
+from moderate up in a single issue; it only fails on a leaked secret. Exceptions are named,
+time-boxed and explained in [docs/SECURITY.md](docs/SECURITY.md).
 
 ## Architecture in one paragraph
 

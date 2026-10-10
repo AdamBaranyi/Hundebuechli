@@ -48,8 +48,12 @@ jobs:
                 `bunx expo-doctor`, `bun run verify` und ein kurzer Start in Expo Go.
           - [ ] **Expo Go im App Store**: Welche SDK kann die aktuelle Fassung? Kommt eine neue
                 SDK, ist der Wechsel ein eigener, bewusster Schritt (docs/RELEASE.md).
-          - [ ] **Ausnahmen nachprüfen**: Steht in docs/SECURITY.md noch ein `--ignore`, das
-                inzwischen wegfallen könnte? `bun audit` zeigt es.
+          - [ ] **Ausnahmen nachprüfen**: Tabelle in docs/SECURITY.md und scripts/audit.sh.
+                Ist ein «prüfen bis» erreicht oder gibt es inzwischen einen Fix? `bun audit`
+                ohne Ausnahmen zeigt alles. Verlängern nur mit neuem Datum, höchstens einen
+                Monat; fällt ein Befund weg, fällt seine Zeile an beiden Stellen weg.
+          - [ ] **Issue «Sicherheitsmeldungen»**: offen? Dann die Befunde nach der Regel in
+                docs/SECURITY.md erledigen.
           - [ ] **Signierschlüssel** (sobald es ihn gibt): Sicherung offline vorhanden und lesbar.
 
           Alle drei Monate zusätzlich:

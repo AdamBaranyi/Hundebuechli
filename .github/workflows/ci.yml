@@ -81,7 +81,9 @@ jobs:
           path: test-results/
           retention-days: 7
 
-      # Blockiert ab "hoch". Der tägliche Lauf ist strenger (ab "moderat"):
-      # Dort geht es ums Bemerken, hier ums Durchlassen.
-      - name: Bekannte Schwachstellen
-        run: bun audit --audit-level=high
+      # Blockiert ab "hoch", mit denselben namentlichen und befristeten
+      # Ausnahmen wie der tägliche Lauf (scripts/audit.sh, begründet in
+      # docs/SECURITY.md). "Moderat" meldet der tägliche Lauf als Issue; das
+      # erledigt der nächste Update-PR.
+      - name: Bekannte Schwachstellen, ab hoch
+        run: bash scripts/audit.sh high

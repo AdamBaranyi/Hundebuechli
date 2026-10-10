@@ -6,6 +6,13 @@ name: Sicherheit täglich
 # Prüfung jeden Tag von selbst – bewusst schmal, nur Secret-Scan und
 # Abhängigkeiten. Ein täglicher Lauf über zwanzig Minuten wird abgeschaltet.
 #
+# Regel seit 10.10.2026 (docs/ENTSCHEIDE.md, E-76): Rot wird dieser Lauf nur,
+# wenn gitleaks ein Geheimnis findet – das ist ein Notfall. Befunde der
+# Abhängigkeiten sind eine Meldung: ein Issue «Sicherheitsmeldungen», ergänzt
+# nur, wenn sich die Kennungen ändern, und geschlossen, sobald alles sauber
+# ist. Vorher schickte jeder rote Lauf eine E-Mail und hängte ein rotes Kreuz
+# an den letzten Commit auf main.
+#
 # Wer die Meldung bekommt: Einen fehlgeschlagenen geplanten Lauf meldet GitHub
 # der Person, die diese Datei angelegt oder die cron-Zeile zuletzt geändert
 # hat. Öffentliche Repositories: GitHub schaltet geplante Workflows nach 60
@@ -20,6 +27,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 concurrency:
   group: sicherheit-taeglich
@@ -60,22 +68,15 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
-      # Ausnahmen einzeln als GHSA-Nummer, nie als ganze Stufe, begründet in
-      # docs/SECURITY.md. Fällt ein Befund weg, fällt sein --ignore weg.
-      # GHSA-67mh-4wv8-2f99: esbuild über drizzle-kit, nur Entwicklungswerkzeug.
-      # GHSA-vcc3-ghjq-m6fr: decode-uri-component über expo-router; die
-      # behobene Fassung bricht query-string.
-      - name: Bekannte Schwachstellen, blockierend ab moderat
-        run: bun audit --audit-level=moderate --ignore GHSA-67mh-4wv8-2f99 --ignore GHSA-vcc3-ghjq-m6fr
-
-      # Zur Ansicht in der Laufzusammenfassung, auch die ausgenommenen Nummern.
-      - name: Alle Befunde zur Ansicht
-        if: always()
+      # Befunde sammeln, nicht urteilen. Das Urteil fällt in ci.yml auf Push und
+      # Pull Request (ab high). Hier entsteht eine Meldung, keine Farbe.
+      - name: Befunde sammeln, ab moderat
         run: |
-          {
-            echo '### bun audit, alle Stufen'
-            echo ''
-            echo '```'
-            bun audit 2>&1 || true
-            echo '```'
-          } | tee -a "$GITHUB_STEP_SUMMARY"
+          bash scripts/audit.sh moderate > audit.txt 2>&1 || true
+          { echo '### bun audit, ab moderat, mit Ausnahmen'; echo '```'; cat audit.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Meldung als Issue, nur bei Änderung
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: bash scripts/sicherheits-meldung.sh audit.txt

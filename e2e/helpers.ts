@@ -57,6 +57,15 @@ export async function openScreen(page: Page, path: string, { demo = false } = {}
   await page.evaluate(() => document.fonts.ready);
 }
 
+/**
+ * Die sichtbare Fehlermeldung eines Formulars. Derselbe Satz steht 50 ms
+ * später auch im unsichtbaren Live-Bereich für Screenreader (src/ui/announce.ts);
+ * ohne die Rolle träfe getByText unter Last beide Stellen.
+ */
+export function formError(page: Page, text: string) {
+  return page.getByRole('alert').getByText(text);
+}
+
 /** Sichtbare Texte kleiner als 16 px. */
 export function smallText(page: Page): Promise<string[]> {
   return page.evaluate(() => {
