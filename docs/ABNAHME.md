@@ -27,8 +27,8 @@ ist, nennt sein Hindernis.
 
 - **Hosting der Web-Vorschau:** Subdomain beim Webhosting oder eigener Server – Adams Entscheid.
   Der Export mit Content Security Policy und `.htaccess` liegt fertig vor (`bun run export:web`).
-- **SDK-Patches:** Acht Pakete haben neuere Patch-Fassungen (expo, expo-asset, expo-constants,
-  expo-image-manipulator, expo-image-picker, expo-notifications, expo-router, expo-sharing). Sie
-  werden übernommen, sobald jede älter als sieben Tage ist; die jüngsten erschienen am 18.09.2026,
-  also ab dem 25.09.2026 (`docs/RELEASE.md`, «SDK-Patch»).
+- **SDK-Patches:** Am 10.10.2026 neun Pakete gehoben, `expo` auf 57.0.26 – die Runde vom
+  29.09.2026 (E-78). Die nächste Runde erschien am 06.10.2026 und kommt frühestens am 13.10.2026,
+  wenn sie älter als sieben Tage ist (`docs/RELEASE.md`, «SDK-Patch»). Der kurze Start in Expo Go
+  auf dem iPhone steht noch aus (`docs/GERAETETEST.md`).
 - **Zwei Wochen Alltag** mit den eigenen Hunden, festgehalten in `docs/ALLTAG.md`.

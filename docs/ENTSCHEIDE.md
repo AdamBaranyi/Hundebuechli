@@ -419,3 +419,15 @@ erschienen am 29. und 30.09.2026 und sind älter als sieben Tage; die Meldung zu
 am 06.10.2026. Ein Override statt nur des Lockfiles, obwohl die Bereiche der Elternpakete die
 Fassungen erlauben: Es hält auch künftige Kopien auf der behobenen Fassung und steht sichtbar in
 `package.json`. Es fällt weg, sobald die Elternpakete die Fassung selbst verlangen.
+
+**E-78 · SDK-Patch: die letzte Runde, die älter als sieben Tage ist, ohne die Zugaben von
+`expo install`.** Am 10.10.2026 standen zwei Runden an: vom 29.09.2026 (`expo` 57.0.26) und vom
+06.10.2026 (57.0.27), die zweite noch innerhalb der Wartezeit. Genommen wurde die erste: `expo` auf
+57.0.26, dann `EXPO_OFFLINE=1 expo install --fix` gegen dessen `bundledNativeModules.json`; Bun
+hält die Wartezeit dabei ein. Zwei Zugaben von `expo install` sind wieder entfernt: Es schrieb
+Bereiche (`~57.0.18`) statt fester Fassungen, entgegen `exact = true`, und trug die Config-Plugins
+von expo-asset und expo-sharing in `app.json` ein. Das Plugin von expo-sharing richtet «In die App
+teilen» ein – standardmässig aus, aber ein Eingang auf Vorrat, den die App nicht braucht. Nach dem
+schrittweisen Heben lagen expo-asset und expo-constants in `node_modules` doppelt vor
+(`expo-doctor`); das Lockfile hielt sie nicht fest, ein frischer Install wie in der CI legt sie nicht
+an. `expo-doctor` meldet danach nur noch den Online-Vergleich mit der zu jungen Runde (E-4).
