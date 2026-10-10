@@ -2,7 +2,7 @@
 import { expect, test } from '@playwright/test';
 
 import { createDog, start } from './flows';
-import { observe } from './helpers';
+import { formError, observe } from './helpers';
 import { expectScreenQuality } from './quality';
 
 test('Halterangaben: sichern und auf dem Plakat vorgeschlagen', async ({ page, baseURL }) => {
@@ -14,16 +14,13 @@ test('Halterangaben: sichern und auf dem Plakat vorgeschlagen', async ({ page, b
   await expect(page.getByRole('heading', { name: 'Halterangaben' })).toBeVisible();
   await page.getByRole('textbox', { name: 'Telefon', exact: true }).fill('000 000 00 00');
   await page.getByRole('button', { name: 'Halterangaben sichern' }).click();
-  await expect(
-    page.getByText('Gib deinen Namen an, damit man weiss, wen man anruft.'),
-  ).toBeVisible();
+  const nameFehlt = formError(page, 'Gib deinen Namen an, damit man weiss, wen man anruft.');
+  await expect(nameFehlt).toBeVisible();
 
   await page.getByRole('textbox', { name: 'Name', exact: true }).fill('Adam');
   await page.getByRole('button', { name: 'Halterangaben sichern' }).click();
   // Geprüft wird, was bleibt – nicht die Kurzmeldung, die nach 2,5 s verschwindet.
-  await expect(
-    page.getByText('Gib deinen Namen an, damit man weiss, wen man anruft.'),
-  ).toBeHidden();
+  await expect(nameFehlt).toBeHidden();
   await expectScreenQuality(page, seen, 'Einstellungen mit Halterangaben');
 
   // Der Reiter «Hunde» kehrt zum zuletzt offenen Profil zurück.

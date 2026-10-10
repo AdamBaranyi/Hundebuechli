@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 
 import { addEntry, createDog, start } from './flows';
-import { keyboardProblems, observe } from './helpers';
+import { formError, keyboardProblems, observe } from './helpers';
 import { expectScreenQuality } from './quality';
 
 const FIXTURES = join(__dirname, '..', 'src', 'domain', '__fixtures__');
@@ -23,7 +23,7 @@ test('Ersten Hund anlegen: das Formular prüft, sichert und öffnet das Profil',
 
   await page.getByRole('button', { name: 'Sichern' }).click();
   // Der Satz steht unter dem Feld und zusätzlich im Live-Bereich für Screenreader.
-  await expect(page.getByRole('alert').getByText('Gib deinem Hund einen Namen.')).toBeVisible();
+  await expect(formError(page, 'Gib deinem Hund einen Namen.')).toBeVisible();
 
   await page.getByRole('textbox', { name: 'Name', exact: true }).fill('Bäri');
   await page.getByRole('textbox', { name: 'Rasse oder Mischung' }).fill('Whippet');

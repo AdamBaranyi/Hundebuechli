@@ -2,7 +2,7 @@
 import { expect, test } from '@playwright/test';
 
 import { addEntry, createDog, start } from './flows';
-import { keyboardProblems, observe } from './helpers';
+import { formError, keyboardProblems, observe } from './helpers';
 import { expectScreenQuality } from './quality';
 
 test('Eintrag erfassen: Schnellwahl rechnet die nächste Fälligkeit', async ({ page, baseURL }) => {
@@ -13,7 +13,7 @@ test('Eintrag erfassen: Schnellwahl rechnet die nächste Fälligkeit', async ({ 
   await expect(page.getByRole('heading', { name: 'Neuer Eintrag' })).toBeVisible();
 
   await page.getByRole('button', { name: 'Sichern' }).click();
-  await expect(page.getByText('Wähle die Art des Eintrags.')).toBeVisible();
+  await expect(formError(page, 'Wähle die Art des Eintrags.')).toBeVisible();
 
   await page.getByRole('radio', { name: 'Entwurmung' }).click();
   await page.getByRole('radio', { name: '3 Monate' }).click();
