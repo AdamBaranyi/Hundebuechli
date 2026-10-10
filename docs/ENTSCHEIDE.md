@@ -405,9 +405,13 @@ Befunde ab «moderat» landen in einem einzigen Issue «Sicherheitsmeldungen»
 (`scripts/sicherheits-meldung.sh`): angelegt beim ersten Fund, ergänzt nur, wenn sich die
 Kennungen ändern, geschlossen, sobald nichts mehr übrig ist. Push und Pull Request blockieren ab
 «hoch». Stufe und Ausnahmen stehen an einer Stelle (`scripts/audit.sh`); jede Ausnahme ist
-namentlich, begründet und auf höchstens einen Monat befristet (`docs/SECURITY.md`). Tests halten
-Skript, Tabelle und Workflows zusammen, 21 Sabotagen wurden rot. Die Regel gilt für alle eigenen
-Repositories.
+namentlich, begründet und auf höchstens einen Monat befristet (`docs/SECURITY.md`). Abweichung von
+der gemeinsamen Vorlage: Ein Bericht ohne Kennung heisst noch nicht «sauber» – auch ein Audit ohne
+Netz zur Registry hat keine. bun schreibt «No vulnerabilities found» nur, wenn es gar keine Meldung
+gibt, bei ausgenommenen Befunden also nie. Darum schreibt `scripts/audit.sh` nach grünem Ende selbst
+«Keine offenen Befunde ab …»; fehlt die Zeile, bleibt das Issue offen und der Lauf wird rot. Tests
+halten Skript, Tabelle und Workflows zusammen, 24 Sabotagen wurden rot. Die Regel gilt für alle
+eigenen Repositories.
 
 **E-77 · shell-quote und source-map-js per Override, ohne Ausnahme von der Wartezeit.** Beide
 Meldungen betreffen Werkzeuge (DevTools-Server, postcss), nicht die App. Die behobenen Fassungen

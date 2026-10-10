@@ -66,6 +66,10 @@ esac
 `;
 
 const KOPF = 'bun audit v1.3.14 (0d9b296a)\n';
+/** So endet ein grüner Lauf von scripts/audit.sh. */
+const SAUBER = `${KOPF}Keine offenen Befunde ab moderate.\n`;
+/** Kein Netz zur Registry: auch keine Kennung, aber nicht sauber. */
+const ABGEBROCHEN = `${KOPF}ConnectionRefused: audit request failed\n`;
 const BRACES = `braces  <=3.0.3
   jest › @jest/core › micromatch › braces
   high: braces vulnerable to stack-exhaustion - https://github.com/advisories/GHSA-vfj7-8cjw-p6xm
@@ -93,7 +97,7 @@ describe('scripts/sicherheits-meldung.sh', () => {
   afterEach(() => rmSync(dir, { recursive: true, force: true }));
 
   /** Ein Lauf mit diesem Bericht; liefert die Aufrufe an gh nur dieses Laufs. */
-  function melden(bericht) {
+  function melden(bericht, { status = 0 } = {}) {
     const vorher = aufrufe().length;
     writeFileSync(join(dir, 'audit.txt'), bericht);
     const result = spawnSync('bash', [SCRIPT, join(dir, 'audit.txt')], {
@@ -107,8 +111,9 @@ describe('scripts/sicherheits-meldung.sh', () => {
         ZUWEISUNG: '',
       },
     });
-    expect(result.stderr).toBe('');
-    expect(result.status).toBe(0);
+    expect(result.status).toBe(status);
+    if (status === 0) expect(result.stderr).toBe('');
+    else expect(result.stderr).toContain('der Audit lief nicht durch');
     return aufrufe().slice(vorher);
   }
 
@@ -153,15 +158,22 @@ describe('scripts/sicherheits-meldung.sh', () => {
     expect(lesen('kommentar')).toContain('GHSA-86w9-cpqp-85rv');
   });
 
-  it('schliesst das Issue, sobald der Bericht keine Kennung mehr enthält', () => {
+  it('schliesst das Issue, sobald der Audit sauber durchläuft', () => {
     melden(KOPF + BRACES);
-    expect(melden(KOPF).slice(1)).toEqual(['issue close 7']);
+    expect(melden(SAUBER).slice(1)).toEqual(['issue close 7']);
     expect(lesen('schluss')).toContain('findet keine Befunde mehr');
-    expect(melden(KOPF)).toHaveLength(1);
+    expect(melden(SAUBER)).toHaveLength(1);
+  });
+
+  it('lässt das Issue bei einem abgebrochenen Audit offen und endet rot', () => {
+    melden(KOPF + BRACES);
+    expect(melden(ABGEBROCHEN, { status: 1 })).toHaveLength(1);
+    expect(existsSync(join(zustand, 'offen'))).toBe(true);
+    expect(melden(KOPF, { status: 1 })).toHaveLength(1);
   });
 
   it('tut ohne Fund und ohne offenes Issue nichts', () => {
-    const lauf = melden(KOPF);
+    const lauf = melden(SAUBER);
     expect(lauf).toHaveLength(1);
     expect(lauf[0]).toMatch(/^issue list /);
   });

@@ -29,7 +29,7 @@ printf '%s\\n' "$@" > "$ATTRAPPE/argumente"
 exit "\${BUN_EXIT:-0}"
 `;
 
-/** Führt audit.sh mit der Attrappe aus; liefert Rückgabewert und Argumente an bun. */
+/** Führt audit.sh mit der Attrappe aus; liefert Rückgabewert, Ausgabe und Argumente an bun. */
 function run(args, env = {}) {
   const dir = mkdtempSync(join(tmpdir(), 'hundebuechli-audit-'));
   try {
@@ -41,7 +41,7 @@ function run(args, env = {}) {
     });
     const file = join(dir, 'argumente');
     const argumente = existsSync(file) ? readFileSync(file, 'utf8').trim().split('\n') : [];
-    return { status: result.status, argumente };
+    return { status: result.status, stdout: result.stdout, argumente };
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -110,6 +110,11 @@ describe('scripts/audit.sh', () => {
 
   it('endet rot, wenn bun audit rot endet', () => {
     expect(run(['high'], { BUN_EXIT: '1' }).status).toBe(1);
+  });
+
+  it('meldet «Keine offenen Befunde» nur nach grünem bun audit', () => {
+    expect(run(['moderate']).stdout).toBe('Keine offenen Befunde ab moderate.\n');
+    expect(run(['moderate'], { BUN_EXIT: '1' }).stdout).not.toContain('Keine offenen Befunde');
   });
 
   it('nennt im Skript dieselbe Frist wie die Tabelle', () => {

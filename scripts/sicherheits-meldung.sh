@@ -13,6 +13,14 @@ stand=$(printf '%s' "$ids" | sha256sum | cut -c1-12)
 nummer=$(gh issue list --label "$label" --state open --search "in:title $titel" --json number --jq '.[0].number // empty')
 
 if [ -z "$ids" ]; then
+  # Sauber nur, wenn der Audit es selbst sagt: scripts/audit.sh schreibt die Zeile nur bei
+  # grünem Ende. Ein abgebrochener Lauf (Netz, Registry) hat auch keine Kennungen und darf
+  # das Issue nicht als erledigt schliessen.
+  if ! grep -q 'Keine offenen Befunde ab' "$bericht"; then
+    echo "Bericht ohne Kennungen und ohne «Keine offenen Befunde» – der Audit lief nicht durch:" >&2
+    cat "$bericht" >&2
+    exit 1
+  fi
   [ -n "$nummer" ] && gh issue close "$nummer" --comment "Der tägliche Lauf vom $heute findet keine Befunde mehr."
   exit 0
 fi

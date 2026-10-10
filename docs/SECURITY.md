@@ -10,7 +10,7 @@ Daten auf dem Gerät.
 | Schutz | Wo | Beleg |
 |---|---|---|
 | Täglicher Secret-Scan über die ganze Historie; rot nur bei einem Geheimnis | `.github/workflows/sicherheit-taeglich.yml` | Lauf in GitHub Actions |
-| Täglich `bun audit` ab «moderat» als Meldung: ein Issue «Sicherheitsmeldungen», ergänzt nur bei neuen Kennungen, geschlossen ohne Befund | `scripts/sicherheits-meldung.sh` | `scripts/__tests__/sicherheits-meldung.test.js` |
+| Täglich `bun audit` ab «moderat» als Meldung: ein Issue «Sicherheitsmeldungen», ergänzt nur bei neuen Kennungen, geschlossen erst, wenn `scripts/audit.sh` «Keine offenen Befunde» meldet; ein abgebrochener Audit lässt es offen und macht den Lauf rot | `scripts/sicherheits-meldung.sh` | `scripts/__tests__/sicherheits-meldung.test.js` |
 | Push und Pull Request blockieren ab «hoch», mit denselben Ausnahmen | `scripts/audit.sh` in `.github/workflows/ci.yml` | `scripts/__tests__/audit.test.js`, `sicherheitslauf.test.js` |
 | Updates mit sieben Tagen Wartezeit, Sammel-PR, Zuweisung | `.github/dependabot.yml`, `bunfig.toml` | – |
 | SDK-gebundene Pakete nie über Dependabot | `ignore`-Liste in `.github/dependabot.yml` | `scripts/__tests__/dependabot.test.js` |

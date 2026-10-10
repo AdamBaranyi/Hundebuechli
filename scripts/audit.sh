@@ -12,3 +12,7 @@ ausnahmen=(
   --ignore GHSA-67mh-4wv8-2f99   # esbuild über drizzle-kit, nur Entwicklungsserver, kein Update – prüfen bis 10.11.2026
 )
 bun audit --audit-level="$stufe" "${ausnahmen[@]}"
+# Nur erreichbar, wenn bun audit grün endet (set -e). bun schreibt «No vulnerabilities
+# found» nur, wenn es gar keine Meldung gibt; sind alle ausgenommen oder unter der Stufe,
+# steht nichts da. Diese Zeile sagt sicherheits-meldung.sh, dass der Audit durchlief.
+echo "Keine offenen Befunde ab $stufe."
