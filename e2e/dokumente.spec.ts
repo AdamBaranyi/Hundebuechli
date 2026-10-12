@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 
 import { createDog, start } from './flows';
-import { observe } from './helpers';
+import { formError, observe } from './helpers';
 import { expectScreenQuality } from './quality';
 
 const FIXTURES = join(__dirname, '..', 'src', 'domain', '__fixtures__');
@@ -20,7 +20,7 @@ test('Dokument: anlegen, Seite fotografieren, im Vollbild öffnen', async ({ pag
 
   await page.getByRole('button', { name: 'Dokument hinzufügen' }).click();
   await page.getByRole('button', { name: 'Sichern' }).click();
-  await expect(page.getByText('Wähle die Art des Dokuments.')).toBeVisible();
+  await expect(formError(page, 'Wähle die Art des Dokuments.')).toBeVisible();
   await page.getByRole('radio', { name: 'Versicherung' }).click();
   await page.getByRole('textbox', { name: 'Titel' }).fill('Police 2026');
   await page.getByRole('textbox', { name: 'Datum' }).fill('01012026');

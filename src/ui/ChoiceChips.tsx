@@ -13,54 +13,71 @@ type Props<T extends string> = {
   choices: readonly Choice<T>[];
   selected: T | null;
   onSelect: (value: T) => void;
+  /** Fehlertext; steht als Satz unter den Chips, nicht nur als Ansage. */
+  error?: string | null;
 };
 
 /**
  * Kapseln zur Auswahl, eine davon gewählt: Graphit gefüllt mit Haken. Für
- * VoiceOver eine Gruppe von Optionsfeldern; 48 Punkte hoch.
+ * VoiceOver eine Gruppe von Optionsfeldern; 48 Punkte hoch. Ein Fehler steht
+ * darunter wie in den Gruppen des Eintrags-Formulars.
  */
-export function ChoiceChips<T extends string>({ label, choices, selected, onSelect }: Props<T>) {
+export function ChoiceChips<T extends string>({
+  label,
+  choices,
+  selected,
+  onSelect,
+  error,
+}: Props<T>) {
   const palette = usePalette();
   return (
-    <View role="radiogroup" accessibilityLabel={label} style={styles.chips}>
-      {choices.map((choice) => {
-        const isSelected = choice.value === selected;
-        return (
-          <Pressable
-            key={choice.value}
-            role="radio"
-            accessibilityLabel={choice.label}
-            accessibilityState={{ checked: isSelected }}
-            aria-checked={isSelected}
-            onPress={() => onSelect(choice.value)}
-            style={({ pressed }) => [
-              styles.chip,
-              {
-                borderColor: isSelected ? palette.graphite : palette.fieldBorder,
-                backgroundColor: isSelected
-                  ? palette.graphite
-                  : pressed
-                    ? palette.pressed
-                    : palette.sheet,
-              },
-            ]}
-          >
-            {isSelected ? <Icon name="check" size={18} color="onGraphite" /> : null}
-            <AppText
-              variant="secondary"
-              weight="medium"
-              color={isSelected ? 'onGraphite' : 'graphite'}
+    <View style={styles.field}>
+      <View role="radiogroup" accessibilityLabel={label} style={styles.chips}>
+        {choices.map((choice) => {
+          const isSelected = choice.value === selected;
+          return (
+            <Pressable
+              key={choice.value}
+              role="radio"
+              accessibilityLabel={choice.label}
+              accessibilityState={{ checked: isSelected }}
+              aria-checked={isSelected}
+              onPress={() => onSelect(choice.value)}
+              style={({ pressed }) => [
+                styles.chip,
+                {
+                  borderColor: isSelected ? palette.graphite : palette.fieldBorder,
+                  backgroundColor: isSelected
+                    ? palette.graphite
+                    : pressed
+                      ? palette.pressed
+                      : palette.sheet,
+                },
+              ]}
             >
-              {choice.label}
-            </AppText>
-          </Pressable>
-        );
-      })}
+              {isSelected ? <Icon name="check" size={18} color="onGraphite" /> : null}
+              <AppText
+                variant="secondary"
+                weight="medium"
+                color={isSelected ? 'onGraphite' : 'graphite'}
+              >
+                {choice.label}
+              </AppText>
+            </Pressable>
+          );
+        })}
+      </View>
+      {error ? (
+        <AppText variant="secondary" weight="bold" color="carmine" role="alert">
+          {error}
+        </AppText>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  field: { gap: space.s3 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.s2 },
   chip: {
     flexDirection: 'row',

@@ -140,6 +140,7 @@ function DocumentForm({ documentId, document, dogs, initialDogId }: FormProps) {
         }))}
         selected={category}
         onSelect={setCategory}
+        error={errors.category ?? null}
       />
       <TextField
         label={f.title}

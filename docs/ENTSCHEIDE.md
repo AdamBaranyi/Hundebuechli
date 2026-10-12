@@ -431,3 +431,15 @@ teilen» ein – standardmässig aus, aber ein Eingang auf Vorrat, den die App n
 schrittweisen Heben lagen expo-asset und expo-constants in `node_modules` doppelt vor
 (`expo-doctor`); das Lockfile hielt sie nicht fest, ein frischer Install wie in der CI legt sie nicht
 an. `expo-doctor` meldet danach nur noch den Online-Vergleich mit der zu jungen Runde (E-4).
+
+**E-79 · Ein Fehler bei den Chips steht sichtbar darunter, nicht nur im Live-Bereich.** Im
+Dokument- und im Tagebuch-Formular setzte «Sichern» ohne gewählte Art den Fehler und sagte ihn an,
+sichtbar erschien er nie: `ChoiceChips` hatte keine Fehler-Eigenschaft, und die Formulare reichten
+`errors.category` nicht weiter. Wer nur die Art vergass, sah nach «Sichern» nichts (WCAG 3.3.1).
+Die Browsertests blieben trotzdem grün, weil `getByText` denselben Satz im versteckten
+Live-Bereich fand (`src/ui/LiveRegion.tsx`). Jetzt steht der Satz unter den Chips, gestaltet wie in
+den Gruppen des Eintrags-Formulars: Nebentext mit 16 pt, fett, Karmin, `role="alert"`. Ein
+Jest-Test prüft in beiden Formularen den Fall «nur die Art fehlt»; die Browsertests prüfen mit
+`formError` die sichtbare Meldung und waren gegen die alte App in allen drei Breiten rot. Für
+jeden Baustein mit Auswahl gilt: Der Fehler steht sichtbar beim Feld, die Ansage kommt dazu und
+ersetzt ihn nicht.
