@@ -413,6 +413,11 @@ gibt, bei ausgenommenen Befunden also nie. Darum schreibt `scripts/audit.sh` nac
 halten Skript, Tabelle und Workflows zusammen, 24 Sabotagen wurden rot. Die Regel gilt für alle
 eigenen Repositories.
 
+Ergänzung 25.10.2026: Bei sauberem Stand bleibt das Issue offen und sagt «keine Befunde» (Marke
+`<!-- stand:sauber -->`), statt geschlossen und beim nächsten Fund neu angelegt zu werden – jedes
+Neuanlegen wies Adam zu und schickte eine Mail. Aus demselben Grund weist Dependabot seine PRs
+niemandem mehr zu.
+
 **E-77 · shell-quote und source-map-js per Override, ohne Ausnahme von der Wartezeit.** Beide
 Meldungen betreffen Werkzeuge (DevTools-Server, postcss), nicht die App. Die behobenen Fassungen
 erschienen am 29. und 30.09.2026 und sind älter als sieben Tage; die Meldung zu shell-quote kam erst
