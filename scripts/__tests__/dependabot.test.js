@@ -56,11 +56,12 @@ describe('Dependabot und Expo SDK', () => {
     for (const entry of ignore) expect(dependencies).toContain(entry['dependency-name']);
   });
 
-  it('hat keinen docker-Eintrag und überall Wartezeit und Zuweisung', () => {
+  it('hat keinen docker-Eintrag, überall Wartezeit und keine Zuweisung', () => {
     for (const entry of config.updates) {
       expect(entry['package-ecosystem']).not.toBe('docker');
       expect(entry.cooldown['default-days']).toBe(7);
-      expect(entry.assignees).toEqual(['AdamBaranyi']);
+      // Ein zugewiesener Pull Request mailt jede Woche; die Liste im Reiter genügt.
+      expect(entry.assignees).toBeUndefined();
     }
   });
 });
