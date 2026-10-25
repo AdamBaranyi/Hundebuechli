@@ -10,9 +10,9 @@ Daten auf dem Gerät.
 | Schutz | Wo | Beleg |
 |---|---|---|
 | Täglicher Secret-Scan über die ganze Historie; rot nur bei einem Geheimnis | `.github/workflows/sicherheit-taeglich.yml` | Lauf in GitHub Actions |
-| Täglich `bun audit` ab «moderat» als Meldung: ein Issue «Sicherheitsmeldungen», ergänzt nur bei neuen Kennungen, geschlossen erst, wenn `scripts/audit.sh` «Keine offenen Befunde» meldet; ein abgebrochener Audit lässt es offen und macht den Lauf rot | `scripts/sicherheits-meldung.sh` | `scripts/__tests__/sicherheits-meldung.test.js` |
+| Täglich `bun audit` ab «moderat» als Meldung: ein Issue «Sicherheitsmeldungen», ergänzt nur bei neuen Kennungen; meldet `scripts/audit.sh` «Keine offenen Befunde», bleibt es offen und sagt das (seit 25.10.2026, vorher wurde es geschlossen und beim nächsten Fund neu angelegt); ein abgebrochener Audit lässt es unverändert und macht den Lauf rot | `scripts/sicherheits-meldung.sh` | `scripts/__tests__/sicherheits-meldung.test.js` |
 | Push und Pull Request blockieren ab «hoch», mit denselben Ausnahmen | `scripts/audit.sh` in `.github/workflows/ci.yml` | `scripts/__tests__/audit.test.js`, `sicherheitslauf.test.js` |
-| Updates mit sieben Tagen Wartezeit, Sammel-PR, Zuweisung | `.github/dependabot.yml`, `bunfig.toml` | – |
+| Updates mit sieben Tagen Wartezeit, Sammel-PR, ohne Zuweisung (seit 25.10.2026: zugewiesene PRs mailten jede Woche) | `.github/dependabot.yml`, `bunfig.toml` | – |
 | SDK-gebundene Pakete nie über Dependabot | `ignore`-Liste in `.github/dependabot.yml` | `scripts/__tests__/dependabot.test.js` |
 | Fassungen passen zur Expo-SDK | `bun run check:expo` in der CI | Gegenprobe in `docs/ENTSCHEIDE.md` E-4 |
 | Erinnerung bei liegengebliebenen Update-PRs, monatliche Wartungsliste | `.github/workflows/erinnerung-*.yml` | – |
@@ -37,6 +37,7 @@ erscheinen weder im Issue «Sicherheitsmeldungen» noch blockieren sie die CI.
 | GHSA-hp3w-g68c-fv3c | sprintf-js ≤ 1.1.3 über argparse (ESLint, Jest, `@expo/cli`) | moderat | Werkzeug | kein Fix | 10.10.2026 | 10.11.2026 |
 | GHSA-vcc3-ghjq-m6fr | decode-uri-component ≤ 0.4.2 über expo-router › query-string | moderat | Laufzeit im Bundle | der Fix ist reines ESM und bricht query-string | 10.10.2026 | 10.11.2026 |
 | GHSA-67mh-4wv8-2f99 | esbuild ≤ 0.24.2 über drizzle-kit | moderat | Werkzeug | kein Update; drizzle-kit startet keinen Server | 10.10.2026 | 10.11.2026 |
+| GHSA-mrhx-c7xc-m3w5 | zod 3.25.76 über `@expo/cli` (verlangt `^3.25.76`) und eslint-plugin-react-hooks | hoch | Werkzeug | Fix nur in zod 4.6.6, das die App selbst schon nutzt; ein Override auf 4 wäre für die Expo-CLI ein Bruch, keine Behebung. Die CLI prüft nur eigene Konfiguration beim Bauen | 25.10.2026 | 25.11.2026 |
 
 **GHSA-86w9-cpqp-85rv – node-forge (hoch), seit 10.10.2026.** Die Prüfung von RSA-Signaturen nach
 PKCS#1 v1.5 nimmt zusätzliche, verschachtelte DigestAlgorithm-Elemente an; eine gefälschte
