@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Liest den Bericht des täglichen Laufs und hält genau ein Issue «Sicherheitsmeldungen»:
-# anlegen beim ersten Fund, ergänzen nur bei geänderter Kennungsliste, schliessen ohne Funde.
+# anlegen beim ersten Fund, ergänzen nur bei geänderter Kennungsliste; ohne Funde bleibt es offen und sagt «keine Befunde».
 # Braucht GH_TOKEN (issues: write) und GH_REPO.
 set -euo pipefail
 bericht="${1:-audit.txt}"
@@ -21,7 +21,16 @@ if [ -z "$ids" ]; then
     cat "$bericht" >&2
     exit 1
   fi
-  [ -n "$nummer" ] && gh issue close "$nummer" --comment "Der tägliche Lauf vom $heute findet keine Befunde mehr."
+  # Sauber: Das Issue bleibt offen und sagt «keine Befunde». Schliessen und beim
+  # nächsten Fund neu anlegen hiess jedes Mal zuweisen und mailen (Oktober 2026).
+  if [ -n "$nummer" ]; then
+    sauber=$(printf '<!-- stand:sauber -->\nStand %s: keine Befunde. Prüfung ab moderat mit den Ausnahmen aus scripts/audit.sh.\n\nDas Issue bleibt offen und zeigt den letzten Stand; der tägliche Lauf schreibt nur bei Änderungen. Bitte nicht schliessen.' "$heute")
+    bisher=$(gh issue view "$nummer" --json body --jq .body)
+    case "$bisher" in
+      *"stand:sauber"*) echo "Weiterhin keine Befunde, keine Änderung." ;;
+      *) gh issue edit "$nummer" --body "$sauber" ;;
+    esac
+  fi
   exit 0
 fi
 

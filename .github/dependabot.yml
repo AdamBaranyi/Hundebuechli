@@ -8,8 +8,9 @@
 # 3. "Funktioniert" heisst grün. Jeder dieser Pull Requests löst den vollen
 #    CI-Lauf aus. Gemergt wird nur, was grün ist.
 #
-# Meldung: `assignees` macht den Pull Request zu einer zugewiesenen Aufgabe –
-# E-Mail und Push in GitHub Mobile.
+# Keine Zuweisung: Ein zugewiesener Pull Request mailt und meldet sich in GitHub
+# Mobile – jede Woche, bei jedem Repo. Die Pull Requests stehen im Reiter
+# «Pull requests»; echte Funde meldet allein das Issue «Sicherheitsmeldungen».
 #
 # Kein `docker`-Eintrag: Das Projekt hat kein Dockerfile, und ein solcher
 # Eintrag scheitert bei jedem Lauf still.
@@ -31,8 +32,6 @@ updates:
     cooldown:
       default-days: 7
     open-pull-requests-limit: 5
-    assignees:
-      - AdamBaranyi
     commit-message:
       prefix: chore
       include: scope
@@ -123,7 +122,5 @@ updates:
     cooldown:
       default-days: 7
     open-pull-requests-limit: 3
-    assignees:
-      - AdamBaranyi
     commit-message:
       prefix: ci

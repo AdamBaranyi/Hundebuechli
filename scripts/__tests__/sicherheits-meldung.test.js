@@ -158,11 +158,12 @@ describe('scripts/sicherheits-meldung.sh', () => {
     expect(lesen('kommentar')).toContain('GHSA-86w9-cpqp-85rv');
   });
 
-  it('schliesst das Issue, sobald der Audit sauber durchläuft', () => {
+  it('lässt das Issue bei sauberem Audit offen und schreibt «keine Befunde» hinein', () => {
     melden(KOPF + BRACES);
-    expect(melden(SAUBER).slice(1)).toEqual(['issue close 7']);
-    expect(lesen('schluss')).toContain('findet keine Befunde mehr');
-    expect(melden(SAUBER)).toHaveLength(1);
+    expect(melden(SAUBER).slice(1)).toEqual(['issue view 7', 'issue edit 7']);
+    expect(existsSync(join(zustand, 'offen'))).toBe(true);
+    expect(lesen('text')).toContain('keine Befunde');
+    expect(melden(SAUBER).slice(1)).toEqual(['issue view 7']);
   });
 
   it('lässt das Issue bei einem abgebrochenen Audit offen und endet rot', () => {
