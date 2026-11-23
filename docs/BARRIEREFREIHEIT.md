@@ -13,6 +13,7 @@ müde. Daraus folgen die Grenzen – und sie sind geprüft, nicht behauptet.
 | Kontrast: Text 4,5:1, Kanten 3:1 | aus den Tokens gerechnet, hell und dunkel | `src/ui/__tests__/tokens.test.ts` |
 | Zustand nie nur über Farbe | «fällig» mit Zeichen und Text, Stempel mit Datum im Text der Zeile | Bildschirme, axe |
 | VoiceOver und TalkBack | Rolle, Name und Zustand je Bedienelement; Überschriften ausgezeichnet; Ansage nach Sichern, Erledigen und Löschen | Jest (Rollen und Namen), Geräteprotokoll |
+| Sichtbarer Text steht im Namen (WCAG 2.5.3) | Name aus dem Inhalt; wo die App mehr sagt, steht der sichtbare Text zuerst und am Stück (E-80) | axe je Bildschirm, `src/content/__tests__/dogs.test.ts` |
 | Die Gewichtskurve hat ein Gegenstück | Tabelle mit denselben Zahlen, erreichbar über denselben Umschalter | Jest, Playwright |
 | Reduzierte Bewegung | Der Stempel blendet nur ein, keine Drehung; die Haptik bleibt | Jest mit Gegenprobe; Playwright: keine Animation |
 | Tastatur im Browser | jedes Bedienelement erreichbar, sichtbarer Fokus | Playwright in Chrome, Safari (WebKit) und Firefox |

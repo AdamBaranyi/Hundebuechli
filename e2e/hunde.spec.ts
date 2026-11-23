@@ -34,7 +34,7 @@ test('Ersten Hund anlegen: das Formular prüft, sichert und öffnet das Profil',
 
   await expect(page.getByRole('heading', { level: 1, name: 'Bäri' })).toBeVisible();
   await expect(page.getByText('Whippet, Rüde')).toBeVisible();
-  const copy = page.getByRole('button', { name: /Chipnummer kopieren, 756 0981 2345 6789/ });
+  const copy = page.getByRole('button', { name: 'Chipnummer kopieren 756 0981 2345 6789' });
   await expect(copy).toBeVisible();
 
   // Kopieren verändert sonst nichts auf dem Bildschirm: Die Meldung ist der Beleg.

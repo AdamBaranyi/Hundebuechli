@@ -59,7 +59,9 @@ export function YearStamps({ entries, today, onOpen }: Props) {
             style={styles.row}
           >
             <View style={styles.head}>
-              <AppText weight="bold">{healthKinds[row.kind]}</AppText>
+              {/* Das Leerzeichen trennt die zwei Texte auch im DOM. Ohne es stünde dort
+                  «Impfungnächste am 22.10.», und das steht in keinem Namen (WCAG 2.5.3). */}
+              <AppText weight="bold">{`${healthKinds[row.kind]} `}</AppText>
               {next ? (
                 <AppText
                   variant="secondary"

@@ -5,12 +5,10 @@
 set -euo pipefail
 stufe="${1:-high}"
 ausnahmen=(
-  --ignore GHSA-86w9-cpqp-85rv   # node-forge über @expo/cli, nur Werkzeug, kein Fix – prüfen bis 10.11.2026
-  --ignore GHSA-vfj7-8cjw-p6xm   # braces über micromatch (Metro, Jest), nur Werkzeug, kein Fix – prüfen bis 10.11.2026
-  --ignore GHSA-hp3w-g68c-fv3c   # sprintf-js über argparse (ESLint, Jest, @expo/cli), nur Werkzeug, kein Fix – prüfen bis 10.11.2026
-  --ignore GHSA-vcc3-ghjq-m6fr   # decode-uri-component über expo-router, im Bundle, Fix bricht query-string – prüfen bis 10.11.2026
-  --ignore GHSA-67mh-4wv8-2f99   # esbuild über drizzle-kit, nur Entwicklungsserver, kein Update – prüfen bis 10.11.2026
-  --ignore GHSA-mrhx-c7xc-m3w5   # zod 3.25.76 über @expo/cli (verlangt ^3.25.76), Fix nur in 4.6.6, nur Werkzeug – prüfen bis 25.11.2026
+  --ignore GHSA-qr28-fpjm-wq7f   # decode-uri-component über expo-router, im Bundle, Fix 0.5.1 bricht query-string, Parser läuft in der App nicht – prüfen bis 23.12.2026
+  --ignore GHSA-vcc3-ghjq-m6fr   # decode-uri-component über expo-router, im Bundle, Fix bricht query-string, Parser läuft in der App nicht – prüfen bis 23.12.2026
+  --ignore GHSA-67mh-4wv8-2f99   # esbuild 0.18.20 über drizzle-kit, nur Entwicklungsserver, kein Update – prüfen bis 23.12.2026
+  --ignore GHSA-mrhx-c7xc-m3w5   # zod 3.25.76 über @expo/cli (verlangt ^3.25.76), Fix nur in 4.6.6, nur Werkzeug – prüfen bis 23.12.2026
 )
 bun audit --audit-level="$stufe" "${ausnahmen[@]}"
 # Nur erreichbar, wenn bun audit grün endet (set -e). bun schreibt «No vulnerabilities

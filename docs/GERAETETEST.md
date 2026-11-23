@@ -104,6 +104,7 @@ ausprobieren** – es löscht auch die echten Einträge; der Ablauf ist im Brows
 | 3.5 | Unter «Als Nächstes» stempeln | Der Stempel kommt gedreht herein und setzt sich, das iPhone gibt einen kurzen Erfolgs-Ruck | | | |
 | 3.6 | Bedienungshilfen › Bewegung › «Bewegung reduzieren» an, nochmals stempeln | Nur Einblenden, keine Drehung; der Ruck bleibt | | | |
 | 3.7 | Einstellungen › Beispieldaten laden, ansehen, wieder entfernen | Bäri und Mila mit Fotos und Geschichte; nach dem Entfernen ist nur der eigene Hund da | | | |
+| 3.8 | VoiceOver an: Hundeliste, Schnellzugriffe im Profil, eine Reihe in «Das Jahr in Stempeln» (E-80) | Liest den sichtbaren Text der Zeile; die Reihe sagt zuerst Art und Fälligkeit, dann die erledigten Monate | | | |
 
 ## Runde 4 – Messungen
 

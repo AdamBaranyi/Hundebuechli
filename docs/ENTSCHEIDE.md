@@ -448,3 +448,17 @@ Jest-Test prüft in beiden Formularen den Fall «nur die Art fehlt»; die Browse
 `formError` die sichtbare Meldung und waren gegen die alte App in allen drei Breiten rot. Für
 jeden Baustein mit Auswahl gilt: Der Fehler steht sichtbar beim Feld, die Ansage kommt dazu und
 ersetzt ihn nicht.
+
+**E-80 · Der Name eines Bedienelements enthält, was dort steht.** axe-core 4.14 prüft
+`label-content-name-mismatch` (WCAG 2.5.3, «Label in Name») regulär; bis 4.13 war die Regel
+experimentell und lief hier nicht. Wer per Sprachsteuerung bedient, sagt an, was auf dem Knopf
+steht. Getroffen waren drei Stellen. Hundezeile und Schnellzugriffe im Profil wiederholten ihren
+Text in `accessibilityLabel`; sie bekommen den Namen jetzt aus dem Inhalt, wie `Row`. In den Reihen
+von «Das Jahr in Stempeln» stand «erledigt im …» mitten zwischen den zwei sichtbaren Texten: Der
+Satz beginnt jetzt mit Art und Fälligkeit, die Monate folgen. Dort bleibt der Name ausdrücklich
+gesetzt, weil die zwölf Punkte für den Screenreader in Worte übersetzt werden. Ein Leerzeichen
+trennt die zwei Texte auch im DOM; ohne es liest axe «Impfungnächste am 22.10.». axe wertet nur
+aus, was im sichtbaren Bereich liegt: Bei 320 × 720 lagen die Reihen darunter, der Fehler zeigte
+sich nur bei 768 und 1440. Darum hält ein Jest-Test den Satz fest
+(`src/content/__tests__/dogs.test.ts`). Mit VoiceOver ist das noch nicht gehört (Geräteprotokoll
+3.8).

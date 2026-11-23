@@ -64,7 +64,7 @@ describe('Hundeprofil', () => {
     });
     expect(await screen.findByRole('heading', { name: 'Bäri' })).toBeOnTheScreen();
     expect(
-      screen.getByRole('button', { name: 'Chipnummer kopieren, 756 0981 2345 6789' }),
+      screen.getByRole('button', { name: 'Chipnummer kopieren 756 0981 2345 6789' }),
     ).toBeOnTheScreen();
     expect(screen.getByText('Chipnummer aus der Schweiz')).toBeOnTheScreen();
     expect(textSizes(container).filter((t) => (t.fontSize ?? 0) < 16)).toEqual([]);

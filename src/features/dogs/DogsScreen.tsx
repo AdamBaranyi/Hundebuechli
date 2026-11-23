@@ -26,7 +26,6 @@ function DogRow({ dog, today }: { dog: DogWithPhoto; today: string }) {
   return (
     <Pressable
       role="button"
-      accessibilityLabel={[dog.name, details].filter(Boolean).join(', ')}
       onPress={() => router.push({ pathname: '/dogs/[id]', params: { id: dog.id } })}
       style={({ pressed }) => [styles.row, pressed ? { backgroundColor: palette.pressed } : null]}
     >

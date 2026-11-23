@@ -32,45 +32,48 @@ erscheinen weder im Issue «Sicherheitsmeldungen» noch blockieren sie die CI.
 
 | Kennung | Paket und Weg | Stufe | Art | Grund | Geprüft | Prüfen bis |
 |---|---|---|---|---|---|---|
-| GHSA-86w9-cpqp-85rv | node-forge ≤ 1.4.0 über `@expo/cli` | hoch | Werkzeug | kein Fix; auch `@expo/cli` 57.0.28 verlangt `^1.3.3` | 10.10.2026 | 10.11.2026 |
-| GHSA-vfj7-8cjw-p6xm | braces ≤ 3.0.3 über micromatch (Metro, Jest) | hoch | Werkzeug | kein Fix; die Muster kommen aus der eigenen Konfiguration | 10.10.2026 | 10.11.2026 |
-| GHSA-hp3w-g68c-fv3c | sprintf-js ≤ 1.1.3 über argparse (ESLint, Jest, `@expo/cli`) | moderat | Werkzeug | kein Fix | 10.10.2026 | 10.11.2026 |
-| GHSA-vcc3-ghjq-m6fr | decode-uri-component ≤ 0.4.2 über expo-router › query-string | moderat | Laufzeit im Bundle | der Fix ist reines ESM und bricht query-string | 10.10.2026 | 10.11.2026 |
-| GHSA-67mh-4wv8-2f99 | esbuild ≤ 0.24.2 über drizzle-kit | moderat | Werkzeug | kein Update; drizzle-kit startet keinen Server | 10.10.2026 | 10.11.2026 |
-| GHSA-mrhx-c7xc-m3w5 | zod 3.25.76 über `@expo/cli` (verlangt `^3.25.76`) und eslint-plugin-react-hooks | hoch | Werkzeug | Fix nur in zod 4.6.6, das die App selbst schon nutzt; ein Override auf 4 wäre für die Expo-CLI ein Bruch, keine Behebung. Die CLI prüft nur eigene Konfiguration beim Bauen | 25.10.2026 | 25.11.2026 |
+| GHSA-qr28-fpjm-wq7f | decode-uri-component ≤ 0.5.0 über expo-router › query-string | hoch | Laufzeit im Bundle | der Fix 0.5.1 ist reines ESM und bricht query-string 7; die App ruft den Parser nicht auf (Beleg unten) | 23.11.2026 | 23.12.2026 |
+| GHSA-vcc3-ghjq-m6fr | decode-uri-component ≤ 0.4.2 über expo-router › query-string | moderat | Laufzeit im Bundle | wie GHSA-qr28-fpjm-wq7f | 23.11.2026 | 23.12.2026 |
+| GHSA-67mh-4wv8-2f99 | esbuild ≤ 0.24.2 (Kopie 0.18.20) über drizzle-kit › `@esbuild-kit/core-utils` | moderat | Werkzeug | kein Update: drizzle-kit 0.31.11 ist die neuste stabile Fassung und startet keinen Server | 23.11.2026 | 23.12.2026 |
+| GHSA-mrhx-c7xc-m3w5 | zod 3.25.76 über `@expo/cli` 57.0.27 (verlangt `^3.25.76`) | hoch | Werkzeug | Fix nur in zod 4.6.6, das die App selbst nutzt; ein Override auf 4 wäre für die Expo-CLI ein Bruch. Erst `@expo/cli` 57.0.33 kommt ohne zod aus und wechselt mit dem nächsten SDK-Patch. Die CLI prüft nur eigene Konfiguration beim Bauen | 23.11.2026 | 23.12.2026 |
 
-**GHSA-86w9-cpqp-85rv – node-forge (hoch), seit 10.10.2026.** Die Prüfung von RSA-Signaturen nach
-PKCS#1 v1.5 nimmt zusätzliche, verschachtelte DigestAlgorithm-Elemente an; eine gefälschte
-Signatur könnte so durchgehen. `@expo/cli` braucht node-forge für die Code-Signatur von Updates
-(expo-updates) und für Zertifikate bei `expo run:ios`; Hundebüechli nutzt beides nicht. In der App
-und in der Web-Vorschau steckt node-forge nicht. Die neuste Fassung 1.4.0 ist betroffen.
+**GHSA-qr28-fpjm-wq7f (hoch) und GHSA-vcc3-ghjq-m6fr (moderat) – decode-uri-component über
+expo-router › query-string.** Präparierte, kaputt kodierte Prozentzeichen lassen das Dekodieren
+sehr lange laufen. Behoben ist es erst in 0.5.0 und 0.5.1, beide reines ESM: query-string 7.1.3
+lädt das Paket mit `require` und scheitert mit `TypeError: decodeComponent is not a function` (am
+23.11.2026 mit 0.5.1 in Node nachgestellt). Ein Override wäre also ein Bruch, keine Behebung. Auch
+expo-router 57.0.31, die neuste Fassung für SDK 57, verlangt weiter query-string `^7.1.3`.
 
-**GHSA-vfj7-8cjw-p6xm – braces (hoch), seit 10.10.2026.** Tief verschachtelte Muster wie
-`{a,{b,{c,…}}}` erschöpfen den Stack. braces steckt in micromatch, mit dem Metro und Jest
-Dateimuster auswerten. Die Muster stammen aus der eigenen Konfiguration, nicht von aussen;
-schlimmstenfalls bricht ein Werkzeug auf dem eigenen Rechner ab. Die neuste Fassung 3.0.3 ist
-betroffen.
-
-**GHSA-hp3w-g68c-fv3c – sprintf-js (moderat), seit 10.10.2026.** Unbegrenzte Genauigkeitsangaben
-wie `%.999999999f` können Speicher und Zeit aufbrauchen. sprintf-js kommt über argparse 1 (aus
-js-yaml 3) in ESLint, Jest und `@expo/cli`; die Formate stammen aus den Werkzeugen selbst. Die
-neuste Fassung 1.1.3 ist betroffen.
+**Welche Eingaben den Parser erreichen: keine, die wir gefunden haben.** Dekodiert wird nur in
+`queryString.parse`. Das ruft allein die Standardfunktion `getStateFromPath` von React Navigation
+auf; expo-router ersetzt sie durch seine eigene Fassung, die Parameter mit `URLSearchParams` liest.
+So laufen Adressen im Browser und Deep Links (`hundebuechli://`) am Parser vorbei. Aus query-string
+nutzt expo-router sonst nur `stringify`, das nicht dekodiert. Beleg vom 23.11.2026: Mit einem
+`decode-uri-component`, das bei jedem Aufruf wirft, liefen alle 78 Browsertests grün, dazu Adressen
+mit bis zu 12 000 Prozentzeichen und kaputten Folgen. Das deckt die Web-Vorschau ab; auf dem Gerät
+gilt es nach dem Code, weil native Links dieselbe Funktion nutzen. Träfe es doch einmal zu, hinge
+schlimmstenfalls der eigene Tab oder die eigene App; Daten verlassen dabei nichts. Die Ausnahme
+fällt, sobald expo-router eine behobene Fassung mitbringt.
 
 **GHSA-67mh-4wv8-2f99 – esbuild ≤ 0.24.2 über drizzle-kit (moderat), seit 22.09.2026.** Betrifft
-den Entwicklungsserver von esbuild, der fremden Seiten Anfragen erlaubt. drizzle-kit nutzt esbuild
-nur, um `drizzle.config.ts` zu laden, und startet keinen Server. Das Paket kommt nicht in die App
-und nicht in die Web-Vorschau. Kein Update in drizzle-kit 0.31.
+den Entwicklungsserver von esbuild, der fremden Seiten Anfragen erlaubt. Verwundbar ist nur die
+Kopie 0.18.20 unter `@esbuild-kit/core-utils`, das sie mit `~0.18` festlegt. drizzle-kit nutzt
+esbuild nur, um `drizzle.config.ts` zu laden, und startet keinen Server. Das Paket kommt nicht in
+die App und nicht in die Web-Vorschau. Erst drizzle-kit 1.0 (bisher nur Vorabversionen) ändert das.
 
-**GHSA-vcc3-ghjq-m6fr – decode-uri-component ≤ 0.4.2 über expo-router › query-string (moderat),
-seit 22.09.2026.** Ein präpariertes, kaputt kodiertes Prozentzeichen-Muster kann das Dekodieren
-sehr lange laufen lassen. Behoben ist es erst in 0.5.0, und die ist reines ESM: query-string 7.1.3
-lädt sie mit `require` und scheitert mit `TypeError: decodeComponent is not a function` (am
-22.09.2026 in Node nachgestellt). Ein Override wäre also ein Bruch, keine Behebung. Schlimmstenfalls
-hängt der eigene Browser-Tab oder die eigene App nach einem präparierten Link; Daten verlassen
-dabei nichts. Der Playwright-Test «Adresse mit Parametern» lief sogar mit der gebrochenen Fassung
-fehlerfrei: Beim Laden einer Adresse ruft expo-router den Parser nicht auf. Auch expo-router
-57.0.25, die neuste Fassung für SDK 57, verlangt weiter query-string `^7.1.3`. Die Ausnahme fällt,
-sobald expo-router eine behobene Fassung mitbringt.
+**GHSA-mrhx-c7xc-m3w5 – zod 3.25.76 über `@expo/cli` (hoch), seit 25.10.2026.** Übergrosse
+Sammlungen können beim Prüfen den Speicher erschöpfen. Die verwundbare Kopie liegt nur unter
+`@expo/cli`; `eslint-plugin-react-hooks` nutzt die behobene Fassung der App. Die CLI prüft damit
+eigene Konfiguration beim Bauen, nichts von aussen. Ab `@expo/cli` 57.0.33 fällt zod weg; die CLI
+wechselt aber mit der SDK-Runde (`expo` 57.0.33), und die braucht einen eigenen Durchgang mit
+Expo Go auf dem Gerät (`docs/RELEASE.md`). Die Ausnahme fällt mit diesem SDK-Patch.
+
+**Weggefallen am 23.11.2026.** node-forge: Im Lockfile von 1.4.0 auf 1.4.3 gehoben (erlaubt von
+`^1.3.3`, erschienen am 04.11.2026, also über die Wartezeit). Das behebt GHSA-86w9-cpqp-85rv und
+20 weitere Meldungen. Belegt mit einem Durchlauf von `@expo/code-signing-certificates` (Schlüssel,
+selbstsigniertes Zertifikat, PEM, Signatur); im Web-Export steckt node-forge nicht. braces
+(GHSA-vfj7-8cjw-p6xm) und sprintf-js (GHSA-hp3w-g68c-fv3c): GitHub hat beide Meldungen
+zurückgezogen, `bun audit` nennt sie nicht mehr.
 
 ## Behoben per Override
 

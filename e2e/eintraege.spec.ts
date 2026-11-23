@@ -28,7 +28,7 @@ test('Eintrag erfassen: Schnellwahl rechnet die nächste Fälligkeit', async ({ 
   await expect(page.getByRole('heading', { name: 'Das Jahr in Stempeln' })).toBeVisible();
   await expect(page.getByRole('button', { name: /^Gesundheit/ })).toContainText('1 Eintrag');
   await expect(
-    page.getByRole('button', { name: /^Entwurmung: erledigt im September\./ }),
+    page.getByRole('button', { name: /^Entwurmung: .*Erledigt im September\./ }),
   ).toBeVisible();
 });
 
