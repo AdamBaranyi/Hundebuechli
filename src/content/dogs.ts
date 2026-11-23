@@ -68,11 +68,13 @@ export const dogsText = {
     year: 'Das Jahr in Stempeln',
     yearRange: (from: string, to: string) => `${from} bis ${to}`,
     legend: { done: 'erledigt', due: 'fällig', overdue: 'überfällig' },
+    // Der sichtbare Text (Art und Fälligkeit) steht zuerst und am Stück: Wer die
+    // Zeile per Sprachsteuerung ansagt, nennt, was dort steht (WCAG 2.5.3).
     yearRow: (kind: string, done: string[], next: string | null) =>
       [
         `${kind}:`,
-        done.length > 0 ? `erledigt im ${done.join(', ')}.` : 'in diesem Jahr nichts erledigt.',
-        next ?? '',
+        next ? `${next.replace(/\.$/, '')}.` : '',
+        done.length > 0 ? `Erledigt im ${done.join(', ')}.` : 'In diesem Jahr nichts erledigt.',
         'Geschichte öffnen.',
       ]
         .filter(Boolean)

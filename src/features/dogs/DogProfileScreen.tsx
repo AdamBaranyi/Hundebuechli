@@ -44,7 +44,6 @@ function QuickAction(props: { icon: IconName; label: string; value: string; onPr
   return (
     <Pressable
       role="button"
-      accessibilityLabel={`${props.label}, ${props.value}`}
       onPress={props.onPress}
       style={({ pressed }) => [
         styles.quick,
