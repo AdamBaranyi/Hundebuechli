@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 
 import { createDog, start } from './flows';
-import { formError, observe } from './helpers';
+import { chooseFile, formError, observe } from './helpers';
 import { expectScreenQuality } from './quality';
 
 const FIXTURES = join(__dirname, '..', 'src', 'domain', '__fixtures__');
@@ -32,9 +32,7 @@ test('Dokument: anlegen, Seite fotografieren, im Vollbild öffnen', async ({ pag
   await expectScreenQuality(page, seen, 'Dokumente');
 
   await page.getByRole('button', { name: /^Police 2026/ }).click();
-  const chooser = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: 'Foto hinzufügen' }).click();
-  await (await chooser).setFiles(join(FIXTURES, 'ohne-exif.jpg'));
+  await chooseFile(page, 'Foto hinzufügen', join(FIXTURES, 'ohne-exif.jpg'));
   await page.getByRole('button', { name: 'Foto 1 von 1 gross öffnen' }).click();
   await expect(page.getByRole('button', { name: 'Schliessen' })).toBeVisible();
   await page.getByRole('button', { name: 'Schliessen' }).click();

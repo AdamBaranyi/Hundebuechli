@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 
 import { addEntry, createDog, start } from './flows';
-import { formError, keyboardProblems, observe } from './helpers';
+import { chooseFile, formError, keyboardProblems, observe } from './helpers';
 import { expectScreenQuality } from './quality';
 
 const FIXTURES = join(__dirname, '..', 'src', 'domain', '__fixtures__');
@@ -55,9 +55,7 @@ test('Foto wählen: gespeichert wird es ohne Standortdaten', async ({ page, base
   const seen = await observe(page, baseURL ?? '');
   await start(page);
   await createDog(page, { name: 'Mila' });
-  const chooser = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: 'Foto wählen' }).click();
-  await (await chooser).setFiles(join(FIXTURES, 'mit-gps.jpg'));
+  await chooseFile(page, 'Foto wählen', join(FIXTURES, 'mit-gps.jpg'));
   // react-native-web beschriftet das Bild doppelt: Rahmen und <img>.
   const photo = page.getByRole('img', { name: 'Foto von Mila' }).first();
   await expect(photo).toBeVisible();
