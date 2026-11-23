@@ -38,6 +38,29 @@ export async function observe(page: Page, origin: string): Promise<Observations>
   return seen;
 }
 
+/**
+ * Wählt eine Datei über den Dialog eines Knopfs. Seit Playwright 1.65 beantwortet der
+ * Treiber den abgefangenen Dialog in Firefox sofort mit «Abbrechen». Der Browser meldet
+ * `cancel`, und expo-image-picker gibt auf, bevor `setFiles` die Datei bringt. Wer die
+ * App benutzt, bekommt den echten Dialog; darum schluckt nur der Test dieses Ereignis.
+ */
+export async function chooseFile(page: Page, button: string, file: string) {
+  if (page.context().browser()?.browserType().name() === 'firefox') {
+    await page.evaluate(() => {
+      const swallow = (event: Event) => {
+        const target = event.target;
+        if (target instanceof HTMLInputElement && target.type === 'file') {
+          event.stopImmediatePropagation();
+        }
+      };
+      window.addEventListener('cancel', swallow, { capture: true, once: true });
+    });
+  }
+  const chooser = page.waitForEvent('filechooser');
+  await page.getByRole('button', { name: button }).click();
+  await (await chooser).setFiles(file);
+}
+
 export function cspViolations(page: Page): Promise<string[]> {
   return page.evaluate(() => (window as unknown as { __cspViolations: string[] }).__cspViolations);
 }

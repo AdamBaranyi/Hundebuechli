@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { expect, test } from '@playwright/test';
 
 import { createDog, start } from './flows';
-import { formError, observe } from './helpers';
+import { chooseFile, formError, observe } from './helpers';
 import { expectScreenQuality } from './quality';
 
 const FIXTURES = join(__dirname, '..', 'src', 'domain', '__fixtures__');
@@ -34,9 +34,7 @@ test('Tagebuch: Eintrag mit Foto ohne Standortdaten', async ({ page, baseURL }) 
 
   // Fotos kommen zum gesicherten Eintrag.
   await page.getByRole('button', { name: /^Appetit/ }).click();
-  const chooser = page.waitForEvent('filechooser');
-  await page.getByRole('button', { name: 'Foto hinzufügen' }).click();
-  await (await chooser).setFiles(join(FIXTURES, 'mit-gps.jpg'));
+  await chooseFile(page, 'Foto hinzufügen', join(FIXTURES, 'mit-gps.jpg'));
   await expect(page.getByRole('img', { name: 'Foto 1 von 1' }).first()).toBeVisible();
   await page.getByRole('button', { name: 'Abbrechen' }).click();
   await expect(page.getByRole('button', { name: /^Appetit/ })).toContainText('1 Foto');
